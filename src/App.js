@@ -2,10 +2,10 @@ import React from 'react';
 import './App.css';
 import { Button, DatePicker } from 'antd';
 import 'antd/dist/antd.css';
-import {serviceList} from "./service/ServiceList";
+import {dashboard} from "./dashboard/Dashboard";
 
 function App() {
-  return serviceList();
+  return dashboard();
 }
 
 export default App;
