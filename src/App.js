@@ -2,14 +2,10 @@ import React from 'react';
 import './App.css';
 import { Button, DatePicker } from 'antd';
 import 'antd/dist/antd.css';
+import {serviceList} from "./service/ServiceList";
 
 function App() {
-  return (
-    <div className="App">
-        <Button type="primary">PRESS ME</Button>
-        <DatePicker />
-    </div>
-  );
+  return serviceList();
 }
 
 export default App;
