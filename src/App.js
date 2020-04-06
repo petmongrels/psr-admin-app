@@ -1,11 +1,28 @@
 import React from 'react';
 import './App.css';
-import { Button, DatePicker } from 'antd';
 import 'antd/dist/antd.css';
 import {dashboard} from "./dashboard/Dashboard";
 
-function App() {
-  return dashboard();
-}
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route
+} from "react-router-dom";
+import {service} from "./service/Service";
 
-export default App;
+export default function App() {
+    return (
+        <Router>
+            <div>
+                <Switch>
+                    <Route exact path="/">
+                        {dashboard()}
+                    </Route>
+                    <Route path="/service">
+                        {service()}
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
+    );
+}
