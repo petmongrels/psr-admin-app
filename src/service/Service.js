@@ -1,8 +1,9 @@
-import React from 'react';
-import {Form, Input, Button, Checkbox} from 'antd';
+import React, {useState} from 'react';
+import {Card, Form, Input, Button, Checkbox, Collapse} from 'antd';
 import {PSRLayout} from "../framework/view/PSRLayout";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import {ServiceTypeData} from "./model/ServiceTypeData";
 
 const layout = {
     labelCol: {
@@ -19,7 +20,11 @@ const tailLayout = {
     },
 };
 
-export function service() {
+const {Panel} = Collapse;
+
+export function Service(props) {
+    const [serviceTypeData, update] = useState(ServiceTypeData.newInstance());
+
     return (
         <PSRLayout>
             <Form {...layout} name="basic" onFinish={() => {
@@ -33,7 +38,10 @@ export function service() {
                             message: 'Please provide service name',
                         },
                     ]}>
-                    <Input/>
+                    <Input onChange={(value) => {
+                        serviceTypeData.name = value;
+                        update(serviceTypeData);
+                    }}/>
                 </Form.Item>
 
                 <Form.Item
@@ -47,6 +55,22 @@ export function service() {
                     ]}>
                     <ReactQuill theme="snow" value={""}/>
                 </Form.Item>
+
+                <Form.Item
+                    label="References" name="references"
+                    rules={[
+                        {
+                            message: 'Please provide references',
+                        },
+                    ]}>
+                    <ReactQuill theme="snow" value={""}/>
+                </Form.Item>
+
+                <Collapse defaultActiveKey={['1']}>
+                    <Panel header="Enrolment" key="1">
+                        <p>Foo</p>
+                    </Panel>
+                </Collapse>
 
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">

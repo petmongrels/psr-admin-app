@@ -36,5 +36,5 @@ export function serviceList(props) {
                     />
                 </List.Item>
             )}
-        /></div>
+        /></div>;
 }

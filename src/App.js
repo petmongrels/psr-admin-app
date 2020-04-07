@@ -8,7 +8,7 @@ import {
     Switch,
     Route
 } from "react-router-dom";
-import {service} from "./service/Service";
+import {Service} from "./service/Service";
 
 export default function App() {
     return (
@@ -19,7 +19,7 @@ export default function App() {
                         {dashboard()}
                     </Route>
                     <Route path="/service">
-                        {service()}
+                        {Service()}
                     </Route>
                 </Switch>
             </div>
