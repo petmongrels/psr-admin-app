@@ -1,5 +1,5 @@
-class HttpClient {
-    getJSON(url) {
+export class HttpClient {
+    getJSON(url: string) {
         fetch(url)
             .then((response) => {
                 return response.json();
