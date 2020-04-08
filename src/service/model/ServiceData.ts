@@ -1,3 +1,5 @@
+import {CommunicationMediumData} from "../../master-data/CommunicationMediumData";
+
 export class ServiceData {
     name!: string;
     description!: string;
@@ -56,16 +58,6 @@ export class ApplicationData {
         applicationData.communicationAddress = other.communicationAddress;
         applicationData.applicationForms = other.applicationForms.filter(value => ApplicationFormData.clone(value));
         return applicationData;
-    }
-}
-
-export class CommunicationMediumData {
-    name!: string;
-
-    static clone(other: CommunicationMediumData) {
-        let communicationMediumData = new CommunicationMediumData();
-        communicationMediumData.name = other.name;
-        return communicationMediumData;
     }
 }
 

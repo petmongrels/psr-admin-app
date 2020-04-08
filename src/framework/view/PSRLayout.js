@@ -25,7 +25,7 @@ export function PSRLayout(props) {
                     >
                         <Menu.Item key="sub1"><span><UserOutlined/>Services</span></Menu.Item>
                         <SubMenu key="sub2" title={<span><LaptopOutlined/>Master data</span>}>
-                            <Menu.Item key="communication_mediums">Communication mediums</Menu.Item>
+                            <Menu.Item key="communication_mediums"><a href="/communicationMediums">Comm. Mediums</a></Menu.Item>
                             <Menu.Item key="photograph_types">Photograph types</Menu.Item>
                             <Menu.Item key="serving_entities">Serving entities</Menu.Item>
                         </SubMenu>

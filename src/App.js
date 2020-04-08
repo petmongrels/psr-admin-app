@@ -8,7 +8,16 @@ import {
     Switch,
     Route
 } from "react-router-dom";
+
 import {Service} from "./service/Service";
+import {CommunicationMediumList} from "./master-data/CommunicationMediumList";
+import {CommunicationMedium} from "./master-data/CommunicationMedium";
+
+const getRoute = function (path, view) {
+    return <Route path={path}>
+        {view}
+    </Route>;
+};
 
 export default function App() {
     return (
@@ -18,9 +27,9 @@ export default function App() {
                     <Route exact path="/">
                         {dashboard()}
                     </Route>
-                    <Route path="/service">
-                        {Service()}
-                    </Route>
+                    {getRoute("/service", Service())}
+                    {getRoute("/communicationMediums", CommunicationMediumList())}
+                    {getRoute("/communicationMedium/new", CommunicationMedium())}
                 </Switch>
             </div>
         </Router>
