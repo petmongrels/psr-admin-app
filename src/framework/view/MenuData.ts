@@ -5,9 +5,9 @@ export class MenuData {
     openKeys!: Array<string>;
 
     private constructor() {
-        let commMedium = new MenuItemData("Comm. Mediums", "/communicationMediums", [], "comm-medium");
+        let commMedium = new MenuItemData("Comm. Mediums", "communicationMediums", [], "comm-medium");
         let masterData = new MenuItemData("Master data", "", [commMedium], "master-data");
-        let services = new MenuItemData("Services", "/services", [], "services");
+        let services = new MenuItemData("Services", "services", [], "services");
         this.root = new MenuItemData("root", '', [services, masterData], "root");
     }
 
@@ -42,14 +42,18 @@ export class MenuData {
 
 class MenuItemData {
     text!: string;
-    link!: string;
+    private readonly _appResourceName!: string;
     children!: Array<MenuItemData>;
     key!: string;
 
-    constructor(text: string, link: string, children: Array<MenuItemData>, key: string) {
+    constructor(text: string, appResourceName: string, children: Array<MenuItemData>, key: string) {
         this.text = text;
-        this.link = link;
+        this._appResourceName = appResourceName;
         this.children = children;
         this.key = key;
+    }
+
+    get appResourceName(): string {
+        return `/app/${this._appResourceName}`;
     }
 }

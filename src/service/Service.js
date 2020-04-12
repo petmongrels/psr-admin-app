@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import {Card, Form, Input, Button, Checkbox, Collapse, Space} from 'antd';
+import {Button, Collapse, Form, Input} from 'antd';
 import {PSRLayout} from "../framework/view/PSRLayout";
-import 'react-quill/dist/quill.snow.css';
 import {ServiceData} from "./model/ServiceData";
 import {PSRForm} from "../framework/view/PSRForm";
 
@@ -33,7 +32,7 @@ export function Service(props) {
 
     return (
         <PSRLayout>
-            <PSRForm>
+            <PSRForm submitHandler={() => {}}>
                 <Collapse defaultActiveKey={['1']}>
                     <Panel header="Service details" key="1">
                         <Form.Item

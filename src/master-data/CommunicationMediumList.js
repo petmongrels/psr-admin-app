@@ -1,26 +1,19 @@
-import {List, Avatar, Button, Row} from 'antd';
-import React from 'react';
-import {
-    Link
-} from "react-router-dom";
+import {Button, List, Row, Card} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Link} from "react-router-dom";
 import {PSRLayout} from "../framework/view/PSRLayout";
-
-const data = [
-    {
-        title: 'Ant Design Title 1',
-    },
-    {
-        title: 'Ant Design Title 2',
-    },
-    {
-        title: 'Ant Design Title 3',
-    },
-    {
-        title: 'Ant Design Title 4',
-    },
-];
+import PropTypes from 'prop-types';
+import {APIService} from "../framework/api/APIService";
 
 export function CommunicationMediumList(props) {
+    const [commMediums, update] = useState([]);
+
+    useEffect(() => {
+        APIService.loadAll("/communication_medium").then((commMediums) => {
+            update(commMediums);
+        });
+    });
+
     return <PSRLayout>
         <div>
             <Row justify="end">
@@ -28,16 +21,16 @@ export function CommunicationMediumList(props) {
             </Row>
             <List
                 itemLayout="horizontal"
-                dataSource={data}
+                dataSource={commMediums}
                 renderItem={item => (
-                    <List.Item actions={[<a key="edit">edit</a>]}>
-                        <List.Item.Meta
-                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
-                            title={<a href="https://ant.design">{item.title}</a>}
-                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                        />
+                    <List.Item>
+                        <Card title={item.name}><a key="edit">edit</a></Card>
                     </List.Item>
                 )}
             /></div>
     </PSRLayout>;
 }
+
+CommunicationMediumList.propTypes = {
+    data: PropTypes.array.isRequired
+};

@@ -3,18 +3,14 @@ import './App.css';
 import 'antd/dist/antd.css';
 import {dashboard} from "./dashboard/Dashboard";
 
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route
-} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 import {Service} from "./service/Service";
 import {CommunicationMediumList} from "./master-data/CommunicationMediumList";
 import {CommunicationMedium} from "./master-data/CommunicationMedium";
 
 const getRoute = function (path, view) {
-    return <Route path={path}>
+    return <Route path={`/app/${path}`}>
         {view}
     </Route>;
 };
@@ -29,9 +25,9 @@ export default function App() {
                     <Route exact path="/">
                         {dashboard()}
                     </Route>
-                    {getRoute("/services", Service())}
-                    {getRoute("/communicationMediums", CommunicationMediumList())}
-                    {getRoute("/communicationMedium/new", CommunicationMedium())}
+                    {getRoute("services", Service())}
+                    {getRoute("communicationMediums", CommunicationMediumList())}
+                    {getRoute("communicationMedium/new", CommunicationMedium())}
                 </Switch>
             </div>
         </Router>

@@ -2,6 +2,7 @@
   "name": "psr-admin-app",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:7100",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -11,6 +12,7 @@
     "@types/react": "^16.9.32",
     "@types/react-dom": "^16.9.6",
     "antd": "^4.1.0",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",

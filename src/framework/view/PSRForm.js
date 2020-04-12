@@ -1,5 +1,6 @@
 import React from 'react';
-import {Form, Space, Button} from 'antd';
+import {Button, Form, Space} from 'antd';
+import PropTypes from 'prop-types';
 
 const layout = {
     labelCol: {
@@ -23,10 +24,14 @@ export function PSRForm(props) {
         <Space direction="vertical" style={{width: "100%"}}>
             {props.children}
             <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" onClick={props.submitHandler}>
                     Submit
                 </Button>
             </Form.Item>
         </Space>
     </Form>
 }
+
+PSRForm.propTypes = {
+    submitHandler: PropTypes.func.isRequired
+};

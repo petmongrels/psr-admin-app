@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {Button, Form, Input, Space} from 'antd';
+import {Form, Input} from 'antd';
 
 import {PSRLayout} from "../framework/view/PSRLayout";
 import {CommunicationMediumData} from "./CommunicationMediumData";
 import {PSRForm} from "../framework/view/PSRForm";
+import {APIService} from "../framework/api/APIService";
 
 export function CommunicationMedium(props) {
     const [communicationMediumData, update] = useState(new CommunicationMediumData());
@@ -13,7 +14,7 @@ export function CommunicationMedium(props) {
     };
 
     return <PSRLayout>
-        <PSRForm>
+        <PSRForm submitHandler={() => APIService.save("communication_medium", communicationMediumData)}>
             <Form.Item
                 label="Name" name="name"
                 rules={[
