@@ -8,9 +8,11 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {Service} from "./service/Service";
 import {CommunicationMediumList} from "./master-data/CommunicationMediumList";
 import {CommunicationMedium} from "./master-data/CommunicationMedium";
+import {PSRRouter} from "./framework/routing/PSRRouter";
+import {ServiceList} from "./service/ServiceList";
 
 const getRoute = function (path, view) {
-    return <Route path={`/app/${path}`}>
+    return <Route path={path}>
         {view}
     </Route>;
 };
@@ -25,9 +27,10 @@ export default function App() {
                     <Route exact path="/">
                         {dashboard()}
                     </Route>
-                    {getRoute("services", Service())}
-                    {getRoute("communicationMediums", CommunicationMediumList())}
-                    {getRoute("communicationMedium/new", CommunicationMedium())}
+                    {getRoute(PSRRouter.getListURLFor("service"), ServiceList())}
+                    {getRoute(PSRRouter.getCreateURLFor("service"), Service())}
+                    {getRoute(PSRRouter.getListURLFor("communicationMedium"), CommunicationMediumList())}
+                    {getRoute(PSRRouter.getCreateURLFor("communicationMedium"), CommunicationMedium())}
                 </Switch>
             </div>
         </Router>

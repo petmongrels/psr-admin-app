@@ -3,6 +3,7 @@ import {LaptopOutlined, UserOutlined} from '@ant-design/icons';
 import {Breadcrumb, Layout, Menu} from 'antd';
 import {MenuData} from "./MenuData";
 import {Link} from 'react-router-dom';
+import {PSRRouter} from "../routing/PSRRouter";
 
 export function PSRLayout(props) {
     const {SubMenu} = Menu;
@@ -29,12 +30,12 @@ export function PSRLayout(props) {
                         {MenuData.getInstance().getTopItems().map(menuItemData => {
                             if (menuItemData.children.length === 0)
                                 return <Menu.Item key={menuItemData.key}>
-                                        <Link to={menuItemData.appResourceName}><span><UserOutlined/>{menuItemData.text}</span></Link>
+                                        <Link to={menuItemData.url}><span><UserOutlined/>{menuItemData.text}</span></Link>
                                 </Menu.Item>;
                             else {
                                 return <SubMenu key={menuItemData.key} title={<span><LaptopOutlined/>{menuItemData.text}</span>}>
                                     {menuItemData.children.map(child => <Menu.Item key={child.key}>
-                                        <Link to={child.appResourceName}>{child.text}</Link>
+                                        <Link to={child.url}>{child.text}</Link>
                                     </Menu.Item>)}}
                                 </SubMenu>;
                             }
