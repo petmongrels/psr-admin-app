@@ -24,7 +24,7 @@ export function CommunicationMediumList(props) {
     return <PSRLayout>
         <div>
             <Row justify="end">
-                <Button type="primary"><Link to="service">New Communication Medium</Link></Button>
+                <Button type="primary"><Link to="/communicationMedium/new">New Communication Medium</Link></Button>
             </Row>
             <List
                 itemLayout="horizontal"

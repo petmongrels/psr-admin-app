@@ -29,7 +29,7 @@ export default function App() {
                     <Route exact path="/">
                         {dashboard()}
                     </Route>
-                    {getRoute("/service", Service())}
+                    {getRoute("/services", Service())}
                     {getRoute("/communicationMediums", CommunicationMediumList())}
                     {getRoute("/communicationMedium/new", CommunicationMedium())}
                 </Switch>

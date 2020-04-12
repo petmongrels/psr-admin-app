@@ -8,4 +8,11 @@ export class HttpClient {
                 console.log(data);
             });
     }
+
+    postJSON(url: string, data: object) {
+        fetch(url, {
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(data)
+        }).then((response) => response.json());
+    }
 }

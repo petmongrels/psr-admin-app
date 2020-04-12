@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {Form, Input, Space} from 'antd';
+import {Button, Form, Input, Space} from 'antd';
 
 import {PSRLayout} from "../framework/view/PSRLayout";
 import {CommunicationMediumData} from "./CommunicationMediumData";
+import {PSRForm} from "../framework/view/PSRForm";
 
 export function CommunicationMedium(props) {
     const [communicationMediumData, update] = useState(new CommunicationMediumData());
@@ -12,24 +13,20 @@ export function CommunicationMedium(props) {
     };
 
     return <PSRLayout>
-        <Form name="basic" onFinish={() => {
-        }} onFinishFailed={() => {
-        }}>
-            <Space direction="vertical" style={{width: "100%"}}>
-                <Form.Item
-                    label="Name" name="name"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Name is mandatory'
-                        }
-                    ]}>
-                    <Input onChange={(e) => {
-                        communicationMediumData.name = e.target.value;
-                        updateState();
-                    }}/>
-                </Form.Item>
-            </Space>
-        </Form>
+        <PSRForm>
+            <Form.Item
+                label="Name" name="name"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Name is mandatory'
+                    }
+                ]}>
+                <Input onChange={(e) => {
+                    communicationMediumData.name = e.target.value;
+                    updateState();
+                }}/>
+            </Form.Item>
+        </PSRForm>
     </PSRLayout>;
 }

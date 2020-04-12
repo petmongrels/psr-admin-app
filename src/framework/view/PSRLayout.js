@@ -2,7 +2,7 @@ import React from 'react';
 import {LaptopOutlined, UserOutlined} from '@ant-design/icons';
 import {Breadcrumb, Layout, Menu} from 'antd';
 import {MenuData} from "./MenuData";
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 export function PSRLayout(props) {
     const {SubMenu} = Menu;
@@ -28,7 +28,9 @@ export function PSRLayout(props) {
                     >
                         {MenuData.getInstance().getTopItems().map(menuItemData => {
                             if (menuItemData.children.length === 0)
-                                return <Menu.Item key={menuItemData.key}><span><UserOutlined/>{menuItemData.text}</span></Menu.Item>;
+                                return <Menu.Item key={menuItemData.key}>
+                                        <Link to={menuItemData.link}><span><UserOutlined/>{menuItemData.text}</span></Link>
+                                </Menu.Item>;
                             else {
                                 return <SubMenu key={menuItemData.key} title={<span><LaptopOutlined/>{menuItemData.text}</span>}>
                                     {menuItemData.children.map(child => <Menu.Item key={child.key}>
