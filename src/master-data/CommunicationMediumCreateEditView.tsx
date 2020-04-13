@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, FunctionComponent} from 'react';
 import {Form, Input} from 'antd';
 
 import {PSRLayout} from "../framework/view/PSRLayout";
-import {CommunicationMedium} from "./CommunicationMediumData";
+import {CommunicationMedium} from "./model/CommunicationMedium";
 import {PSRForm} from "../framework/view/PSRForm";
 import {APIService} from "../framework/api/APIService";
 
-export function CommunicationMediumCreateEdit(props) {
+export const CommunicationMediumCreateEditView: FunctionComponent<any> = ({children}) => {
     const [communicationMedium, update] = useState(new CommunicationMedium());
 
     const updateState = function () {
@@ -30,4 +30,4 @@ export function CommunicationMediumCreateEdit(props) {
             </Form.Item>
         </PSRForm>
     </PSRLayout>;
-}
+};

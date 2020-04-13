@@ -1,6 +1,5 @@
 import React, {FunctionComponent} from 'react';
 import {Button, Form, Space} from 'antd';
-import PropTypes from 'prop-types';
 
 const layout = {
     labelCol: {

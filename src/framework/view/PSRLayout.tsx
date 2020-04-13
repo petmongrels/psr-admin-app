@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 import {LaptopOutlined, UserOutlined} from '@ant-design/icons';
 import {Breadcrumb, Layout, Menu} from 'antd';
 import {MenuData} from "./MenuData";
 import {Link} from 'react-router-dom';
-import {PSRResources} from "../routing/PSRResources";
 
-export function PSRLayout(props) {
+type PSRLayoutProps = {
+};
+
+export const PSRLayout: FunctionComponent<PSRLayoutProps> = ({children}) => {
     const {SubMenu} = Menu;
     const {Header, Content, Sider} = Layout;
 
@@ -55,9 +57,9 @@ export function PSRLayout(props) {
                             margin: 0,
                             minHeight: 280,
                         }}
-                    >{props.children}</Content>
+                    >{children}</Content>
                 </Layout>
             </Layout>
         </Layout>
     );
-}
+};

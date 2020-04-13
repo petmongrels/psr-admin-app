@@ -1,4 +1,4 @@
-import {CommunicationMedium} from "../../master-data/CommunicationMediumData";
+import {CommunicationMedium} from "../../master-data/model/CommunicationMedium";
 
 export class Service {
     name!: string;

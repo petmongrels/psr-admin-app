@@ -6,8 +6,8 @@ import {dashboard} from "./dashboard/Dashboard";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 import {ServiceCreateEditView} from "./service/ServiceCreateEditView";
-import {CommunicationMediumList} from "./master-data/CommunicationMediumList";
-import {CommunicationMediumCreateEdit} from "./master-data/CommunicationMedium";
+import {CommunicationMediumListView} from "./master-data/CommunicationMediumListView";
+import {CommunicationMediumCreateEditView} from "./master-data/CommunicationMediumCreateEditView";
 import {PSRResources} from "./framework/routing/PSRResources";
 import {ServiceListView} from "./service/ServiceListView";
 
@@ -19,7 +19,7 @@ const getRoute = function (path, view) {
 
 const UIContext = React.createContext();
 
-export default function App() {
+export default function App(props) {
     return (
         <Router>
             <div>
@@ -29,8 +29,8 @@ export default function App() {
                     </Route>
                     {getRoute(PSRResources.getListURLFor("service"), ServiceListView())}
                     {getRoute(PSRResources.getCreateURLFor("service"), ServiceCreateEditView())}
-                    {getRoute(PSRResources.getListURLFor("communicationMedium"), CommunicationMediumList())}
-                    {getRoute(PSRResources.getCreateURLFor("communicationMedium"), CommunicationMediumCreateEdit())}
+                    {getRoute(PSRResources.getListURLFor("communicationMedium"), CommunicationMediumListView(props))}
+                    {getRoute(PSRResources.getCreateURLFor("communicationMedium"), CommunicationMediumCreateEditView(props))}
                 </Switch>
             </div>
         </Router>

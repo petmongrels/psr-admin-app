@@ -1,11 +1,13 @@
 import {Button, List, Row, Card} from 'antd';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, FunctionComponent} from 'react';
 import {Link} from "react-router-dom";
 import {PSRLayout} from "../framework/view/PSRLayout";
-import PropTypes from 'prop-types';
 import {APIService} from "../framework/api/APIService";
 
-export function CommunicationMediumList(props) {
+type CommunicationMediumListProps = {
+};
+
+export const CommunicationMediumListView: FunctionComponent<CommunicationMediumListProps> = ({children}) => {
     const [commMediums, update] = useState([]);
 
     useEffect(() => {
@@ -24,13 +26,9 @@ export function CommunicationMediumList(props) {
                 dataSource={commMediums}
                 renderItem={item => (
                     <List.Item>
-                        <Card title={item.name}><a key="edit">edit</a></Card>
+                        <Card title={item["name"]}><a key="edit">edit</a></Card>
                     </List.Item>
                 )}
             /></div>
     </PSRLayout>;
-}
-
-CommunicationMediumList.propTypes = {
-    data: PropTypes.array.isRequired
 };

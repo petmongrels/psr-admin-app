@@ -1,5 +1,5 @@
 import {EntityRelationshipType, PhotographType, ProofType, PSRDocumentType, Service} from "./Service";
-import {CommunicationMedium} from "../../master-data/CommunicationMediumData";
+import {CommunicationMedium} from "../../master-data/model/CommunicationMedium";
 
 export class ServiceCreateEdit {
     service!: Service;
