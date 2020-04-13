@@ -3,7 +3,7 @@ import {LaptopOutlined, UserOutlined} from '@ant-design/icons';
 import {Breadcrumb, Layout, Menu} from 'antd';
 import {MenuData} from "./MenuData";
 import {Link} from 'react-router-dom';
-import {PSRRouter} from "../routing/PSRRouter";
+import {PSRResources} from "../routing/PSRResources";
 
 export function PSRLayout(props) {
     const {SubMenu} = Menu;

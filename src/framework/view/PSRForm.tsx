@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 import {Button, Form, Space} from 'antd';
 import PropTypes from 'prop-types';
 
@@ -17,21 +17,21 @@ const tailLayout = {
     },
 };
 
-export function PSRForm(props) {
+type PSRFormProps = {
+    submitHandler: Function
+};
+
+export const PSRForm: FunctionComponent<PSRFormProps> = ({submitHandler, children}) => {
     return <Form {...layout} name="basic" onFinish={() => {
                         }} onFinishFailed={() => {
                         }}>
         <Space direction="vertical" style={{width: "100%"}}>
-            {props.children}
+            {children}
             <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit" onClick={props.submitHandler}>
+                <Button type="primary" htmlType="submit" onClick={() => submitHandler()}>
                     Submit
                 </Button>
             </Form.Item>
         </Space>
     </Form>
-}
-
-PSRForm.propTypes = {
-    submitHandler: PropTypes.func.isRequired
 };

@@ -5,11 +5,11 @@ import {dashboard} from "./dashboard/Dashboard";
 
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
-import {Service} from "./service/Service";
+import {ServiceCreateEditView} from "./service/ServiceCreateEditView";
 import {CommunicationMediumList} from "./master-data/CommunicationMediumList";
-import {CommunicationMedium} from "./master-data/CommunicationMedium";
-import {PSRRouter} from "./framework/routing/PSRRouter";
-import {ServiceList} from "./service/ServiceList";
+import {CommunicationMediumCreateEdit} from "./master-data/CommunicationMedium";
+import {PSRResources} from "./framework/routing/PSRResources";
+import {ServiceListView} from "./service/ServiceListView";
 
 const getRoute = function (path, view) {
     return <Route path={path}>
@@ -27,10 +27,10 @@ export default function App() {
                     <Route exact path="/">
                         {dashboard()}
                     </Route>
-                    {getRoute(PSRRouter.getListURLFor("service"), ServiceList())}
-                    {getRoute(PSRRouter.getCreateURLFor("service"), Service())}
-                    {getRoute(PSRRouter.getListURLFor("communicationMedium"), CommunicationMediumList())}
-                    {getRoute(PSRRouter.getCreateURLFor("communicationMedium"), CommunicationMedium())}
+                    {getRoute(PSRResources.getListURLFor("service"), ServiceListView())}
+                    {getRoute(PSRResources.getCreateURLFor("service"), ServiceCreateEditView())}
+                    {getRoute(PSRResources.getListURLFor("communicationMedium"), CommunicationMediumList())}
+                    {getRoute(PSRResources.getCreateURLFor("communicationMedium"), CommunicationMediumCreateEdit())}
                 </Switch>
             </div>
         </Router>

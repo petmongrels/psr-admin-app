@@ -1,9 +1,9 @@
-export class CommunicationMediumData {
+export class CommunicationMedium {
     name!: string;
 
-    static clone(other: CommunicationMediumData) {
-        let communicationMediumData = new CommunicationMediumData();
-        communicationMediumData.name = other.name;
-        return communicationMediumData;
+    static clone(other: CommunicationMedium) {
+        let communicationMedium = new CommunicationMedium();
+        communicationMedium.name = other.name;
+        return communicationMedium;
     }
 }

@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
-import {Button, Collapse, Form, Input} from 'antd';
+import React, {useState, useEffect} from 'react';
+import {Button, Collapse, Form, Input, Select} from 'antd';
 import {PSRLayout} from "../framework/view/PSRLayout";
-import {ServiceData} from "./model/ServiceData";
 import {PSRForm} from "../framework/view/PSRForm";
+import {APIService} from "../framework/api/APIService";
+import {ServiceCreateEdit} from "./model/ServiceCreateEdit";
+import {PSRResources} from "../framework/routing/PSRResources";
 
 const {TextArea} = Input;
 
@@ -22,13 +24,21 @@ const tailLayout = {
 };
 
 const {Panel} = Collapse;
+const { Option } = Select;
 
-export function Service(props) {
-    const [serviceTypeData, update] = useState(ServiceData.newService());
+export function ServiceCreateEditView(props: any) {
+    const [serviceCreateEdit, update] = useState<ServiceCreateEdit>(ServiceCreateEdit.newInstance());
 
     const updateState = function () {
-        update(ServiceData.clone(serviceTypeData));
+        update(ServiceCreateEdit.clone(serviceCreateEdit));
     };
+
+    useEffect(() => {
+        APIService.loadAll(PSRResources.getResourceListURL("communication_medium")).then((commMediums) => {
+            serviceCreateEdit.communicationMediums = commMediums;
+            update(serviceCreateEdit);
+        });
+    });
 
     return (
         <PSRLayout>
@@ -44,7 +54,7 @@ export function Service(props) {
                                 },
                             ]}>
                             <Input onChange={(e) => {
-                                serviceTypeData.name = e.target.value;
+                                serviceCreateEdit.service.name = e.target.value;
                                 updateState();
                             }}/>
                         </Form.Item>
@@ -59,21 +69,21 @@ export function Service(props) {
                                 },
                             ]}>
                                     <TextArea onChange={(e) => {
-                                        serviceTypeData.description = e.target.value;
+                                        serviceCreateEdit.service.description = e.target.value;
                                         updateState();
                                     }} autoSize={{minRows: 2}}/>
                         </Form.Item>
 
                         <Form.Item label="References" name="references">
                                 <TextArea onChange={(e) => {
-                                    serviceTypeData.references = e.target.value;
+                                    serviceCreateEdit.service.references = e.target.value;
                                     updateState();
                                 }} autoSize={{minRows: 2}}/>
                         </Form.Item>
                     </Panel>
                 </Collapse>
 
-                {serviceTypeData.components.map((serviceComponentData, index) => {
+                {serviceCreateEdit.service.components.map((serviceComponent, index) => {
                         let prefix = (index + 2).toString();
                         return <Collapse defaultActiveKey={[prefix]}>
                             <Panel header={`Service Component - ${index + 1}`} key={prefix}>
@@ -83,7 +93,7 @@ export function Service(props) {
                                                message: 'This field is mandatory'
                                            }]}>
                                     <Input onChange={(e) => {
-                                        serviceComponentData.name = e.target.value;
+                                        serviceComponent.name = e.target.value;
                                         updateState();
                                     }}/>
                                 </Form.Item>
@@ -96,7 +106,7 @@ export function Service(props) {
                                                        message: 'This field is mandatory'
                                                    }]}>
                                             <Input onChange={(e) => {
-                                                serviceComponentData.applications[0].name = e.target.value;
+                                                serviceComponent.applications[0].name = e.target.value;
                                                 updateState();
                                             }}/>
                                         </Form.Item>
@@ -106,8 +116,13 @@ export function Service(props) {
                                                        required: true,
                                                        message: 'This field is mandatory'
                                                    }]}>
-                                            <Input onChange={(e) => {
-                                                serviceComponentData.applications[0].name = e.target.value;
+                                            <Select style={{ width: 120 }} onChange={(value) => {
+                                                // serviceComponent.applications[0].communicationMedium = value;
+                                                // updateState();
+                                            }}>
+                                                {/*<Option value={}>Jack</Option>*/}
+                                            </Select>
+                                            <Select onChange={(e) => {
                                                 updateState();
                                             }}/>
                                         </Form.Item>
@@ -117,7 +132,7 @@ export function Service(props) {
                         </Collapse>
                     }
                 )};
-                <Button type="secondary" htmlType="submit">Add Service Component</Button>
+                <Button type="primary" htmlType="submit">Add Service Component</Button>
             </PSRForm>
         </PSRLayout>
     );
