@@ -1,9 +1,14 @@
-export class CommunicationMedium {
+import {ReferenceEntity} from "../../framework/model/ReferenceEntity";
+
+export class CommunicationMedium implements ReferenceEntity {
     name!: string;
 
     static clone(other: CommunicationMedium) {
-        let communicationMedium = new CommunicationMedium();
-        communicationMedium.name = other.name;
-        return communicationMedium;
+        if (other) {
+            let communicationMedium = new CommunicationMedium();
+            communicationMedium.name = other.name;
+            return communicationMedium;
+        }
+        return other;
     }
 }

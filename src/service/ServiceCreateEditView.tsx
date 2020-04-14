@@ -5,6 +5,7 @@ import {PSRForm} from "../framework/view/PSRForm";
 import {APIService} from "../framework/api/APIService";
 import {ServiceCreateEdit} from "./model/ServiceCreateEdit";
 import {PSRResources} from "../framework/routing/PSRResources";
+import {ReferenceEntities} from "../framework/model/ReferenceEntity";
 
 const {TextArea} = Input;
 
@@ -24,7 +25,7 @@ const tailLayout = {
 };
 
 const {Panel} = Collapse;
-const { Option } = Select;
+const {Option} = Select;
 
 export function ServiceCreateEditView(props: any) {
     const [serviceCreateEdit, update] = useState<ServiceCreateEdit>(ServiceCreateEdit.newInstance());
@@ -36,13 +37,14 @@ export function ServiceCreateEditView(props: any) {
     useEffect(() => {
         APIService.loadAll(PSRResources.getResourceListURL("communication_medium")).then((commMediums) => {
             serviceCreateEdit.communicationMediums = commMediums;
-            update(serviceCreateEdit);
+            updateState();
         });
-    });
+    }, []);
 
     return (
         <PSRLayout>
-            <PSRForm submitHandler={() => {}}>
+            <PSRForm submitHandler={() => {
+            }}>
                 <Collapse defaultActiveKey={['1']}>
                     <Panel header="Service details" key="1">
                         <Form.Item
@@ -116,11 +118,13 @@ export function ServiceCreateEditView(props: any) {
                                                        required: true,
                                                        message: 'This field is mandatory'
                                                    }]}>
-                                            <Select style={{ width: 120 }} onChange={(value) => {
-                                                // serviceComponent.applications[0].communicationMedium = value;
-                                                // updateState();
+                                            <Select style={{width: 120}} onChange={(value) => {
+                                                serviceComponent.applications[0].communicationMedium = ReferenceEntities.findEntityByName(serviceCreateEdit.communicationMediums, value.toString());
+                                                updateState();
                                             }}>
-                                                {/*<Option value={}>Jack</Option>*/}
+                                                {serviceCreateEdit.communicationMediums.map((commMedium) => {
+                                                    return <Option value={commMedium.name}>{commMedium.name}</Option>;
+                                                })}
                                             </Select>
                                             <Select onChange={(e) => {
                                                 updateState();

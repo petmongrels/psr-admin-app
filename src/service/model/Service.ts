@@ -13,12 +13,12 @@ export class Service {
     }
 
     static clone(other: Service) {
-        let serviceData = new Service();
-        serviceData.name = other.name;
-        serviceData.description = other.description;
-        serviceData.references = other.references;
-        serviceData.components = other.components.filter((serviceComponent:any) => ServiceComponent.clone(serviceComponent));
-        return serviceData;
+        let service = new Service();
+        service.name = other.name;
+        service.description = other.description;
+        service.references = other.references;
+        service.components = other.components.filter((serviceComponent:any) => ServiceComponent.clone(serviceComponent));
+        return service;
     }
 }
 
@@ -75,7 +75,7 @@ export class ApplicationForm {
         applicationForm.fileURL = other.fileURL;
         applicationForm.photographSubmissions = other.photographSubmissions.filter(value => PhotographSubmission.clone(value));
         applicationForm.proofSubmissions = other.proofSubmissions.filter(value => ProofSubmission.clone(value));
-        return undefined;
+        return applicationForm;
     }
 }
 

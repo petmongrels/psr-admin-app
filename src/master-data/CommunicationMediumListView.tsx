@@ -11,10 +11,10 @@ export const CommunicationMediumListView: FunctionComponent<CommunicationMediumL
     const [commMediums, update] = useState([]);
 
     useEffect(() => {
-        APIService.loadAll("/communication_medium").then((commMediums) => {
-            update(commMediums);
+        APIService.loadAll("/communication_medium").then((data) => {
+            update(data);
         });
-    });
+    }, []);
 
     return <PSRLayout>
         <div>
