@@ -6,6 +6,7 @@ import {APIService} from "../framework/api/APIService";
 import {ServiceCreateEdit} from "./model/ServiceCreateEdit";
 import {PSRResources} from "../framework/routing/PSRResources";
 import {ReferenceEntities} from "../framework/model/ReferenceEntity";
+import {ApplicationFormCreateEditView} from "./ApplicationFormCreateEditView";
 
 const {TextArea} = Input;
 
@@ -149,23 +150,7 @@ export function ServiceCreateEditView(props: any) {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <div style={{backgroundColor: '#d9d9d9', paddingTop: 10}}>
-                                    <Descriptions title="APPLICATION FORM - 1" style={{marginLeft: 60, paddingTop: 10}}/>
-                                    <Row style={{paddingRight: 10}}>
-                                        <Col span={24}>
-                                            <Form.Item label="Communication address" name={`${prefix}.communication.address`}
-                                                       rules={[{
-                                                           required: true,
-                                                           message: 'This field is mandatory'
-                                                       }]}>
-                                                <Input onChange={(e) => {
-                                                    serviceComponent.applications[0].communicationAddress = e.target.value;
-                                                    updateState();
-                                                }}/>
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-                                </div>
+                                <ApplicationFormCreateEditView applicationForm={serviceComponent.applications[0].applicationForms[0]} index={0} updateState={() => updateState()}/>
                             </Col>
                         </Card>
                     }
