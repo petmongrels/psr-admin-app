@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Collapse, Form, Input, Select} from 'antd';
+import {Button, Collapse, Form, Input, Select, Row, Col, Descriptions, Card} from 'antd';
 import {PSRLayout} from "../framework/view/PSRLayout";
 import {PSRForm} from "../framework/view/PSRForm";
 import {APIService} from "../framework/api/APIService";
@@ -45,64 +45,65 @@ export function ServiceCreateEditView(props: any) {
         <PSRLayout>
             <PSRForm submitHandler={() => {
             }}>
-                <Collapse defaultActiveKey={['1']}>
-                    <Panel header="Service details" key="1">
-                        <Form.Item
-                            label="Name" name="name"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please provide service name',
-                                },
-                            ]}>
-                            <Input onChange={(e) => {
-                                serviceCreateEdit.service.name = e.target.value;
-                                updateState();
-                            }}/>
-                        </Form.Item>
+                <Card>
+                    <Descriptions title="SERVICE DETAILS" style={{marginLeft: 10}}/>
+                    <Form.Item
+                        label="Name" name="name"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please provide service name',
+                            },
+                        ]}>
+                        <Input onChange={(e) => {
+                            serviceCreateEdit.service.name = e.target.value;
+                            updateState();
+                        }}/>
+                    </Form.Item>
 
-                        <Form.Item
-                            label="Description"
-                            name="description"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please provide service description'
-                                },
-                            ]}>
+                    <Form.Item
+                        label="Description"
+                        name="description"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please provide service description'
+                            },
+                        ]}>
                                     <TextArea onChange={(e) => {
                                         serviceCreateEdit.service.description = e.target.value;
                                         updateState();
                                     }} autoSize={{minRows: 2}}/>
-                        </Form.Item>
+                    </Form.Item>
 
-                        <Form.Item label="References" name="references">
+                    <Form.Item label="References" name="references">
                                 <TextArea onChange={(e) => {
                                     serviceCreateEdit.service.references = e.target.value;
                                     updateState();
                                 }} autoSize={{minRows: 2}}/>
-                        </Form.Item>
-                    </Panel>
-                </Collapse>
+                    </Form.Item>
+                </Card>
 
                 {serviceCreateEdit.service.components.map((serviceComponent, index) => {
                         let prefix = (index + 2).toString();
-                        return <Collapse defaultActiveKey={[prefix]}>
-                            <Panel header={`Service Component - ${index + 1}`} key={prefix}>
-                                <Form.Item label="Name" name={`${prefix}.component.name`}
-                                           rules={[{
-                                               required: true,
-                                               message: 'This field is mandatory'
-                                           }]}>
-                                    <Input onChange={(e) => {
-                                        serviceComponent.name = e.target.value;
-                                        updateState();
-                                    }}/>
-                                </Form.Item>
+                        return <Card>
+                            <Descriptions title="SERVICE COMPONENT - 1" style={{marginLeft: 10}}/>
+                            <Form.Item label="Name" name={`${prefix}.component.name`}
+                                       rules={[{
+                                           required: true,
+                                           message: 'This field is mandatory'
+                                       }]}>
+                                <Input onChange={(e) => {
+                                    serviceComponent.name = e.target.value;
+                                    updateState();
+                                }}/>
+                            </Form.Item>
 
-                                <Collapse defaultActiveKey={['foo']}>
-                                    <Panel header={`Application - ${index + 100}`} key={prefix}>
-                                        <Form.Item label="Application name" name={`${prefix}.component.name`}
+                            <Col style={{backgroundColor: '#f5f5f5'}}>
+                                <Descriptions title="APPLICATION - 1" style={{marginLeft: 40, paddingTop: 10}}/>
+                                <Row style={{paddingRight: 10}}>
+                                    <Col span={24}>
+                                        <Form.Item label="Application name" name={`${prefix}.application.name`}
                                                    rules={[{
                                                        required: true,
                                                        message: 'This field is mandatory'
@@ -112,8 +113,12 @@ export function ServiceCreateEditView(props: any) {
                                                 updateState();
                                             }}/>
                                         </Form.Item>
+                                    </Col>
+                                </Row>
 
-                                        <Form.Item label="Communication medium" name={`${prefix}.component.name`}
+                                <Row style={{paddingRight: 10}}>
+                                    <Col span={24}>
+                                        <Form.Item label="Communication medium" name={`${prefix}.communication.medium`}
                                                    rules={[{
                                                        required: true,
                                                        message: 'This field is mandatory'
@@ -126,18 +131,48 @@ export function ServiceCreateEditView(props: any) {
                                                     return <Option value={commMedium.name}>{commMedium.name}</Option>;
                                                 })}
                                             </Select>
-                                            <Select onChange={(e) => {
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+
+                                <Row style={{paddingRight: 10}}>
+                                    <Col span={24}>
+                                        <Form.Item label="Communication address" name={`${prefix}.communication.address`}
+                                                   rules={[{
+                                                       required: true,
+                                                       message: 'This field is mandatory'
+                                                   }]}>
+                                            <Input onChange={(e) => {
+                                                serviceComponent.applications[0].communicationAddress = e.target.value;
                                                 updateState();
                                             }}/>
                                         </Form.Item>
-                                    </Panel>
-                                </Collapse>
-                            </Panel>
-                        </Collapse>
+                                    </Col>
+                                </Row>
+                                <div style={{backgroundColor: '#d9d9d9', paddingTop: 10}}>
+                                    <Descriptions title="APPLICATION FORM - 1" style={{marginLeft: 60, paddingTop: 10}}/>
+                                    <Row style={{paddingRight: 10}}>
+                                        <Col span={24}>
+                                            <Form.Item label="Communication address" name={`${prefix}.communication.address`}
+                                                       rules={[{
+                                                           required: true,
+                                                           message: 'This field is mandatory'
+                                                       }]}>
+                                                <Input onChange={(e) => {
+                                                    serviceComponent.applications[0].communicationAddress = e.target.value;
+                                                    updateState();
+                                                }}/>
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </Col>
+                        </Card>
                     }
                 )};
                 <Button type="primary" htmlType="submit">Add Service Component</Button>
             </PSRForm>
         </PSRLayout>
-    );
+    )
+        ;
 }
