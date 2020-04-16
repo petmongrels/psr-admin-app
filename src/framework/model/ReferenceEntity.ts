@@ -2,6 +2,7 @@ import * as _ from "lodash";
 
 export interface ReferenceEntity {
     name: string;
+    description: string;
 }
 
 export class ReferenceEntities {

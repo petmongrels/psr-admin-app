@@ -1,4 +1,5 @@
 import {CommunicationMedium} from "../../master-data/model/CommunicationMedium";
+import {ReferenceEntity} from "../../framework/model/ReferenceEntity";
 
 export class Service {
     name!: string;
@@ -68,6 +69,13 @@ export class ApplicationForm {
     photographSubmissions!: Array<PhotographSubmission>;
     proofSubmissions!: Array<ProofSubmission>;
 
+    static newInstance() {
+        let applicationForm = new ApplicationForm();
+        applicationForm.photographSubmissions = [];
+        applicationForm.proofSubmissions = [];
+        return applicationForm;
+    }
+
     static clone(other: ApplicationForm) {
         let applicationForm = new ApplicationForm();
         applicationForm.name = other.name;
@@ -79,13 +87,13 @@ export class ApplicationForm {
     }
 }
 
-export class PhotographType {
+export class PhotographType implements ReferenceEntity {
     name!: string;
     description!: string;
 }
 
 export class PhotographSubmission {
-    photoGraphType!: PhotographType;
+    photographType!: PhotographType;
     crossSignRequired!: boolean;
     numberOfCopies!: number;
     entityRelationshipType!: EntityRelationshipType;
@@ -95,13 +103,14 @@ export class PhotographSubmission {
         photographSubmission.numberOfCopies = other.numberOfCopies;
         photographSubmission.entityRelationshipType = other.entityRelationshipType;
         photographSubmission.crossSignRequired = other.crossSignRequired;
-        photographSubmission.photoGraphType = other.photoGraphType;
+        photographSubmission.photographType = other.photographType;
         return photographSubmission;
     }
 }
 
-export class EntityRelationshipType {
+export class EntityRelationshipType implements ReferenceEntity {
     name!: string;
+    description: string;
 }
 
 export class ProofSubmission {

@@ -1,32 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import {Button, Collapse, Form, Input, Select, Row, Col, Descriptions, Card} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Button, Card, Col, Descriptions, Form, Input, Row} from 'antd';
 import {PSRLayout} from "../framework/view/PSRLayout";
 import {PSRForm} from "../framework/view/PSRForm";
 import {APIService} from "../framework/api/APIService";
 import {ServiceCreateEdit} from "./model/ServiceCreateEdit";
 import {PSRResources} from "../framework/routing/PSRResources";
-import {ReferenceEntities} from "../framework/model/ReferenceEntity";
 import {ApplicationFormCreateEditView} from "./ApplicationFormCreateEditView";
+import {ReferenceEntityFormItem} from "../master-data/ReferenceEntityFormItem";
+import {ApplicationForm} from "./model/Service";
 
 const {TextArea} = Input;
-
-const layout = {
-    labelCol: {
-        span: 8,
-    },
-    wrapperCol: {
-        span: 16,
-    },
-};
-const tailLayout = {
-    wrapperCol: {
-        offset: 8,
-        span: 16,
-    },
-};
-
-const {Panel} = Collapse;
-const {Option} = Select;
 
 export function ServiceCreateEditView(props: any) {
     const [serviceCreateEdit, update] = useState<ServiceCreateEdit>(ServiceCreateEdit.newInstance());
@@ -119,20 +102,12 @@ export function ServiceCreateEditView(props: any) {
 
                                 <Row style={{paddingRight: 10}}>
                                     <Col span={24}>
-                                        <Form.Item label="Communication medium" name={`${prefix}.communication.medium`}
-                                                   rules={[{
-                                                       required: true,
-                                                       message: 'This field is mandatory'
-                                                   }]}>
-                                            <Select style={{width: 120}} onChange={(value) => {
-                                                serviceComponent.applications[0].communicationMedium = ReferenceEntities.findEntityByName(serviceCreateEdit.communicationMediums, value.toString());
-                                                updateState();
-                                            }}>
-                                                {serviceCreateEdit.communicationMediums.map((commMedium) => {
-                                                    return <Option value={commMedium.name}>{commMedium.name}</Option>;
-                                                })}
-                                            </Select>
-                                        </Form.Item>
+                                        <ReferenceEntityFormItem formItemName="communicationMedium" label="Communication medium"
+                                                                 referenceEntities={serviceCreateEdit.communicationMediums} onReferenceEntityChange={(referenceEntity) => {
+                                            serviceComponent.applications[0].communicationMedium = referenceEntity;
+                                            updateState();
+                                        }
+                                        }/>
                                     </Col>
                                 </Row>
 
@@ -150,7 +125,19 @@ export function ServiceCreateEditView(props: any) {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <ApplicationFormCreateEditView applicationForm={serviceComponent.applications[0].applicationForms[0]} index={0} updateState={() => updateState()}/>
+                                <Row justify="end">
+                                    <Button type="link" onClick={() => {
+                                        serviceComponent.applications[0].applicationForms.push(ApplicationForm.newInstance());
+                                        updateState();
+                                    }
+                                    }>Add Application Form</Button>
+                                </Row>
+                                {serviceComponent.applications[0].applicationForms.map((applicationForm) =>
+                                    <ApplicationFormCreateEditView applicationForm={applicationForm}
+                                                                   entityRelationshipTypes={serviceCreateEdit.entityRelationshipTypes}
+                                                                   photographTypes={serviceCreateEdit.photographTypes} applicationFormIndex={0}
+                                                                   proofTypes={serviceCreateEdit.proofTypes} updateState={() => updateState()}/>
+                                )}
                             </Col>
                         </Card>
                     }
