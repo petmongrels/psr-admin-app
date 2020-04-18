@@ -106,6 +106,10 @@ export class PhotographSubmission {
         photographSubmission.photographType = other.photographType;
         return photographSubmission;
     }
+
+    static newInstance() {
+        return new PhotographSubmission();
+    }
 }
 
 export class EntityRelationshipType implements ReferenceEntity {
@@ -129,14 +133,22 @@ export class ProofSubmission {
         proofSubmission.proofDocuments = other.proofDocuments.filter(value => ProofDocument.clone(value));
         return proofSubmission;
     }
+
+    static newInstance() {
+        let proofSubmission = new ProofSubmission();
+        proofSubmission.proofDocuments = [];
+        return proofSubmission;
+    }
 }
 
-export class ProofType {
+export class ProofType implements ReferenceEntity {
     name!: string;
+    description: string;
 }
 
-export class PSRDocumentType {
+export class PSRDocumentType implements ReferenceEntity {
     name!: string;
+    description: string;
 }
 
 export class ProofDocument {
@@ -148,5 +160,9 @@ export class ProofDocument {
         proofDocument.documentType = value.documentType;
         proofDocument.condition = value.condition;
         return proofDocument;
+    }
+
+    static newInstance() {
+        return new ProofDocument();
     }
 }
