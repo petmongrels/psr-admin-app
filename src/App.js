@@ -28,7 +28,7 @@ export default function App(props) {
                         {dashboard()}
                     </Route>
                     {getRoute(PSRResources.getListURLFor("service"), ServiceListView())}
-                    {getRoute(PSRResources.getCreateURLFor("service"), ServiceCreateEditView())}
+                    {getRoute(PSRResources.getCreateURLFor("service"), ServiceCreateEditView(props))}
                     {getRoute(PSRResources.getListURLFor("communicationMedium"), CommunicationMediumListView(props))}
                     {getRoute(PSRResources.getCreateURLFor("communicationMedium"), CommunicationMediumCreateEditView(props))}
                 </Switch>

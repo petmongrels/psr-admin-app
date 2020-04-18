@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import {LaptopOutlined, UserOutlined} from '@ant-design/icons';
-import {Breadcrumb, Layout, Menu} from 'antd';
+import {Layout, Menu} from 'antd';
 import {MenuData} from "./MenuData";
 import {Link} from 'react-router-dom';
 
@@ -45,11 +45,6 @@ export const PSRLayout: FunctionComponent<PSRLayoutProps> = ({children}) => {
                     </Menu>
                 </Sider>
                 <Layout style={{padding: '0 24px 24px'}}>
-                    <Breadcrumb style={{margin: '16px 0'}}>
-                        <Breadcrumb.Item>Home</Breadcrumb.Item>
-                        <Breadcrumb.Item>List</Breadcrumb.Item>
-                        <Breadcrumb.Item>App</Breadcrumb.Item>
-                    </Breadcrumb>
                     <Content
                         className="site-layout-background"
                         style={{

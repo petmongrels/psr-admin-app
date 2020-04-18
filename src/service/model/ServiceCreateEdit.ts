@@ -20,7 +20,7 @@ export class ServiceCreateEdit {
         return serviceCreateEdit;
     }
 
-    static clone(other: ServiceCreateEdit) {
+    static clone(other: any) {
         let serviceCreateEdit = new ServiceCreateEdit();
         serviceCreateEdit.service = Service.clone(other.service);
         serviceCreateEdit.communicationMediums = other.communicationMediums;

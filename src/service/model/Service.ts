@@ -13,7 +13,7 @@ export class Service {
         return service;
     }
 
-    static clone(other: Service) {
+    static clone(other: any) {
         let service = new Service();
         service.name = other.name;
         service.description = other.description;
@@ -33,9 +33,9 @@ export class ServiceComponent {
         return serviceComponent;
     }
 
-    static clone(serviceComponent: ServiceComponent) {
+    static clone(serviceComponent: any) {
         let serviceComponentData = new ServiceComponent();
-        serviceComponentData.applications = serviceComponent.applications.filter(value => Application.clone(value));
+        serviceComponentData.applications = serviceComponent.applications.filter((value: any) => Application.clone(value));
         return serviceComponentData;
     }
 }
@@ -52,12 +52,12 @@ export class Application {
         return application;
     }
 
-    static clone(other: Application) {
+    static clone(other: any) {
         let application = new Application();
         application.name = other.name;
         application.communicationMedium = CommunicationMedium.clone(other.communicationMedium);
         application.communicationAddress = other.communicationAddress;
-        application.applicationForms = other.applicationForms.filter(value => ApplicationForm.clone(value));
+        application.applicationForms = other.applicationForms.filter((value: any) => ApplicationForm.clone(value));
         return application;
     }
 }
@@ -76,13 +76,13 @@ export class ApplicationForm {
         return applicationForm;
     }
 
-    static clone(other: ApplicationForm) {
+    static clone(other: any) {
         let applicationForm = new ApplicationForm();
         applicationForm.name = other.name;
         applicationForm.officialFileURL = other.officialFileURL;
         applicationForm.fileURL = other.fileURL;
-        applicationForm.photographSubmissions = other.photographSubmissions.filter(value => PhotographSubmission.clone(value));
-        applicationForm.proofSubmissions = other.proofSubmissions.filter(value => ProofSubmission.clone(value));
+        applicationForm.photographSubmissions = other.photographSubmissions.filter((value: PhotographSubmission) => PhotographSubmission.clone(value));
+        applicationForm.proofSubmissions = other.proofSubmissions.filter((value: any) => ProofSubmission.clone(value));
         return applicationForm;
     }
 }
@@ -98,7 +98,7 @@ export class PhotographSubmission {
     numberOfCopies!: number;
     entityRelationshipType!: EntityRelationshipType;
 
-    static clone(other: PhotographSubmission) {
+    static clone(other: any) {
         let photographSubmission = new PhotographSubmission();
         photographSubmission.numberOfCopies = other.numberOfCopies;
         photographSubmission.entityRelationshipType = other.entityRelationshipType;
@@ -125,12 +125,12 @@ export class ProofSubmission {
     numberOfCopies!: number;
     proofDocuments!: Array<ProofDocument>;
 
-    static clone(other: ProofSubmission) {
+    static clone(other: any) {
         let proofSubmission = new ProofSubmission();
         proofSubmission.name = other.name;
         proofSubmission.proofType = other.proofType;
         proofSubmission.originalToBeShown = other.originalToBeShown;
-        proofSubmission.proofDocuments = other.proofDocuments.filter(value => ProofDocument.clone(value));
+        proofSubmission.proofDocuments = other.proofDocuments.filter((value: any) => ProofDocument.clone(value));
         return proofSubmission;
     }
 
@@ -155,7 +155,7 @@ export class ProofDocument {
     documentType!: PSRDocumentType;
     condition!: string;
 
-    static clone(value: ProofDocument) {
+    static clone(value: any) {
         let proofDocument = new ProofDocument();
         proofDocument.documentType = value.documentType;
         proofDocument.condition = value.condition;

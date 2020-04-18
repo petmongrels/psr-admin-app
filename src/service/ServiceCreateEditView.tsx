@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, FunctionComponent} from 'react';
 import {Button, Card, Col, Descriptions, Form, Input, Row} from 'antd';
 import {PSRLayout} from "../framework/view/PSRLayout";
-import {PSRForm} from "../framework/view/PSRForm";
+import {FieldData, PSRForm} from "../framework/view/PSRForm";
 import {APIService} from "../framework/api/APIService";
 import {ServiceCreateEdit} from "./model/ServiceCreateEdit";
 import {PSRResources} from "../framework/routing/PSRResources";
@@ -11,8 +11,24 @@ import {ApplicationForm} from "./model/Service";
 
 const {TextArea} = Input;
 
-export function ServiceCreateEditView(props: any) {
+const draftKey = 'service.draft';
+
+type ServiceCreateEditViewProps = {
+}
+
+class FieldDataState {
+    doPopulateFieldData: boolean;
+    fieldData: FieldData[];
+
+    constructor(doPopulateFieldData: boolean, fieldData: FieldData[]) {
+        this.doPopulateFieldData = doPopulateFieldData;
+        this.fieldData = fieldData;
+    }
+}
+
+export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps> = ({}) => {
     const [serviceCreateEdit, update] = useState<ServiceCreateEdit>(ServiceCreateEdit.newInstance());
+    const [fieldDataState, populateFieldData] = useState<FieldDataState>(new FieldDataState(false, undefined));
 
     const updateState = function () {
         update(ServiceCreateEdit.clone(serviceCreateEdit));
@@ -29,17 +45,32 @@ export function ServiceCreateEditView(props: any) {
         });
     }, []);
 
+    console.log(fieldDataState.doPopulateFieldData, fieldDataState.fieldData && fieldDataState.fieldData);
+
     return (
         <PSRLayout>
-            <PSRForm submitHandler={() => {
-            }}>
+            <PSRForm submitHandler={() => {}} onChange={(allFields) => {
+                populateFieldData(new FieldDataState(false, allFields));
+            }} name="serviceCreateEdit" fieldData={fieldDataState.doPopulateFieldData ? fieldDataState.fieldData : undefined}>
+                <Row justify="end">
+                    <Button type="default" htmlType="button" onClick={() => {
+                        localStorage.setItem(draftKey, JSON.stringify(fieldDataState.fieldData));
+                    }}>Save as draft</Button>
+                    <Button type="default" htmlType="button" style={{marginLeft: 10}} onClick={() => {
+                        populateFieldData(new FieldDataState(true, JSON.parse(localStorage.getItem(draftKey))));
+                    }}>Restore from draft</Button>
+                    <Button type="default" htmlType="button" style={{marginLeft: 10}}>Clear form</Button>
+                    <Button type="default" htmlType="button" style={{marginLeft: 10}} onClick={() => {
+                        update(ServiceCreateEdit.newInstance());
+                    }}>Clear draft</Button>
+                </Row>
                 <Card>
                     <Descriptions title="SERVICE DETAILS" style={{marginLeft: 10}}/>
                     <Form.Item label="Name" name="name" rules={[{required: true}]}>
                         <Input onChange={(e) => {
                             serviceCreateEdit.service.name = e.target.value;
                             updateState();
-                        }}/>
+                        }} defaultValue={serviceCreateEdit.service.name}/>
                     </Form.Item>
 
                     <Form.Item label="Description" name="description" rules={[{required: true}]}>

@@ -14,7 +14,8 @@ export const CommunicationMediumCreateEditView: FunctionComponent<any> = ({child
     };
 
     return <PSRLayout>
-        <PSRForm submitHandler={() => APIService.save("communication_medium", communicationMedium)}>
+        <PSRForm submitHandler={() => APIService.save("communication_medium", communicationMedium)} onChange={(allFields) => {
+        }} name="communicationMediumCreateEdit" fieldData={undefined}>
             <Form.Item
                 label="Name" name="name"
                 rules={[
