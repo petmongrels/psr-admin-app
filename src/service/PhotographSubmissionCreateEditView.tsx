@@ -13,23 +13,23 @@ type PhotographSubmissionCreateEditViewProps = {
 };
 
 export const PhotographSubmissionCreateEditView: FunctionComponent<PhotographSubmissionCreateEditViewProps> = ({children, namePrefix, photographTypes, entityRelationshipTypes, photographSubmission, onStateChange}) => {
-    return <Card style={{width: 400}}>
-        <Col span={24}>
+    return <Card>
+        <Col>
             <ReferenceEntityFormItem referenceEntities={photographTypes}
                                      onReferenceEntityChange={(referenceEntity) => photographSubmission.photographType = referenceEntity} formItemName="photographType"
                                      label="Photograph type"/>
         </Col>
-        <Col span={24}>
+        <Col>
             <BooleanFormItem label="Cross sign required?" formItemName={`${namePrefix}.crossSignRequired`} value={photographSubmission.crossSignRequired} onValueChange={(value) => photographSubmission.crossSignRequired = value}/>
         </Col>
-        <Col span={24}>
+        <Col>
             <Form.Item label="Number of copies" name={`${namePrefix}.numberOfCopies`}>
                 <InputNumber onChange={(value) => {
                     photographSubmission.numberOfCopies = value;
                 }}/>
             </Form.Item>
         </Col>
-        <Col span={24}>
+        <Col>
             <ReferenceEntityFormItem referenceEntities={entityRelationshipTypes}
                                      onReferenceEntityChange={(referenceEntity) => photographSubmission.entityRelationshipType = referenceEntity}
                                      formItemName={`${namePrefix}.entityRelationshipType`}

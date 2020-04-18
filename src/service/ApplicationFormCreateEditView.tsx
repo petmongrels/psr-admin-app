@@ -1,6 +1,6 @@
 import {Card, Col, Descriptions, Form, Input, Row, Button} from 'antd';
 import React, {FunctionComponent, useState} from 'react';
-import {ApplicationForm, EntityRelationshipType, PhotographSubmission, PhotographType, ProofType, PSRDocumentType} from "./model/Service";
+import {ApplicationForm, EntityRelationshipType, PhotographSubmission, PhotographType, ProofSubmission, ProofType, PSRDocumentType} from "./model/Service";
 import {PhotographSubmissionCreateEditView} from "./PhotographSubmissionCreateEditView";
 import {ProofSubmissionCreateEditView} from "./ProofSubmissionCreateEditView";
 
@@ -64,30 +64,33 @@ export const ApplicationFormCreateEditView: FunctionComponent<ApplicationFormCre
                 </Form.Item>
             </Col>
 
-            <Card
-                style={{width: '100%', marginLeft: 10, marginBottom: 10}}
-                tabList={tabListNoTitle}
-                activeTabKey={'photographs'}
-                onTabChange={key => {
-                    update(key);
-                }}
-            >
+            <Card style={{width: '100%', marginLeft: 10, marginBottom: 10}} tabList={tabListNoTitle}
+                  activeTabKey={activeTabKey} onTabChange={key => {
+                update(key);
+            }}>
                 {activeTabKey === 'photographs' ? applicationForm.photographSubmissions.map((photographSubmission, index) =>
+
                         <PhotographSubmissionCreateEditView photographTypes={photographTypes} photographSubmission={photographSubmission}
                                                             entityRelationshipTypes={entityRelationshipTypes} namePrefix={`${namePrefix}.${index}.`}
                                                             onStateChange={updateState}/>
                     )
-                    : applicationForm.proofSubmissions.map((proofSubmission, index) => <ProofSubmissionCreateEditView proofTypes={proofTypes}
-                                                                                                                      entityRelationshipTypes={entityRelationshipTypes}
-                                                                                                                      documentTypes={documentTypes}
-                                                                                                                      namePrefix={`${namePrefix}.${index}.`}
-                                                                                                                      proofSubmission={proofSubmission}/>)
+                    : applicationForm.proofSubmissions.map((proofSubmission, index) =>
+                        <ProofSubmissionCreateEditView proofTypes={proofTypes}
+                                                       entityRelationshipTypes={entityRelationshipTypes}
+                                                       documentTypes={documentTypes}
+                                                       namePrefix={`${namePrefix}.${index}.`}
+                                                       proofSubmission={proofSubmission}/>
+                    )
                 }
-                <Button type="link" onClick={() => {
-                    applicationForm.photographSubmissions.push(PhotographSubmission.newInstance());
-                    updateState();
+                {activeTabKey === 'photographs' ? <Button type="link" onClick={() => {
+                        applicationForm.photographSubmissions.push(PhotographSubmission.newInstance());
+                        updateState();
+                    }}>Add Photograph Submission Details</Button> :
+                    <Button type="link" onClick={() => {
+                        applicationForm.proofSubmissions.push(ProofSubmission.newInstance());
+                        updateState();
+                    }}>Add Proof Submission Details</Button>
                 }
-                }>Add Photograph Submission Details</Button>
             </Card>
         </Row>
     </div>;
