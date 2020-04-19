@@ -1,4 +1,4 @@
-import React, {useState, FunctionComponent} from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import {Form, Input} from 'antd';
 
 import {PSRLayout} from "../framework/view/PSRLayout";

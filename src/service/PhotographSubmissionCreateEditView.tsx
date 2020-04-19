@@ -1,4 +1,4 @@
-import {Card, Col, Form, InputNumber, Radio} from 'antd';
+import {Card, Col, Form, InputNumber} from 'antd';
 import React, {FunctionComponent} from 'react';
 import {EntityRelationshipType, PhotographSubmission, PhotographType} from "./model/Service";
 import {ReferenceEntityFormItem} from "../master-data/ReferenceEntityFormItem";

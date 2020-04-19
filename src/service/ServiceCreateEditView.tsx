@@ -1,4 +1,4 @@
-import React, {useEffect, useState, FunctionComponent} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import {Button, Card, Col, Descriptions, Form, Input, Row} from 'antd';
 import {PSRLayout} from "../framework/view/PSRLayout";
 import {FieldData, PSRForm} from "../framework/view/PSRForm";

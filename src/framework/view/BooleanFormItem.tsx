@@ -1,6 +1,5 @@
-import {Button, Form, Radio} from 'antd';
-import React, {useEffect, useState, FunctionComponent} from 'react';
-import {ReferenceEntity} from "../model/ReferenceEntity";
+import {Form, Radio} from 'antd';
+import React, {FunctionComponent} from 'react';
 
 type BooleanFormItemProps = {
     label: string,
