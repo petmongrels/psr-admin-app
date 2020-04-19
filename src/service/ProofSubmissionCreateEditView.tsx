@@ -1,8 +1,9 @@
 import {Card, Col, Form, Input, InputNumber, Select} from 'antd';
 import React, {FunctionComponent} from 'react';
-import {EntityRelationshipType, ProofDocument, ProofSubmission, ProofType, PSRDocumentType} from "./model/Service";
+import {EntityRelationshipType, ProofSubmission, ProofType, PSRDocumentType} from "./model/Service";
 import {ReferenceEntityFormItem} from "../master-data/ReferenceEntityFormItem";
 import {BooleanFormItem} from "../framework/view/BooleanFormItem";
+import {ReferenceEntities} from "../framework/model/ReferenceEntity";
 
 const {Option} = Select;
 
@@ -12,12 +13,13 @@ type ProofSubmissionCreateEditViewProps = {
     entityRelationshipTypes: Array<EntityRelationshipType>,
     proofTypes: Array<ProofType>,
     documentTypes: Array<PSRDocumentType>,
+    onStateChange: Function
 };
 
-export const ProofSubmissionCreateEditView: FunctionComponent<ProofSubmissionCreateEditViewProps> = ({children, namePrefix, proofSubmission, entityRelationshipTypes, proofTypes, documentTypes}) => {
+export const ProofSubmissionCreateEditView: FunctionComponent<ProofSubmissionCreateEditViewProps> = ({children, namePrefix, proofSubmission, entityRelationshipTypes, proofTypes, documentTypes, onStateChange}) => {
     return <Card style={{width: 400}}>
         <Col span={24}>
-            <Form.Item label="Name" name={`${namePrefix}.name`}>
+            <Form.Item label="Name" name={`${namePrefix}name`}>
                 <Input onChange={(e) => {
                     proofSubmission.name = e.target.value;
                 }}/>
@@ -27,22 +29,22 @@ export const ProofSubmissionCreateEditView: FunctionComponent<ProofSubmissionCre
         <Col span={24}>
             <ReferenceEntityFormItem referenceEntities={entityRelationshipTypes}
                                      onReferenceEntityChange={(referenceEntity) => proofSubmission.entityRelationshipType = referenceEntity}
-                                     formItemName={`${namePrefix}.entityRelationshipType`} label="Relationship type"/>
+                                     formItemName={`${namePrefix}relationship`} label="Relationship"/>
         </Col>
 
         <Col span={24}>
             <ReferenceEntityFormItem referenceEntities={proofTypes}
-                                     onReferenceEntityChange={(referenceEntity) => proofSubmission.proofType = referenceEntity} formItemName={`${namePrefix}.proofType`}
+                                     onReferenceEntityChange={(referenceEntity) => proofSubmission.proofType = referenceEntity} formItemName={`${namePrefix}proofType`}
                                      label="Proof type"/>
         </Col>
 
         <Col span={24}>
-            <BooleanFormItem label="Original to be shown" formItemName={`${namePrefix}.originalToBeShown`} value={proofSubmission.originalToBeShown}
+            <BooleanFormItem label="Original to be shown" formItemName={`${namePrefix}originalToBeShown`} value={proofSubmission.originalToBeShown}
                              onValueChange={(value) => proofSubmission.originalToBeShown = value}/>
         </Col>
 
         <Col span={24}>
-            <Form.Item label="Number of copies" name={`${namePrefix}.numberOfCopies`}>
+            <Form.Item label="Number of copies" name={`${namePrefix}numberOfCopies`}>
                 <InputNumber onChange={(value) => {
                     proofSubmission.numberOfCopies = value;
                 }}/>
@@ -50,10 +52,12 @@ export const ProofSubmissionCreateEditView: FunctionComponent<ProofSubmissionCre
         </Col>
 
         <Col span={24}>
-            <Form.Item label="Proof documents required" name={`${namePrefix}.proofDocuments`}>
-                <Select mode="multiple" style={{width: '100%'}} placeholder="Please select" onChange={(value) =>
-                    proofSubmission.proofDocuments.push(ProofDocument.newInstance())
-                } value={proofSubmission.proofDocuments.map((proofDocument) => proofDocument.documentType.name)}>
+            <Form.Item label="Proof documents required" name={`${namePrefix}proofDocuments`}>
+                <Select mode="multiple" style={{width: '100%'}} placeholder="Please select" onChange={(values) => {
+                    proofSubmission.proofDocuments = values.map((value) => ReferenceEntities.findEntityByName(documentTypes, value));
+                    onStateChange();
+                }
+                } value={proofSubmission.proofDocuments.map((proofDocument) => proofDocument.name)}>
                     {documentTypes.map((documentType) => <Option value={documentType.name}>{documentType.name}</Option>)}
                 </Select>
             </Form.Item>

@@ -32,7 +32,7 @@ export const ApplicationFormCreateEditView: FunctionComponent<ApplicationFormCre
         <Descriptions title="APPLICATION FORM - 1" style={{marginLeft: 60, paddingTop: 10}}/>
         <Row style={{paddingRight: 10}}>
             <Col span={24}>
-                <Form.Item label="Form name" name={`${namePrefix}.name`}
+                <Form.Item label="Form name" name={`${namePrefix}name`}
                            rules={[{
                                required: true,
                                message: 'This field is mandatory'
@@ -44,7 +44,7 @@ export const ApplicationFormCreateEditView: FunctionComponent<ApplicationFormCre
                 </Form.Item>
             </Col>
             <Col span={24}>
-                <Form.Item label="Official file link" name={`${namePrefix}.officialFileURL`}
+                <Form.Item label="Official file link" name={`${namePrefix}officialFileURL`}
                            rules={[{
                                required: true,
                                message: 'This field is mandatory'
@@ -56,7 +56,7 @@ export const ApplicationFormCreateEditView: FunctionComponent<ApplicationFormCre
                 </Form.Item>
             </Col>
             <Col span={24}>
-                <Form.Item label="File link" name={`${namePrefix}.fileURL`}>
+                <Form.Item label="File link" name={`${namePrefix}fileURL`}>
                     <Input onChange={(e) => {
                         applicationForm.fileURL = e.target.value;
                         updateState();
@@ -71,15 +71,15 @@ export const ApplicationFormCreateEditView: FunctionComponent<ApplicationFormCre
                 {activeTabKey === 'photographs' ? applicationForm.photographSubmissions.map((photographSubmission, index) =>
 
                         <PhotographSubmissionCreateEditView photographTypes={photographTypes} photographSubmission={photographSubmission}
-                                                            entityRelationshipTypes={entityRelationshipTypes} namePrefix={`${namePrefix}.${index}.`}
+                                                            entityRelationshipTypes={entityRelationshipTypes} namePrefix={`${namePrefix}photographSubmission.${index}.`}
                                                             onStateChange={updateState}/>
                     )
                     : applicationForm.proofSubmissions.map((proofSubmission, index) =>
                         <ProofSubmissionCreateEditView proofTypes={proofTypes}
                                                        entityRelationshipTypes={entityRelationshipTypes}
                                                        documentTypes={documentTypes}
-                                                       namePrefix={`${namePrefix}.${index}.`}
-                                                       proofSubmission={proofSubmission}/>
+                                                       namePrefix={`${namePrefix}proofSubmission.${index}.`}
+                                                       proofSubmission={proofSubmission} onStateChange={updateState}/>
                     )
                 }
                 {activeTabKey === 'photographs' ? <Button type="link" onClick={() => {

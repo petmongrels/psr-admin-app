@@ -123,14 +123,14 @@ export class ProofSubmission {
     proofType!: ProofType;
     originalToBeShown!: boolean;
     numberOfCopies!: number;
-    proofDocuments!: Array<ProofDocument>;
+    proofDocuments!: Array<PSRDocumentType>;
 
     static clone(other: any) {
         let proofSubmission = new ProofSubmission();
         proofSubmission.name = other.name;
         proofSubmission.proofType = other.proofType;
         proofSubmission.originalToBeShown = other.originalToBeShown;
-        proofSubmission.proofDocuments = other.proofDocuments.filter((value: any) => ProofDocument.clone(value));
+        proofSubmission.proofDocuments = [...other.proofDocuments];
         return proofSubmission;
     }
 
@@ -149,20 +149,4 @@ export class ProofType implements ReferenceEntity {
 export class PSRDocumentType implements ReferenceEntity {
     name!: string;
     description: string;
-}
-
-export class ProofDocument {
-    documentType!: PSRDocumentType;
-    condition!: string;
-
-    static clone(value: any) {
-        let proofDocument = new ProofDocument();
-        proofDocument.documentType = value.documentType;
-        proofDocument.condition = value.condition;
-        return proofDocument;
-    }
-
-    static newInstance() {
-        return new ProofDocument();
-    }
 }

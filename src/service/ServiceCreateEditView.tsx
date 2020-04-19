@@ -13,8 +13,7 @@ const {TextArea} = Input;
 
 const draftKey = 'service.draft';
 
-type ServiceCreateEditViewProps = {
-}
+type ServiceCreateEditViewProps = {}
 
 class FieldDataState {
     doPopulateFieldData: boolean;
@@ -45,11 +44,10 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
         });
     }, []);
 
-    console.log(fieldDataState.doPopulateFieldData, fieldDataState.fieldData && fieldDataState.fieldData);
-
     return (
         <PSRLayout>
-            <PSRForm submitHandler={() => {}} onChange={(allFields) => {
+            <PSRForm submitHandler={() => {
+            }} onChange={(allFields) => {
                 populateFieldData(new FieldDataState(false, allFields));
             }} name="serviceCreateEdit" fieldData={fieldDataState.doPopulateFieldData ? fieldDataState.fieldData : undefined}>
                 <Row justify="end">
@@ -59,9 +57,8 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
                     <Button type="default" htmlType="button" style={{marginLeft: 10}} onClick={() => {
                         populateFieldData(new FieldDataState(true, JSON.parse(localStorage.getItem(draftKey))));
                     }}>Restore from draft</Button>
-                    <Button type="default" htmlType="button" style={{marginLeft: 10}}>Clear form</Button>
                     <Button type="default" htmlType="button" style={{marginLeft: 10}} onClick={() => {
-                        update(ServiceCreateEdit.newInstance());
+                        localStorage.removeItem(draftKey);
                     }}>Clear draft</Button>
                 </Row>
                 <Card>
@@ -103,13 +100,14 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
                                 }}/>
                             </Form.Item>
 
-                            {serviceComponent.applications.map((application, index) =>
-                                <div>
+                            {serviceComponent.applications.map((application, index) => {
+                                const applicationPrefix = `${prefix}application.${index}.`;
+                                return <div>
                                     <Col style={{backgroundColor: '#f5f5f5'}}>
                                         <Descriptions title="APPLICATION - 1" style={{marginLeft: 40, paddingTop: 10}}/>
                                         <Row style={{paddingRight: 10}}>
                                             <Col span={24}>
-                                                <Form.Item label="Application name" name={`${prefix}.application.name`}
+                                                <Form.Item label="Application name" name={`${applicationPrefix}name`}
                                                            rules={[{
                                                                required: true,
                                                                message: 'This field is mandatory'
@@ -124,7 +122,7 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
 
                                         <Row style={{paddingRight: 10}}>
                                             <Col span={24}>
-                                                <ReferenceEntityFormItem formItemName="communicationMedium" label="Communication medium"
+                                                <ReferenceEntityFormItem formItemName={`${applicationPrefix}communicationMedium`} label="Communication medium"
                                                                          referenceEntities={serviceCreateEdit.communicationMediums}
                                                                          onReferenceEntityChange={(referenceEntity) => {
                                                                              serviceComponent.applications[0].communicationMedium = referenceEntity;
@@ -136,7 +134,7 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
 
                                         <Row style={{paddingRight: 10}}>
                                             <Col span={24}>
-                                                <Form.Item label="Communication address" name={`${prefix}.communication.address`}
+                                                <Form.Item label="Communication address" name={`${applicationPrefix}communicationAddress`}
                                                            rules={[{
                                                                required: true,
                                                                message: 'This field is mandatory'
@@ -152,7 +150,8 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
                                             {serviceComponent.applications[0].applicationForms.map((applicationForm, index) =>
                                                 <ApplicationFormCreateEditView applicationForm={applicationForm}
                                                                                entityRelationshipTypes={serviceCreateEdit.entityRelationshipTypes}
-                                                                               photographTypes={serviceCreateEdit.photographTypes} namePrefix={`${prefix}`}
+                                                                               photographTypes={serviceCreateEdit.photographTypes}
+                                                                               namePrefix={`${applicationPrefix}applicationForm.${index}.`}
                                                                                proofTypes={serviceCreateEdit.proofTypes} updateState={() => updateState()}
                                                                                documentTypes={serviceCreateEdit.documentTypes}/>)}
                                         </Row>
@@ -164,7 +163,8 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
                                             }>Add Application Form</Button>
                                         </Row>
                                     </Col>
-                                </div>)
+                                </div>
+                            })
                             }
                         </Card>
                     }
@@ -173,4 +173,4 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
             </PSRForm>
         </PSRLayout>
     )
-}
+};
