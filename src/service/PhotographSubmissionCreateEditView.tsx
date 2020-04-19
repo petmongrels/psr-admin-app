@@ -14,7 +14,7 @@ type PhotographSubmissionCreateEditViewProps = {
 
 export const PhotographSubmissionCreateEditView: FunctionComponent<PhotographSubmissionCreateEditViewProps> = ({children, namePrefix, photographTypes, entityRelationshipTypes, photographSubmission, onStateChange}) => {
     return <Card>
-        <Col>
+        <Col key={`${namePrefix}photographType`}>
             <ReferenceEntityFormItem referenceEntities={photographTypes}
                                      onReferenceEntityChange={(referenceEntity) => {
                                          photographSubmission.photographType = referenceEntity;
@@ -22,7 +22,7 @@ export const PhotographSubmissionCreateEditView: FunctionComponent<PhotographSub
                                      }} formItemName={`${namePrefix}photographType`}
                                      label="Photograph type"/>
         </Col>
-        <Col>
+        <Col key={`${namePrefix}crossSignRequired`}>
             <BooleanFormItem label="Cross sign required?" formItemName={`${namePrefix}crossSignRequired`} value={photographSubmission.crossSignRequired}
                              onValueChange={(value) => {
                                  photographSubmission.crossSignRequired = value;
@@ -30,7 +30,7 @@ export const PhotographSubmissionCreateEditView: FunctionComponent<PhotographSub
                              }
                              }/>
         </Col>
-        <Col>
+        <Col key={`${namePrefix}numberOfCopies`}>
             <Form.Item label="Number of copies" name={`${namePrefix}numberOfCopies`}>
                 <InputNumber onChange={(value) => {
                     photographSubmission.numberOfCopies = value;
@@ -38,7 +38,7 @@ export const PhotographSubmissionCreateEditView: FunctionComponent<PhotographSub
                 }}/>
             </Form.Item>
         </Col>
-        <Col>
+        <Col key={`${namePrefix}relationship`}>
             <ReferenceEntityFormItem referenceEntities={entityRelationshipTypes}
                                      onReferenceEntityChange={(referenceEntity) => {
                                          photographSubmission.entityRelationshipType = referenceEntity;

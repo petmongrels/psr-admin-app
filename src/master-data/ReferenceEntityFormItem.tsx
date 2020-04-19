@@ -18,7 +18,7 @@ export const ReferenceEntityFormItem: FunctionComponent<ReferenceEntityFormItemP
                           message: 'This field is mandatory'
                       }]}>
         <Select style={{width: 120}} onChange={(value) => onReferenceEntityChange(ReferenceEntities.findEntityByName(referenceEntities, value.toString()))}>
-            {referenceEntities.map((referenceEntity) => <Option value={referenceEntity.name}>{referenceEntity.name}</Option>)}
+            {referenceEntities.map((referenceEntity, index) => <Option key={`${formItemName}.${index}`} value={referenceEntity.name}>{referenceEntity.name}</Option>)}
         </Select>
     </Form.Item>;
 };

@@ -31,7 +31,7 @@ export const ApplicationFormCreateEditView: FunctionComponent<ApplicationFormCre
     return <div style={{backgroundColor: '#d9d9d9', paddingTop: 10}}>
         <Descriptions title="APPLICATION FORM - 1" style={{marginLeft: 60, paddingTop: 10}}/>
         <Row style={{paddingRight: 10}}>
-            <Col span={24}>
+            <Col span={24} key={`${namePrefix}name`}>
                 <Form.Item label="Form name" name={`${namePrefix}name`}
                            rules={[{
                                required: true,
@@ -43,7 +43,7 @@ export const ApplicationFormCreateEditView: FunctionComponent<ApplicationFormCre
                     }}/>
                 </Form.Item>
             </Col>
-            <Col span={24}>
+            <Col span={24} key={`${namePrefix}officialFileURL`}>
                 <Form.Item label="Official file link" name={`${namePrefix}officialFileURL`}
                            rules={[{
                                required: true,
@@ -55,7 +55,7 @@ export const ApplicationFormCreateEditView: FunctionComponent<ApplicationFormCre
                     }}/>
                 </Form.Item>
             </Col>
-            <Col span={24}>
+            <Col span={24} key={`${namePrefix}fileURL`}>
                 <Form.Item label="File link" name={`${namePrefix}fileURL`}>
                     <Input onChange={(e) => {
                         applicationForm.fileURL = e.target.value;
@@ -82,11 +82,11 @@ export const ApplicationFormCreateEditView: FunctionComponent<ApplicationFormCre
                                                        proofSubmission={proofSubmission} onStateChange={updateState}/>
                     )
                 }
-                {activeTabKey === 'photographs' ? <Button type="link" onClick={() => {
+                {activeTabKey === 'photographs' ? <Button type="link" key="addPhotographSubmission" onClick={() => {
                         applicationForm.photographSubmissions.push(PhotographSubmission.newInstance());
                         updateState();
                     }}>Add Photograph Submission Details</Button> :
-                    <Button type="link" onClick={() => {
+                    <Button type="link" key="addProofSubmission" onClick={() => {
                         applicationForm.proofSubmissions.push(ProofSubmission.newInstance());
                         updateState();
                     }}>Add Proof Submission Details</Button>

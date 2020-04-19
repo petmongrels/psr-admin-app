@@ -22,17 +22,15 @@ const UIContext = React.createContext();
 export default function App(props) {
     return (
         <Router>
-            <div>
-                <Switch>
-                    <Route exact path="/">
-                        {dashboard()}
-                    </Route>
-                    {getRoute(PSRResources.getListURLFor("service"), ServiceListView())}
-                    {getRoute(PSRResources.getCreateURLFor("service"), ServiceCreateEditView(props))}
-                    {getRoute(PSRResources.getListURLFor("communicationMedium"), CommunicationMediumListView(props))}
-                    {getRoute(PSRResources.getCreateURLFor("communicationMedium"), CommunicationMediumCreateEditView(props))}
-                </Switch>
-            </div>
+            <Switch>
+                <Route exact path="/">
+                    {dashboard()}
+                </Route>
+                {getRoute(PSRResources.getListURLFor("service"), ServiceListView())}
+                {getRoute(PSRResources.getCreateURLFor("service"), ServiceCreateEditView(props))}
+                {getRoute(PSRResources.getListURLFor("communicationMedium"), CommunicationMediumListView(props))}
+                {getRoute(PSRResources.getCreateURLFor("communicationMedium"), CommunicationMediumCreateEditView(props))}
+            </Switch>
         </Router>
     );
 }

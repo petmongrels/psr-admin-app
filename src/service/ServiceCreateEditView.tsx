@@ -48,7 +48,7 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
         <PSRLayout>
             <PSRForm submitHandler={() => {
             }} onChange={(allFields) => {
-                populateFieldData(new FieldDataState(false, allFields));
+                // populateFieldData(new FieldDataState(false, allFields));
             }} name="serviceCreateEdit" fieldData={fieldDataState.doPopulateFieldData ? fieldDataState.fieldData : undefined}>
                 <Row justify="end">
                     <Button type="default" htmlType="button" onClick={() => {
@@ -61,7 +61,7 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
                         localStorage.removeItem(draftKey);
                     }}>Clear draft</Button>
                 </Row>
-                <Card>
+                <Card key="service">
                     <Descriptions title="SERVICE DETAILS" style={{marginLeft: 10}}/>
                     <Form.Item label="Name" name="name" rules={[{required: true}]}>
                         <Input onChange={(e) => {
@@ -87,7 +87,7 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
 
                 {serviceCreateEdit.service.components.map((serviceComponent, index) => {
                         let prefix = `serviceComponent.${index}.`;
-                        return <Card>
+                        return <Card key={prefix}>
                             <Descriptions title="SERVICE COMPONENT - 1" style={{marginLeft: 10}}/>
                             <Form.Item label="Name" name={`${prefix}name`}
                                        rules={[{
@@ -102,74 +102,72 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
 
                             {serviceComponent.applications.map((application, index) => {
                                 const applicationPrefix = `${prefix}application.${index}.`;
-                                return <div>
-                                    <Col style={{backgroundColor: '#f5f5f5'}}>
-                                        <Descriptions title="APPLICATION - 1" style={{marginLeft: 40, paddingTop: 10}}/>
-                                        <Row style={{paddingRight: 10}}>
-                                            <Col span={24}>
-                                                <Form.Item label="Application name" name={`${applicationPrefix}name`}
-                                                           rules={[{
-                                                               required: true,
-                                                               message: 'This field is mandatory'
-                                                           }]}>
-                                                    <Input onChange={(e) => {
-                                                        serviceComponent.applications[0].name = e.target.value;
-                                                        updateState();
-                                                    }}/>
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
+                                return <Col style={{backgroundColor: '#f5f5f5'}} key={applicationPrefix}>
+                                    <Descriptions title="APPLICATION - 1" style={{marginLeft: 40, paddingTop: 10}}/>
+                                    <Row style={{paddingRight: 10}} key={`${applicationPrefix}name`}>
+                                        <Col span={24}>
+                                            <Form.Item label="Application name" name={`${applicationPrefix}name`}
+                                                       rules={[{
+                                                           required: true,
+                                                           message: 'This field is mandatory'
+                                                       }]}>
+                                                <Input onChange={(e) => {
+                                                    serviceComponent.applications[0].name = e.target.value;
+                                                    updateState();
+                                                }}/>
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
 
-                                        <Row style={{paddingRight: 10}}>
-                                            <Col span={24}>
-                                                <ReferenceEntityFormItem formItemName={`${applicationPrefix}communicationMedium`} label="Communication medium"
-                                                                         referenceEntities={serviceCreateEdit.communicationMediums}
-                                                                         onReferenceEntityChange={(referenceEntity) => {
-                                                                             serviceComponent.applications[0].communicationMedium = referenceEntity;
-                                                                             updateState();
-                                                                         }
-                                                                         }/>
-                                            </Col>
-                                        </Row>
+                                    <Row style={{paddingRight: 10}} key={`${applicationPrefix}communicationMedium`}>
+                                        <Col span={24}>
+                                            <ReferenceEntityFormItem formItemName={`${applicationPrefix}communicationMedium`} label="Communication medium"
+                                                                     referenceEntities={serviceCreateEdit.communicationMediums}
+                                                                     onReferenceEntityChange={(referenceEntity) => {
+                                                                         serviceComponent.applications[0].communicationMedium = referenceEntity;
+                                                                         updateState();
+                                                                     }
+                                                                     }/>
+                                        </Col>
+                                    </Row>
 
-                                        <Row style={{paddingRight: 10}}>
-                                            <Col span={24}>
-                                                <Form.Item label="Communication address" name={`${applicationPrefix}communicationAddress`}
-                                                           rules={[{
-                                                               required: true,
-                                                               message: 'This field is mandatory'
-                                                           }]}>
-                                                    <Input onChange={(e) => {
-                                                        serviceComponent.applications[0].communicationAddress = e.target.value;
-                                                        updateState();
-                                                    }}/>
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row style={{paddingRight: 10, paddingLeft: 10}}>
-                                            {serviceComponent.applications[0].applicationForms.map((applicationForm, index) =>
-                                                <ApplicationFormCreateEditView applicationForm={applicationForm}
-                                                                               entityRelationshipTypes={serviceCreateEdit.entityRelationshipTypes}
-                                                                               photographTypes={serviceCreateEdit.photographTypes}
-                                                                               namePrefix={`${applicationPrefix}applicationForm.${index}.`}
-                                                                               proofTypes={serviceCreateEdit.proofTypes} updateState={() => updateState()}
-                                                                               documentTypes={serviceCreateEdit.documentTypes}/>)}
-                                        </Row>
-                                        <Row justify="end">
-                                            <Button type="link" onClick={() => {
-                                                serviceComponent.applications[0].applicationForms.push(ApplicationForm.newInstance());
-                                                updateState();
-                                            }
-                                            }>Add Application Form</Button>
-                                        </Row>
-                                    </Col>
-                                </div>
+                                    <Row style={{paddingRight: 10}} key={`${applicationPrefix}communicationAddress`}>
+                                        <Col span={24}>
+                                            <Form.Item label="Communication address" name={`${applicationPrefix}communicationAddress`}
+                                                       rules={[{
+                                                           required: true,
+                                                           message: 'This field is mandatory'
+                                                       }]}>
+                                                <Input onChange={(e) => {
+                                                    serviceComponent.applications[0].communicationAddress = e.target.value;
+                                                    updateState();
+                                                }}/>
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{paddingRight: 10, paddingLeft: 10}} key={`${applicationPrefix}applicationForm`}>
+                                        {serviceComponent.applications[0].applicationForms.map((applicationForm, index) =>
+                                            <ApplicationFormCreateEditView applicationForm={applicationForm}
+                                                                           entityRelationshipTypes={serviceCreateEdit.entityRelationshipTypes}
+                                                                           photographTypes={serviceCreateEdit.photographTypes}
+                                                                           namePrefix={`${applicationPrefix}applicationForm.${index}.`}
+                                                                           proofTypes={serviceCreateEdit.proofTypes} updateState={() => updateState()}
+                                                                           documentTypes={serviceCreateEdit.documentTypes}/>)}
+                                    </Row>
+                                    <Row justify="end" key={`${applicationPrefix}addApplicationForm`}>
+                                        <Button type="link" onClick={() => {
+                                            serviceComponent.applications[0].applicationForms.push(ApplicationForm.newInstance());
+                                            updateState();
+                                        }
+                                        }>Add Application Form</Button>
+                                    </Row>
+                                </Col>
                             })
                             }
                         </Card>
                     }
                 )};
-                <Button type="primary" htmlType="submit">Add Service Component</Button>
+                <Button type="primary" htmlType="submit" key="addServiceComponent">Add Service Component</Button>
             </PSRForm>
         </PSRLayout>
     )

@@ -34,7 +34,7 @@ type PSRFormProps = {
 let formChildren = function (children: React.ReactNode, submitHandler: Function) {
     return <Space direction="vertical" style={{width: "100%"}}>
         {children}
-        <Form.Item {...tailLayout}>
+        <Form.Item {...tailLayout} key="submit">
             <Button type="primary" htmlType="submit" onClick={() => submitHandler()}>
                 Submit
             </Button>
