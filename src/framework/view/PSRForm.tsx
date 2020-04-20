@@ -1,5 +1,6 @@
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, RefObject} from 'react';
 import {Button, Form, Space} from 'antd';
+import {FormInstance} from 'antd/lib/form';
 
 const layout = {
     labelCol: {
@@ -27,8 +28,7 @@ export interface FieldData {
 type PSRFormProps = {
     name: string,
     submitHandler: Function,
-    onChange: (fields: any) => void,
-    fieldData: FieldData[]
+    form: FormInstance
 };
 
 let formChildren = function (children: React.ReactNode, submitHandler: Function) {
@@ -42,18 +42,8 @@ let formChildren = function (children: React.ReactNode, submitHandler: Function)
     </Space>;
 };
 
-export const PSRForm: FunctionComponent<PSRFormProps> = ({submitHandler, children, fieldData, onChange}) => {
-    if (fieldData) {
-        return <Form {...layout} name="basic" fields={fieldData} onFieldsChange={(changedFields, allFields) => {
-            onChange(allFields);
-        }}>
-            {formChildren(children, submitHandler)}
-        </Form>
-    } else {
-        return <Form {...layout} name="basic" onFieldsChange={(changedFields, allFields) => {
-            onChange(allFields);
-        }}>
-            {formChildren(children, submitHandler)}
-        </Form>
-    }
+export const PSRForm: FunctionComponent<PSRFormProps> = ({submitHandler, children, form}) => {
+    return <Form {...layout} name="basic" form={form}>
+        {formChildren(children, submitHandler)}
+    </Form>
 };

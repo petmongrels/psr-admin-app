@@ -7,6 +7,7 @@ import {PSRForm} from "../framework/view/PSRForm";
 import {APIService} from "../framework/api/APIService";
 
 export const CommunicationMediumCreateEditView: FunctionComponent<any> = ({children}) => {
+    const [form] = Form.useForm();
     const [communicationMedium, update] = useState(new CommunicationMedium());
 
     const updateState = function () {
@@ -14,8 +15,7 @@ export const CommunicationMediumCreateEditView: FunctionComponent<any> = ({child
     };
 
     return <PSRLayout>
-        <PSRForm submitHandler={() => APIService.save("communication_medium", communicationMedium)} onChange={(allFields) => {
-        }} name="communicationMediumCreateEdit" fieldData={undefined}>
+        <PSRForm submitHandler={() => APIService.save("communication_medium", communicationMedium)} name="communicationMediumCreateEdit" initialValues={{}} form={form}>
             <Form.Item
                 label="Name" name="name"
                 rules={[
