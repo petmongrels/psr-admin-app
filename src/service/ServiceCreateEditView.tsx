@@ -7,7 +7,7 @@ import {ServiceCreateEdit} from "./model/ServiceCreateEdit";
 import {PSRResources} from "../framework/routing/PSRResources";
 import {ApplicationFormCreateEditView} from "./ApplicationFormCreateEditView";
 import {ReferenceEntityFormItem} from "../master-data/ReferenceEntityFormItem";
-import {ApplicationForm, Service} from "./model/Service";
+import {ApplicationForm, EntityRelationshipType, Service} from "./model/Service";
 import {CommunicationMedium} from '../master-data/model/CommunicationMedium';
 
 const {TextArea} = Input;
@@ -41,6 +41,10 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
         });
         APIService.loadAll(PSRResources.getResourceListURL("document_type")).then((documentTypes) => {
             serviceCreateEdit.documentTypes = documentTypes;
+            updateState();
+        });
+        APIService.loadAll(PSRResources.getResourceListURL("entity_relationship_type")).then((resources) => {
+            serviceCreateEdit.entityRelationshipTypes = resources.map((resource: any) => EntityRelationshipType.fromResource(resource));
             updateState();
         });
     }, []);

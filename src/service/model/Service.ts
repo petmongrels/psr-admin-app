@@ -19,7 +19,7 @@ export class Service {
         service.name = other.name;
         service.description = other.description;
         service.references = other.references;
-        service.components = other.components.filter((serviceComponent:any) => ServiceComponent.clone(serviceComponent));
+        service.components = other.components.filter((serviceComponent: any) => ServiceComponent.clone(serviceComponent));
         return service;
     }
 }
@@ -124,6 +124,17 @@ export class PhotographSubmission {
 export class EntityRelationshipType implements ReferenceEntity {
     name!: string;
     description: string;
+
+    static newInstance(name: string, description: string) {
+        let entityRelationshipType = new EntityRelationshipType();
+        entityRelationshipType.name = name;
+        entityRelationshipType.description = description;
+        return entityRelationshipType;
+    }
+
+    static fromResource(resource: any) {
+        return EntityRelationshipType.newInstance(resource["name"], resource["description"]);
+    }
 }
 
 export class ProofSubmission {
