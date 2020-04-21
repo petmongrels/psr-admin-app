@@ -1,5 +1,6 @@
 import {CommunicationMedium} from "../../master-data/model/CommunicationMedium";
 import {ReferenceEntity} from "../../framework/model/ReferenceEntity";
+import _ from 'lodash';
 
 export class Service {
     name!: string;
@@ -85,6 +86,14 @@ export class ApplicationForm {
         applicationForm.proofSubmissions = other.proofSubmissions.filter((value: any) => ProofSubmission.clone(value));
         return applicationForm;
     }
+
+    removePhotographSubmission(photographSubmission: PhotographSubmission) {
+        _.remove(this.photographSubmissions, (item) => item === photographSubmission);
+    }
+
+    removeProofSubmission(proofSubmission: ProofSubmission) {
+        _.remove(this.proofSubmissions, (item) => item === proofSubmission);
+    }
 }
 
 export class PhotographType implements ReferenceEntity {
@@ -118,16 +127,16 @@ export class EntityRelationshipType implements ReferenceEntity {
 }
 
 export class ProofSubmission {
-    name!: string;
     entityRelationshipType!: EntityRelationshipType;
     proofType!: ProofType;
     originalToBeShown!: boolean;
     numberOfCopies!: number;
     proofDocuments!: Array<PSRDocumentType>;
+    reason!: string;
 
     static clone(other: any) {
         let proofSubmission = new ProofSubmission();
-        proofSubmission.name = other.name;
+        proofSubmission.reason = other.reason;
         proofSubmission.proofType = other.proofType;
         proofSubmission.originalToBeShown = other.originalToBeShown;
         proofSubmission.proofDocuments = [...other.proofDocuments];

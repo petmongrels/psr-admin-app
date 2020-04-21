@@ -8,6 +8,8 @@ import {PSRResources} from "../framework/routing/PSRResources";
 import {ApplicationFormCreateEditView} from "./ApplicationFormCreateEditView";
 import {ReferenceEntityFormItem} from "../master-data/ReferenceEntityFormItem";
 import {ApplicationForm, Service} from "./model/Service";
+import {CommunicationMediumListView} from "../master-data/CommunicationMediumListView";
+import {CommunicationMedium} from '../master-data/model/CommunicationMedium';
 
 const {TextArea} = Input;
 
@@ -34,8 +36,8 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
     };
 
     useEffect(() => {
-        APIService.loadAll(PSRResources.getResourceListURL("communication_medium")).then((commMediums) => {
-            serviceCreateEdit.communicationMediums = commMediums;
+        APIService.loadAll(PSRResources.getResourceListURL("communication_medium")).then((resources) => {
+            serviceCreateEdit.communicationMediums = resources.map((resource: any) => CommunicationMedium.fromResource(resource));
             updateState();
         });
         APIService.loadAll(PSRResources.getResourceListURL("document_type")).then((documentTypes) => {
@@ -46,13 +48,14 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
 
     return (
         <PSRLayout>
-            <PSRForm submitHandler={() => {}} name="serviceCreateEdit" form={form}>
+            <PSRForm submitHandler={() => {
+            }} name="serviceCreateEdit" form={form}>
                 <Row justify="end">
                     <Button type="default" htmlType="button" onClick={() => {
                         localStorage.setItem(draftKey, JSON.stringify(new FormState(form.getFieldsValue(), serviceCreateEdit.service)));
                     }}>Save as draft</Button>
                     <Button type="default" htmlType="button" style={{marginLeft: 10}} onClick={() => {
-                        let formState:FormState = JSON.parse(localStorage.getItem(draftKey));
+                        let formState: FormState = JSON.parse(localStorage.getItem(draftKey));
                         form.setFieldsValue(formState.formValues);
                         serviceCreateEdit.service = formState.service;
                         updateState();
@@ -124,19 +127,19 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
                                             <ReferenceEntityFormItem formItemName={`${applicationPrefix}communicationMedium`} label="Communication medium"
                                                                      referenceEntities={serviceCreateEdit.communicationMediums}
                                                                      onReferenceEntityChange={(referenceEntity) => {
-                                                                         serviceComponent.applications[0].communicationMedium = referenceEntity;
+                                                                         application.communicationMedium = referenceEntity as CommunicationMedium;
                                                                          updateState();
                                                                      }
                                                                      }/>
                                         </Col>
                                     </Row>
 
+                                    {application.communicationMedium && application.communicationMedium.requiresAddress &&
                                     <Row style={{paddingRight: 10}} key={`${applicationPrefix}communicationAddress`}>
                                         <Col span={24}>
                                             <Form.Item label="Communication address" name={`${applicationPrefix}communicationAddress`}
                                                        rules={[{
-                                                           required: true,
-                                                           message: 'This field is mandatory'
+                                                           required: true
                                                        }]}>
                                                 <Input onChange={(e) => {
                                                     serviceComponent.applications[0].communicationAddress = e.target.value;
@@ -144,15 +147,18 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
                                                 }}/>
                                             </Form.Item>
                                         </Col>
-                                    </Row>
+                                    </Row>}
+
                                     <Row style={{paddingRight: 10, paddingLeft: 10}} key={`${applicationPrefix}applicationForm`}>
-                                        {serviceComponent.applications[0].applicationForms.map((applicationForm, index) =>
-                                            <ApplicationFormCreateEditView applicationForm={applicationForm}
+                                        {serviceComponent.applications[0].applicationForms.map((applicationForm, index) => {
+                                            let applicationFormNamePrefix = `${applicationPrefix}applicationForm.${index}.`;
+                                            return <ApplicationFormCreateEditView applicationForm={applicationForm}
                                                                            entityRelationshipTypes={serviceCreateEdit.entityRelationshipTypes}
                                                                            photographTypes={serviceCreateEdit.photographTypes}
-                                                                           namePrefix={`${applicationPrefix}applicationForm.${index}.`}
+                                                                           namePrefix={applicationFormNamePrefix}
                                                                            proofTypes={serviceCreateEdit.proofTypes} updateState={() => updateState()}
-                                                                           documentTypes={serviceCreateEdit.documentTypes}/>)}
+                                                                           documentTypes={serviceCreateEdit.documentTypes} key={applicationFormNamePrefix}/>
+                                        })}
                                     </Row>
                                     <Row justify="end" key={`${applicationPrefix}addApplicationForm`}>
                                         <Button type="link" onClick={() => {

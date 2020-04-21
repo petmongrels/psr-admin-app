@@ -3,6 +3,7 @@ import React, {FunctionComponent, useState} from 'react';
 import {ApplicationForm, EntityRelationshipType, PhotographSubmission, PhotographType, ProofSubmission, ProofType, PSRDocumentType} from "./model/Service";
 import {PhotographSubmissionCreateEditView} from "./PhotographSubmissionCreateEditView";
 import {ProofSubmissionCreateEditView} from "./ProofSubmissionCreateEditView";
+import _ from 'lodash';
 
 type ApplicationFormCreateEditViewProps = {
     namePrefix: string,
@@ -69,20 +70,37 @@ export const ApplicationFormCreateEditView: FunctionComponent<ApplicationFormCre
                 update(key);
             }}>
                 {activeTabKey === 'photographs' ? applicationForm.photographSubmissions.map((photographSubmission, index) =>
-
-                        <PhotographSubmissionCreateEditView photographTypes={photographTypes} photographSubmission={photographSubmission}
-                                                            entityRelationshipTypes={entityRelationshipTypes} namePrefix={`${namePrefix}photographSubmission.${index}.`}
-                                                            onStateChange={updateState}/>
+                        <div key={`${namePrefix}photographSubmissionDiv.${index}`}>
+                            <PhotographSubmissionCreateEditView photographTypes={photographTypes} photographSubmission={photographSubmission}
+                                                                entityRelationshipTypes={entityRelationshipTypes}
+                                                                namePrefix={`${namePrefix}photographSubmission.${index}.`}
+                                                                onStateChange={updateState}/>
+                            <Col span={24} offset={22} style={{marginTop: 10}}>
+                                <Button type="danger" onClick={() => {
+                                    applicationForm.removePhotographSubmission(photographSubmission);
+                                    updateState();
+                                }}>Remove</Button>
+                            </Col>
+                        </div>
                     )
                     : applicationForm.proofSubmissions.map((proofSubmission, index) =>
-                        <ProofSubmissionCreateEditView proofTypes={proofTypes}
-                                                       entityRelationshipTypes={entityRelationshipTypes}
-                                                       documentTypes={documentTypes}
-                                                       namePrefix={`${namePrefix}proofSubmission.${index}.`}
-                                                       proofSubmission={proofSubmission} onStateChange={updateState}/>
+                        <div key={`${namePrefix}proofTypeSubmissionDiv.${index}`}>
+                            <ProofSubmissionCreateEditView proofTypes={proofTypes}
+                                                           entityRelationshipTypes={entityRelationshipTypes}
+                                                           documentTypes={documentTypes}
+                                                           namePrefix={`${namePrefix}proofSubmission.${index}.`}
+                                                           proofSubmission={proofSubmission} onStateChange={updateState}/>
+                            <Col span={24} offset={22} style={{marginTop: 10}}>
+                                <Button type="danger" key="removeProofSubmission" onClick={() => {
+                                    applicationForm.removeProofSubmission(proofSubmission);
+                                    updateState();
+                                }}>Remove</Button>
+                            </Col>
+                        </div>
                     )
                 }
-                {activeTabKey === 'photographs' ? <Button type="link" key="addPhotographSubmission" onClick={() => {
+                {activeTabKey === 'photographs' ?
+                    <Button type="link" key="addPhotographSubmission" onClick={() => {
                         applicationForm.photographSubmissions.push(PhotographSubmission.newInstance());
                         updateState();
                     }}>Add Photograph Submission Details</Button> :
