@@ -77,7 +77,7 @@ export const ApplicationFormCreateEditView: FunctionComponent<ApplicationFormCre
                                                                 onStateChange={updateState}/>
                             <Col span={24} offset={22} style={{marginTop: 10}}>
                                 <Button type="danger" onClick={() => {
-                                    applicationForm.removePhotographSubmission(photographSubmission);
+                                    ApplicationForm.removePhotographSubmission(applicationForm, photographSubmission);
                                     updateState();
                                 }}>Remove</Button>
                             </Col>
@@ -92,7 +92,7 @@ export const ApplicationFormCreateEditView: FunctionComponent<ApplicationFormCre
                                                            proofSubmission={proofSubmission} onStateChange={updateState}/>
                             <Col span={24} offset={22} style={{marginTop: 10}}>
                                 <Button type="danger" key="removeProofSubmission" onClick={() => {
-                                    applicationForm.removeProofSubmission(proofSubmission);
+                                    ApplicationForm.removeProofSubmission(applicationForm, proofSubmission);
                                     updateState();
                                 }}>Remove</Button>
                             </Col>

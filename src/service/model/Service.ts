@@ -87,12 +87,12 @@ export class ApplicationForm {
         return applicationForm;
     }
 
-    removePhotographSubmission(photographSubmission: PhotographSubmission) {
-        _.remove(this.photographSubmissions, (item) => item === photographSubmission);
+    static removePhotographSubmission(applicationForm: ApplicationForm, photographSubmission: PhotographSubmission) {
+        _.remove(applicationForm.photographSubmissions, (item) => item === photographSubmission);
     }
 
-    removeProofSubmission(proofSubmission: ProofSubmission) {
-        _.remove(this.proofSubmissions, (item) => item === proofSubmission);
+    static removeProofSubmission(applicationForm: ApplicationForm, proofSubmission: ProofSubmission) {
+        _.remove(applicationForm.proofSubmissions, (item) => item === proofSubmission);
     }
 }
 
@@ -105,12 +105,12 @@ export class PhotographSubmission {
     photographType!: PhotographType;
     crossSignRequired!: boolean;
     numberOfCopies!: number;
-    entityRelationshipType!: EntityRelationshipType;
+    entityRelationshipTypes!: EntityRelationshipType[];
 
     static clone(other: any) {
         let photographSubmission = new PhotographSubmission();
         photographSubmission.numberOfCopies = other.numberOfCopies;
-        photographSubmission.entityRelationshipType = other.entityRelationshipType;
+        photographSubmission.entityRelationshipTypes = other.entityRelationshipTypes;
         photographSubmission.crossSignRequired = other.crossSignRequired;
         photographSubmission.photographType = other.photographType;
         return photographSubmission;

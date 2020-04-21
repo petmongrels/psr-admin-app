@@ -44,7 +44,7 @@ export const ProofSubmissionCreateEditView: FunctionComponent<ProofSubmissionCre
 
         <Col span={24} key={`${namePrefix}originalToBeShown`}>
             <BooleanFormItem label="Original to be shown?" formItemName={`${namePrefix}originalToBeShown`} value={proofSubmission.originalToBeShown}
-                             onValueChange={(value) => proofSubmission.originalToBeShown = value}/>
+                             onValueChange={(value) => proofSubmission.originalToBeShown = value} mandatory={true}/>
         </Col>
 
         <Col span={24} key={`${namePrefix}numberOfCopies`}>

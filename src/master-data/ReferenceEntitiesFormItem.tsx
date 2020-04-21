@@ -4,17 +4,21 @@ import {ReferenceEntities, ReferenceEntity} from "../framework/model/ReferenceEn
 
 const {Option} = Select;
 
-type ReferenceEntityFormItemProps = {
+type ReferenceEntitiesFormItemProps = {
     label: string,
     formItemName: string,
-    onReferenceEntityChange: (referenceEntity: ReferenceEntity) => void,
+    onReferenceEntitiesChange: (referenceEntity: ReferenceEntity[]) => void,
     referenceEntities: Array<ReferenceEntity>
 };
 
-export const ReferenceEntityFormItem: FunctionComponent<ReferenceEntityFormItemProps> = ({children, formItemName, onReferenceEntityChange, referenceEntities, label}) => {
+export const ReferenceEntitiesFormItem: FunctionComponent<ReferenceEntitiesFormItemProps> = ({children, formItemName, onReferenceEntitiesChange, referenceEntities, label}) => {
     return <Form.Item label={label} name={`${formItemName}`}
                       rules={[{required: true}]}>
-        <Select style={{width: 120}} onChange={(value) => onReferenceEntityChange(ReferenceEntities.findEntityByName(referenceEntities, value.toString()))}>
+        <Select style={{width: 120}} mode="multiple" placeholder="Please select"
+                onChange={(values) => {
+                    console.log(values);
+                    // onReferenceEntitiesChange(ReferenceEntities.findEntitiesByName(referenceEntities, values))
+                }}>
             {referenceEntities.map((referenceEntity, index) => <Option key={`${formItemName}.${index}`} value={referenceEntity.name}>{referenceEntity.name}</Option>)}
         </Select>
     </Form.Item>;

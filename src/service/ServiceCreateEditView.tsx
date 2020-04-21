@@ -8,7 +8,6 @@ import {PSRResources} from "../framework/routing/PSRResources";
 import {ApplicationFormCreateEditView} from "./ApplicationFormCreateEditView";
 import {ReferenceEntityFormItem} from "../master-data/ReferenceEntityFormItem";
 import {ApplicationForm, Service} from "./model/Service";
-import {CommunicationMediumListView} from "../master-data/CommunicationMediumListView";
 import {CommunicationMedium} from '../master-data/model/CommunicationMedium';
 
 const {TextArea} = Input;
