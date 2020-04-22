@@ -30,6 +30,7 @@ export default function App(props) {
                 {getRoute(PSRResources.getCreateURLFor("service"), ServiceCreateEditView(props))}
                 {getRoute(PSRResources.getListURLFor("communicationMedium"), CommunicationMediumListView(props))}
                 {getRoute(PSRResources.getCreateURLFor("communicationMedium"), CommunicationMediumCreateEditView(props))}
+                {getRoute(PSRResources.getCreateURLFor("proofsAndDocuments"), ProofsAndDocumentsView(props))}
             </Switch>
         </Router>
     );

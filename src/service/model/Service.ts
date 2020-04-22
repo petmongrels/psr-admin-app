@@ -164,9 +164,39 @@ export class ProofSubmission {
 export class ProofType implements ReferenceEntity {
     name!: string;
     description: string;
+
+    static newInstance(name: string, description: string) {
+        let psrDocumentType = new ProofType();
+        psrDocumentType.name = name;
+        psrDocumentType.description = description;
+        return psrDocumentType;
+    }
+
+    static clone(other: any) {
+        return this.newInstance(other.name, other.description);
+    }
+
+    static fromResource(resource: any) {
+        return ProofType.newInstance(resource["name"], resource["description"]);
+    }
 }
 
 export class PSRDocumentType implements ReferenceEntity {
     name!: string;
     description: string;
+
+    static newInstance(name: string, description: string) {
+        let psrDocumentType = new PSRDocumentType();
+        psrDocumentType.name = name;
+        psrDocumentType.description = description;
+        return psrDocumentType;
+    }
+
+    static clone(other: any) {
+        return this.newInstance(other.name, other.description);
+    }
+
+    static fromResource(resource: any) {
+        return PSRDocumentType.newInstance(resource["name"], resource["description"]);
+    }
 }
