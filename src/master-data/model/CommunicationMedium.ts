@@ -1,6 +1,7 @@
 import {ReferenceEntity} from "../../framework/model/ReferenceEntity";
 
 export class CommunicationMedium implements ReferenceEntity {
+    id!: number;
     name!: string;
     description: string;
     requiresAddress: boolean;

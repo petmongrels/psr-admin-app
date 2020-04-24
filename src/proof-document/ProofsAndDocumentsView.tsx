@@ -1,10 +1,11 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import {PSRLayout} from "../framework/view/PSRLayout";
-import {List} from 'antd';
+import {List, Descriptions} from 'antd';
 import {APIService} from "../framework/api/APIService";
 import {PSRResources} from "../framework/routing/PSRResources";
 import {ProofType, PSRDocumentType} from "../service/model/Service";
 import {ProofsAndDocuments} from "./model/ProofsAndDocuments";
+import {Link} from 'react-router-dom';
 
 export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) => {
     const [proofsAndDocuments, update] = useState<ProofsAndDocuments>(ProofsAndDocuments.newInstance());
@@ -21,16 +22,33 @@ export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) =>
     }, []);
 
     return <PSRLayout>
+        <Descriptions title="All proof types"/>
         <List
+            bordered
             itemLayout="horizontal"
             dataSource={proofsAndDocuments.proofTypes}
             renderItem={item => (
-                <List.Item actions={[<a key="edit">edit</a>]}>
-                    <List.Item.Meta
-                        title={<a href="https://ant.design">{item.name}</a>}
-                        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                    />
-                </List.Item>
+                <List.Item actions={[<Link to={PSRResources.getEditURLFor("proof_type", ProofsAndDocuments.getProofType(proofsAndDocuments, item.name).id)}>edit</Link>]}
+                           style={{
+                               backgroundColor: ProofsAndDocuments.isProofTypeSelected(item.name, proofsAndDocuments) ? 'lightblue' : 'lightgrey',
+                               paddingLeft: 10,
+                               cursor: ProofsAndDocuments.isProofTypeSelected(item.name, proofsAndDocuments) ? "auto" : "pointer"
+                           }}
+                           onClick={() => {
+                               proofsAndDocuments.selectedProofTypeName = item.name;
+                               update(ProofsAndDocuments.clone(proofsAndDocuments));
+                           }}>{item.name}</List.Item>
+            )}
+        />
+        <br/>
+        <br/>
+        <Descriptions title="All document types"/>
+        <List
+            bordered
+            itemLayout="horizontal"
+            dataSource={proofsAndDocuments.documentTypes}
+            renderItem={item => (
+                <List.Item actions={[<a key="edit">edit</a>]} style={{backgroundColor: 'lightgrey', paddingLeft: 10}}>{item.name}</List.Item>
             )}
         />
     </PSRLayout>;

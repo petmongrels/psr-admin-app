@@ -11,6 +11,10 @@ export class PSRResources {
         return `/app/${resource}/new`;
     }
 
+    static getEditURLFor(resource: string, id: number) {
+        return `/app/${resource}/${id}`;
+    }
+
     static getResourceListURL(resource: string) {
         return `/${resource}`;
     }

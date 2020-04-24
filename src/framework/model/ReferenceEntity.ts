@@ -1,6 +1,7 @@
 import * as _ from "lodash";
 
 export interface ReferenceEntity {
+    id: number;
     name: string;
     description: string;
 }

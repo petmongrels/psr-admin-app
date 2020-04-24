@@ -97,6 +97,7 @@ export class ApplicationForm {
 }
 
 export class PhotographType implements ReferenceEntity {
+    id!: number;
     name!: string;
     description!: string;
 }
@@ -122,18 +123,20 @@ export class PhotographSubmission {
 }
 
 export class EntityRelationshipType implements ReferenceEntity {
+    id!: number;
     name!: string;
     description: string;
 
-    static newInstance(name: string, description: string) {
+    static newInstance(id: number, name: string, description: string) {
         let entityRelationshipType = new EntityRelationshipType();
+        entityRelationshipType.id = id;
         entityRelationshipType.name = name;
         entityRelationshipType.description = description;
         return entityRelationshipType;
     }
 
     static fromResource(resource: any) {
-        return EntityRelationshipType.newInstance(resource["name"], resource["description"]);
+        return EntityRelationshipType.newInstance(resource["id"], resource["name"], resource["description"]);
     }
 }
 
@@ -162,41 +165,45 @@ export class ProofSubmission {
 }
 
 export class ProofType implements ReferenceEntity {
+    id!: number;
     name!: string;
     description: string;
 
-    static newInstance(name: string, description: string) {
+    static newInstance(id: number, name: string, description: string) {
         let psrDocumentType = new ProofType();
+        psrDocumentType.id = id;
         psrDocumentType.name = name;
         psrDocumentType.description = description;
         return psrDocumentType;
     }
 
     static clone(other: any) {
-        return this.newInstance(other.name, other.description);
+        return this.newInstance(other.id, other.name, other.description);
     }
 
     static fromResource(resource: any) {
-        return ProofType.newInstance(resource["name"], resource["description"]);
+        return ProofType.newInstance(resource["id"], resource["name"], resource["description"]);
     }
 }
 
 export class PSRDocumentType implements ReferenceEntity {
+    id!: number;
     name!: string;
     description: string;
 
-    static newInstance(name: string, description: string) {
+    static newInstance(id: number, name: string, description: string) {
         let psrDocumentType = new PSRDocumentType();
+        psrDocumentType.id = id;
         psrDocumentType.name = name;
         psrDocumentType.description = description;
         return psrDocumentType;
     }
 
     static clone(other: any) {
-        return this.newInstance(other.name, other.description);
+        return this.newInstance(other.id, other.name, other.description);
     }
 
     static fromResource(resource: any) {
-        return PSRDocumentType.newInstance(resource["name"], resource["description"]);
+        return PSRDocumentType.newInstance(resource["id"], resource["name"], resource["description"]);
     }
 }
