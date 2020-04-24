@@ -8,7 +8,8 @@ export class MenuData {
 
     private constructor() {
         let commMedium = new MenuItemData("Comm. Mediums", "communicationMedium", [], "comm-medium");
-        let masterData = new MenuItemData("Master data", "", [commMedium], "master-data");
+        let proofsAndDocuments = new MenuItemData("Proofs / Documents", "proofsAndDocument", [], "proofsAndDocuments");
+        let masterData = new MenuItemData("Master data", "", [commMedium, proofsAndDocuments], "master-data");
         let services = new MenuItemData("Services", "service", [], "services");
         this.root = new MenuItemData("root", '', [services, masterData], "root");
     }
@@ -44,18 +45,18 @@ export class MenuData {
 
 class MenuItemData {
     text!: string;
-    private readonly _resource!: string;
+    private readonly appResource!: string;
     children!: Array<MenuItemData>;
     key!: string;
 
-    constructor(text: string, resource: string, children: Array<MenuItemData>, key: string) {
+    constructor(text: string, appResource: string, children: Array<MenuItemData>, key: string) {
         this.text = text;
-        this._resource = resource;
+        this.appResource = appResource;
         this.children = children;
         this.key = key;
     }
 
     get url(): string {
-        return PSRResources.getListURLFor(this._resource);
+        return PSRResources.getListURLFor(this.appResource);
     }
 }

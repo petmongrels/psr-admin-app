@@ -4,21 +4,10 @@ import {List} from 'antd';
 import {APIService} from "../framework/api/APIService";
 import {PSRResources} from "../framework/routing/PSRResources";
 import {ProofType, PSRDocumentType} from "../service/model/Service";
-
-class ProofsAndDocuments {
-    documentTypes: PSRDocumentType[];
-    proofTypes: ProofType[];
-
-    static clone(other: any) {
-        let proofsAndDocuments = new ProofsAndDocuments();
-        proofsAndDocuments.documentTypes = [...other.documentTypes];
-        proofsAndDocuments.proofTypes = [...other.proofTypes];
-        return proofsAndDocuments;
-    }
-}
+import {ProofsAndDocuments} from "./model/ProofsAndDocuments";
 
 export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) => {
-    const [proofsAndDocuments, update] = useState<ProofsAndDocuments>(new ProofsAndDocuments());
+    const [proofsAndDocuments, update] = useState<ProofsAndDocuments>(ProofsAndDocuments.newInstance());
 
     useEffect(() => {
         APIService.loadAll(PSRResources.getResourceListURL("document_type")).then((resources) => {

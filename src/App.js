@@ -10,6 +10,7 @@ import {CommunicationMediumListView} from "./master-data/CommunicationMediumList
 import {CommunicationMediumCreateEditView} from "./master-data/CommunicationMediumCreateEditView";
 import {PSRResources} from "./framework/routing/PSRResources";
 import {ServiceListView} from "./service/ServiceListView";
+import {ProofsAndDocumentsView} from "./proof-document/ProofsAndDocumentsView";
 
 const getRoute = function (path, view) {
     return <Route path={path}>
@@ -30,7 +31,7 @@ export default function App(props) {
                 {getRoute(PSRResources.getCreateURLFor("service"), ServiceCreateEditView(props))}
                 {getRoute(PSRResources.getListURLFor("communicationMedium"), CommunicationMediumListView(props))}
                 {getRoute(PSRResources.getCreateURLFor("communicationMedium"), CommunicationMediumCreateEditView(props))}
-                {getRoute(PSRResources.getCreateURLFor("proofsAndDocuments"), ProofsAndDocumentsView(props))}
+                {getRoute(PSRResources.getAppURLFor("proofsAndDocuments"), ProofsAndDocumentsView(props))}
             </Switch>
         </Router>
     );

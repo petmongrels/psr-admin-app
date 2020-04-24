@@ -1,4 +1,8 @@
 export class PSRResources {
+    static getAppURLFor(custom: string) {
+        return `/app/${custom}`;
+    }
+
     static getListURLFor(resource: string) {
         return `/app/${resource}s`;
     }
