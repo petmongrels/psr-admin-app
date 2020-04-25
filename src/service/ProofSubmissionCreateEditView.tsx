@@ -20,7 +20,7 @@ export const ProofSubmissionCreateEditView: FunctionComponent<ProofSubmissionCre
     return <Card style={{width: 400}}>
         <Col span={24} key={`${namePrefix}proofType`}>
             <ReferenceEntityFormItem referenceEntities={proofTypes}
-                                     onReferenceEntityChange={(referenceEntity) => proofSubmission.proofType = referenceEntity} formItemName={`${namePrefix}proofType`}
+                                     onReferenceEntityChange={(referenceEntity) => proofSubmission.proofType = referenceEntity as ProofType} formItemName={`${namePrefix}proofType`}
                                      label="Proof type"/>
         </Col>
 

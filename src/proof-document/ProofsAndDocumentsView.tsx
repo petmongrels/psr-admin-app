@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import {PSRLayout} from "../framework/view/PSRLayout";
-import {List, Descriptions} from 'antd';
+import {Descriptions, List} from 'antd';
 import {APIService} from "../framework/api/APIService";
 import {PSRResources} from "../framework/routing/PSRResources";
 import {ProofType, PSRDocumentType} from "../service/model/Service";
@@ -16,7 +16,7 @@ export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) =>
             update(ProofsAndDocuments.clone(proofsAndDocuments));
         });
         APIService.loadAll(PSRResources.getResourceListURL("proof_type")).then((resources) => {
-            proofsAndDocuments.proofTypes = resources.map((resource: any) => ProofType.fromResource(resource));
+            proofsAndDocuments.proofTypes = resources.map((resource: any) => ProofType.fromResponse(resource, []));
             update(ProofsAndDocuments.clone(proofsAndDocuments));
         });
     }, []);
@@ -28,7 +28,7 @@ export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) =>
             itemLayout="horizontal"
             dataSource={proofsAndDocuments.proofTypes}
             renderItem={item => (
-                <List.Item actions={[<Link to={PSRResources.getEditURLFor("proof_type", ProofsAndDocuments.getProofType(proofsAndDocuments, item.name).id)}>edit</Link>]}
+                <List.Item actions={[<Link to={PSRResources.getAppEditURLFor("proofType", ProofsAndDocuments.getProofType(proofsAndDocuments, item.name).id)}>edit</Link>]}
                            style={{
                                backgroundColor: ProofsAndDocuments.isProofTypeSelected(item.name, proofsAndDocuments) ? 'lightblue' : 'lightgrey',
                                paddingLeft: 10,

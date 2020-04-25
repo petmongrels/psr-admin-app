@@ -14,4 +14,8 @@ export class ReferenceEntities {
     static findEntitiesByName(referenceEntities: Array<ReferenceEntity>, names: string[]): ReferenceEntity[] {
         return _.filter(referenceEntities, (referenceEntity) => _.some(names, (name) => referenceEntity.name === name));
     }
+
+    static findEntitiesById(referenceEntities: Array<ReferenceEntity>, ids: number[]): ReferenceEntity[] {
+        return _.filter(referenceEntities, (referenceEntity) => _.some(ids, (id) => referenceEntity.id === id));
+    }
 }

@@ -27,11 +27,11 @@ export interface FieldData {
 
 type PSRFormProps = {
     name: string,
-    submitHandler: Function,
+    submitHandler?: Function,
     form: FormInstance
 };
 
-let formChildren = function (children: React.ReactNode, submitHandler: Function) {
+let formChildren = function (children: React.ReactNode, submitHandler: Function = () => {}) {
     return <Space direction="vertical" style={{width: "100%"}}>
         {children}
         <Form.Item {...tailLayout} key="submit">

@@ -8,6 +8,7 @@ export class HttpClient {
 
     static postJSON(url: string, data: object) {
         fetch(url, {
+            method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(data)
         }).then((response) => response.json());

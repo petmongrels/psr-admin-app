@@ -1,5 +1,5 @@
 import {CommunicationMedium} from "../../master-data/model/CommunicationMedium";
-import {ReferenceEntity} from "../../framework/model/ReferenceEntity";
+import {ReferenceEntities, ReferenceEntity} from "../../framework/model/ReferenceEntity";
 import _ from 'lodash';
 
 export class Service {
@@ -168,21 +168,37 @@ export class ProofType implements ReferenceEntity {
     id!: number;
     name!: string;
     description: string;
+    documentTypes: PSRDocumentType[];
 
-    static newInstance(id: number, name: string, description: string) {
-        let psrDocumentType = new ProofType();
-        psrDocumentType.id = id;
-        psrDocumentType.name = name;
-        psrDocumentType.description = description;
-        return psrDocumentType;
+    static newInstance({id, name, description, documentTypes}: ProofType) {
+        let proofType = new ProofType();
+        proofType.id = id;
+        proofType.name = name;
+        proofType.description = description;
+        proofType.documentTypes = [...documentTypes];
+        return proofType;
     }
 
     static clone(other: any) {
-        return this.newInstance(other.id, other.name, other.description);
+        return this.newInstance({id: other.id, name: other.name, description: other.description, documentTypes: other.documentTypes});
     }
 
-    static fromResource(resource: any) {
-        return ProofType.newInstance(resource["id"], resource["name"], resource["description"]);
+    static fromResponse(proofTypeResponse: any, referenceDocumentTypes: PSRDocumentType[]) {
+        let proofTypeDocumentTypes = ReferenceEntities.findEntitiesById(referenceDocumentTypes, proofTypeResponse["document_type"].map((documentTypeResponse: any) => documentTypeResponse["id"]));
+        return ProofType.newInstance({
+            id: proofTypeResponse["id"],
+            name: proofTypeResponse["name"],
+            description: proofTypeResponse["description"],
+            documentTypes: proofTypeDocumentTypes
+        } as ProofType);
+    }
+
+    static toRequest(proofType: ProofType) {
+
+    }
+
+    static initialCreateEditState() {
+        return ProofType.newInstance({documentTypes: []} as ProofType);
     }
 }
 

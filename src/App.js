@@ -11,6 +11,7 @@ import {CommunicationMediumCreateEditView} from "./master-data/CommunicationMedi
 import {PSRResources} from "./framework/routing/PSRResources";
 import {ServiceListView} from "./service/ServiceListView";
 import {ProofsAndDocumentsView} from "./proof-document/ProofsAndDocumentsView";
+import {ProofTypeCreateEditView} from "./master-data/ProofTypeCreateEditView";
 
 const getRoute = function (path, view) {
     return <Route path={path}>
@@ -27,11 +28,12 @@ export default function App(props) {
                 <Route exact path="/">
                     {dashboard()}
                 </Route>
-                {getRoute(PSRResources.getListURLFor("service"), ServiceListView())}
-                {getRoute(PSRResources.getCreateURLFor("service"), ServiceCreateEditView(props))}
-                {getRoute(PSRResources.getListURLFor("communicationMedium"), CommunicationMediumListView(props))}
-                {getRoute(PSRResources.getCreateURLFor("communicationMedium"), CommunicationMediumCreateEditView(props))}
-                {getRoute(PSRResources.getAppURLFor("proofsAndDocuments"), ProofsAndDocumentsView(props))}
+                {getRoute(PSRResources.getListURLFor("service"), <ServiceListView/>)}
+                {getRoute(PSRResources.getCreateURLFor("service"), <ServiceCreateEditView/>)}
+                {getRoute(PSRResources.getListURLFor("communicationMedium"), <CommunicationMediumListView/>)}
+                {getRoute(PSRResources.getCreateURLFor("communicationMedium"), <CommunicationMediumCreateEditView/>)}
+                {getRoute(PSRResources.getAppURLFor("proofsAndDocuments"), <ProofsAndDocumentsView/>)}
+                {getRoute(PSRResources.getEditRoutePath("proofType"), <ProofTypeCreateEditView/>)}
             </Switch>
         </Router>
     );
