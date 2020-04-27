@@ -1,4 +1,5 @@
 import {HttpClient} from "./HttpClient";
+import {HttpRequest} from "./HttpRequest";
 
 export class APIService {
     public static save(url: string, entity: object) {

@@ -8,12 +8,12 @@ import {useParams} from 'react-router-dom';
 import {ReferenceEntities} from "../framework/model/ReferenceEntity";
 import {ProofTypeCreateEdit} from "./model/ProofTypeCreateEdit";
 import {ProofType} from "../service/model/Service";
+import {ProofTypeService} from "./service/ProofTypeService";
 
 const {Option} = Select;
 
 const submit = function (proofType: ProofType) {
-    ProofType.toRequest(proofType);
-    APIService.save(`/proof_type?id=eq.${proofType.id}`, proofType);
+    ProofTypeService.saveProofType(proofType);
 };
 
 export const ProofTypeCreateEditView: FunctionComponent<any> = ({children}) => {
@@ -26,18 +26,13 @@ export const ProofTypeCreateEditView: FunctionComponent<any> = ({children}) => {
     };
 
     useEffect(() => {
-        APIService.loadAll(`/document_type`).then((documentTypesResponse) => {
-            proofTypeCreateEdit.allDocumentTypes = documentTypesResponse;
-            APIService.loadAll(`/proof_type?id=eq.${id}&select=*,document_type(id)`).then((proofTypesResponse) => {
-                ProofTypeCreateEdit.updateProofType(proofTypeCreateEdit, proofTypesResponse[0]);
-                form.setFieldsValue({
-                    name: proofTypeCreateEdit.proofType.name,
-                    documentTypes: proofTypeCreateEdit.proofType.documentTypes.map((documentType) => documentType.name)
-                });
-                updateState();
+        ProofTypeService.loadForProofTypeCreateEdit(proofTypeCreateEdit, id, () => {
+            form.setFieldsValue({
+                name: proofTypeCreateEdit.proofType.name,
+                documentTypes: proofTypeCreateEdit.proofType.documentTypes.map((documentType) => documentType.name)
             });
+            updateState();
         });
-
     }, []);
 
     return <PSRLayout>

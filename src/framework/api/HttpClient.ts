@@ -1,3 +1,5 @@
+import {HttpRequest} from "./HttpRequest";
+
 export class HttpClient {
     static getJSON(url: string) {
         return fetch(url)
@@ -9,8 +11,8 @@ export class HttpClient {
     static postJSON(url: string, data: object) {
         fetch(url, {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json", "Prefer": "resolution=merge-duplicates"},
             body: JSON.stringify(data)
-        }).then((response) => response.json());
+        }).then((response) => {});
     }
 }

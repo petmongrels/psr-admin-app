@@ -184,7 +184,7 @@ export class ProofType implements ReferenceEntity {
     }
 
     static fromResponse(proofTypeResponse: any, referenceDocumentTypes: PSRDocumentType[]) {
-        let proofTypeDocumentTypes = ReferenceEntities.findEntitiesById(referenceDocumentTypes, proofTypeResponse["document_type"].map((documentTypeResponse: any) => documentTypeResponse["id"]));
+        let proofTypeDocumentTypes = ReferenceEntities.findEntitiesById(referenceDocumentTypes, proofTypeResponse["proof_type_document_type"].map((proofTypeDocumentType: any) => proofTypeDocumentType["document_type_id"]));
         return ProofType.newInstance({
             id: proofTypeResponse["id"],
             name: proofTypeResponse["name"],
@@ -193,12 +193,12 @@ export class ProofType implements ReferenceEntity {
         } as ProofType);
     }
 
-    static toRequest(proofType: ProofType) {
-
-    }
-
     static initialCreateEditState() {
         return ProofType.newInstance({documentTypes: []} as ProofType);
+    }
+
+    static getOneURL(id: string) {
+        return `/proof_type?id=eq.${id}&select=*,proof_type_document_type(id,document_type_id)`;
     }
 }
 
