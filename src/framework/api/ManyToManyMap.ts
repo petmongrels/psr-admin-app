@@ -20,7 +20,7 @@ export class ManyToManyMap {
     }
 
     newFieldIds(table: string, fieldName: string, currentFieldIds: number[]): number[] {
-        return _.filter(currentFieldIds, (fieldId) => _.some(this.mappings, (mapping) => mapping.table === table && mapping.obj[fieldName] === fieldId));
+        return _.filter(currentFieldIds, (fieldId) => !_.some(this.mappings, (mapping) => mapping.table === table && mapping.obj[fieldName] === fieldId));
     }
 
     removedObjectIds(table: string, fieldName: string, fieldIds: number[]) {

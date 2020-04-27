@@ -29,10 +29,10 @@ export class HttpRequest {
     }
 
     processor() {
-        return () => fetch(this.url, {
+        return new Promise(() => fetch(this.url, {
             method: this.method,
             headers: {"Content-Type": "application/json", "Prefer": "resolution=merge-duplicates"},
             body: JSON.stringify(this.body)
-        });
+        }));
     }
 }

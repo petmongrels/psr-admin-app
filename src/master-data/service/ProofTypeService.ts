@@ -27,14 +27,16 @@ export class ProofTypeService {
         let newProofTypeDocumentTypes = newDocumentTypeIds.map((newDocumentTypeId) => new ProofTypeDocumentType(undefined, proofType.id, newDocumentTypeId));
         let removedProofTypeDocumentTypeIds = ManyToManyMap.getInstance().removedObjectIds(proofTypeDocumentTypeTable, documentTypeId, currentDocumentTypeIds);
 
-        let httpRequests = [HttpRequest.forSingleUpsert("proof_type", proofType.id, {
+        let proofTypeUpsert = HttpRequest.forSingleUpsert("proof_type", proofType.id, {
             "id": proofType.id,
             "name": proofType.name
-        }), HttpRequest.forMultipleUpsert(proofTypeDocumentTypeTable, newProofTypeDocumentTypes),
-            HttpRequest.forMultipleDelete(proofTypeDocumentTypeTable, removedProofTypeDocumentTypeIds)];
+        });
+        let httpRequests = [proofTypeUpsert];
+        newProofTypeDocumentTypes.length !== 0 && httpRequests.push(HttpRequest.forMultipleUpsert(proofTypeDocumentTypeTable, newProofTypeDocumentTypes));
+        removedProofTypeDocumentTypeIds.length !==0 && httpRequests.push(HttpRequest.forMultipleDelete(proofTypeDocumentTypeTable, removedProofTypeDocumentTypeIds));
 
         let processors = httpRequests.map((httpRequest) => httpRequest.processor());
-        await Promise.all(processors);
+        Promise.all(processors);
     }
 }
 
