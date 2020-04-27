@@ -1,24 +1,16 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import {PSRLayout} from "../framework/view/PSRLayout";
 import {Descriptions, List} from 'antd';
-import {APIService} from "../framework/api/APIService";
 import {PSRResources} from "../framework/routing/PSRResources";
-import {ProofType, PSRDocumentType} from "../service/model/Service";
 import {ProofsAndDocuments} from "./model/ProofsAndDocuments";
 import {Link} from 'react-router-dom';
+import {ProofTypeService} from "../master-data/service/ProofTypeService";
 
 export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) => {
     const [proofsAndDocuments, update] = useState<ProofsAndDocuments>(ProofsAndDocuments.newInstance());
 
     useEffect(() => {
-        APIService.loadAll(PSRResources.getResourceListURL("document_type")).then((resources) => {
-            proofsAndDocuments.documentTypes = resources.map((resource: any) => PSRDocumentType.fromResource(resource));
-            update(ProofsAndDocuments.clone(proofsAndDocuments));
-        });
-        APIService.loadAll(PSRResources.getResourceListURL("proof_type")).then((resources) => {
-            proofsAndDocuments.proofTypes = resources.map((resource: any) => ProofType.fromResponse(resource, []));
-            update(ProofsAndDocuments.clone(proofsAndDocuments));
-        });
+        ProofTypeService.loadProofTypesAndDocumentTypes(proofsAndDocuments, () => update(ProofsAndDocuments.clone(proofsAndDocuments)));
     }, []);
 
     return <PSRLayout>
