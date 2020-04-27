@@ -2,9 +2,10 @@ import _ from 'lodash';
 
 export class ManyToManyMap {
     private static instance: ManyToManyMap;
-    private mappings: ManyToManyMapping[];
+    private readonly mappings: ManyToManyMapping[];
 
     private constructor() {
+        this.mappings = [];
     }
 
     public static getInstance() {

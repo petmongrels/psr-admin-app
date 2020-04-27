@@ -12,9 +12,10 @@ export class ProofTypeService {
         APIService.loadAll(`/document_type`).then((documentTypesResponse) => {
             proofTypeCreateEdit.allDocumentTypes = documentTypesResponse;
             APIService.loadAll(ProofType.getOneURL(proofTypeId)).then((proofTypesResponse) => {
-                ProofTypeCreateEdit.updateProofType(proofTypeCreateEdit, proofTypesResponse[0]);
+                let proofType = proofTypesResponse[0];
+                ProofTypeCreateEdit.updateProofType(proofTypeCreateEdit, proofType);
                 ManyToManyMap.getInstance().clearMapping(proofTypeDocumentTypeTable);
-                ManyToManyMap.getInstance().addMappings(proofTypesResponse[proofTypeDocumentTypeTable].map((proofTypeDocumentType: any) => new ManyToManyMapping(proofTypeDocumentTypeTable, proofTypeDocumentType)));
+                ManyToManyMap.getInstance().addMappings(proofType[proofTypeDocumentTypeTable].map((proofTypeDocumentType: any) => new ManyToManyMapping(proofTypeDocumentTypeTable, proofTypeDocumentType)));
                 cb();
             });
         });
