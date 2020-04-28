@@ -22,12 +22,12 @@ export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) =>
             renderItem={item => (
                 <List.Item actions={[<Link to={PSRResources.getAppEditURLFor("proofType", ProofsAndDocuments.getProofType(proofsAndDocuments, item.name).id)}>edit</Link>]}
                            style={{
-                               backgroundColor: ProofsAndDocuments.isProofTypeSelected(item.name, proofsAndDocuments) ? 'lightblue' : 'lightgrey',
+                               backgroundColor: ProofsAndDocuments.isProofTypeSelected(proofsAndDocuments, item.name) ? 'lightblue' : 'lightgrey',
                                paddingLeft: 10,
-                               cursor: ProofsAndDocuments.isProofTypeSelected(item.name, proofsAndDocuments) ? "auto" : "pointer"
+                               cursor: ProofsAndDocuments.isProofTypeSelected(proofsAndDocuments, item.name) ? "auto" : "pointer"
                            }}
                            onClick={() => {
-                               proofsAndDocuments.selectedProofTypeName = item.name;
+                               ProofsAndDocuments.updateSelectedProofType(proofsAndDocuments, item.name);
                                update(ProofsAndDocuments.clone(proofsAndDocuments));
                            }}>{item.name}</List.Item>
             )}
