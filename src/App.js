@@ -31,15 +31,16 @@ export default function App(props) {
                 <Route exact path="/">
                     {dashboard()}
                 </Route>
-                {getRoute(AppResources.getListPath("service"), <ServiceListView/>)}
                 {getRoute(AppResources.getCreatePath("service"), <ServiceCreateEditView/>)}
+                {getRoute(AppResources.getListPath("service"), <ServiceListView/>)}
+
                 {getRoute(AppResources.getListPath("communication_medium"), <CommunicationMediumListView/>)}
                 {getRoute(AppResources.getCreatePath("communication_medium"), <CommunicationMediumCreateEditView/>)}
                 {getRoute(AppResources.getCustomPath(ProofsAndDocuments.APP_RESOURCE_NAME), <ProofsAndDocumentsView/>)}
                 {getRoute(AppResources.getEditPathTemplate("proof_type"), <ProofTypeCreateEditView/>)}
                 {getRoute(AppResources.getEditPathTemplate("document_type"), <SimpleMasterDataCreateEditView entityFactory={() => new PSRDocumentType()}
                                                                                                              resourceName="document_type"
-                                                                                                             masterDataTitle="DOCUMENT TYPE"/>)}
+                                                                                                             masterDataTitle="document type"/>)}
             </Switch>
         </Router>
     );

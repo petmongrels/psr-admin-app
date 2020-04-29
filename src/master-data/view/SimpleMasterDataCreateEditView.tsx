@@ -29,7 +29,7 @@ const clone = function (simpleMasterData: ReferenceEntity, entityFactory: () => 
 export const SimpleMasterDataCreateEditView: FunctionComponent<SimpleMasterDataCreateEditViewProps> = ({children, entityFactory, resourceName, masterDataTitle}) => {
     const [form] = Form.useForm();
     const [simpleMasterData, update] = useState<ReferenceEntity>(entityFactory());
-    const [saveStatus, saveSuccessful] = useState<boolean>(false);
+    const [pageExited, exitPage] = useState<boolean>(false);
     const history = useHistory();
     const {id} = useParams();
 
@@ -37,7 +37,7 @@ export const SimpleMasterDataCreateEditView: FunctionComponent<SimpleMasterDataC
         update(clone(simpleMasterData, entityFactory));
     };
 
-    if (saveStatus) {
+    if (pageExited) {
         history.replace(AppResources.getCustomPath(ProofsAndDocuments.APP_RESOURCE_NAME));
     }
 
@@ -55,12 +55,10 @@ export const SimpleMasterDataCreateEditView: FunctionComponent<SimpleMasterDataC
     }, []);
 
     return <PSRLayout>
-        <Descriptions title={`CREATE NEW ${masterDataTitle}`}/>
+        <Descriptions title={id ? `Update ${masterDataTitle}` : `Create new ${masterDataTitle}`}/>
         <PSRForm submitHandler={() => {
-            APIService.save(ServerResources.getResourceBaseURL(resourceName), simpleMasterData).then(() => {
-                saveSuccessful(true);
-            });
-        }} name="simpleMasterDataCreateEdit" form={form}>
+            APIService.save(ServerResources.getResourceBaseURL(resourceName), simpleMasterData).then(() => exitPage(true));
+        }} cancelHandler={() => exitPage(true)} name="simpleMasterDataCreateEdit" form={form}>
             <Form.Item
                 label="Name" name="name"
                 rules={[{required: true}]}>

@@ -1,5 +1,5 @@
 import React, {FunctionComponent, RefObject} from 'react';
-import {Button, Form, Space} from 'antd';
+import {Button, Form, Space, Col, Row} from 'antd';
 import {FormInstance} from 'antd/lib/form';
 
 const layout = {
@@ -27,19 +27,25 @@ export interface FieldData {
 
 type PSRFormProps = {
     name: string,
-    submitHandler?: Function,
+    submitHandler?: () => void,
+    cancelHandler?: () => void,
     form: FormInstance
 };
 
-let formChildren = function (children: React.ReactNode, submitHandler: Function = () => {}) {
+let formChildren = function (children: React.ReactNode, submitHandler = () => {}, cancelHandler = () => {}) {
     return <Space direction="vertical" style={{width: "100%"}}>
         {children}
         <Form.Item {...tailLayout} key="submit">
-            <Button type="primary" htmlType="submit" onClick={() => submitHandler()}>
-                Submit
-            </Button>
+            <Row gutter={[10, 0]}>
+                <Col>
+                    <Button type="primary" htmlType="submit" onClick={() => submitHandler()}>Save</Button>
+                </Col>
+                <Col>
+                    <Button type="primary" onClick={() => submitHandler()}>Cancel</Button>
+                </Col>
+            </Row>
         </Form.Item>
-    </Space>;
+    </Space>
 };
 
 export const PSRForm: FunctionComponent<PSRFormProps> = ({submitHandler, children, form}) => {
