@@ -9,10 +9,10 @@ export class HttpClient {
     }
 
     static postJSON(url: string, data: object) {
-        fetch(url, {
+        return fetch(url, {
             method: "POST",
             headers: {"Content-Type": "application/json", "Prefer": "resolution=merge-duplicates"},
             body: JSON.stringify(data)
-        }).then((response) => {});
+        });
     }
 }
