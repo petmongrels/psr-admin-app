@@ -5,6 +5,7 @@ import {PSRResources} from "../framework/routing/PSRResources";
 import {ProofsAndDocuments} from "./model/ProofsAndDocuments";
 import {Link} from 'react-router-dom';
 import {ProofTypeService} from "../master-data/service/ProofTypeService";
+import _ from 'lodash';
 
 export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) => {
     const [proofsAndDocuments, update] = useState<ProofsAndDocuments>(ProofsAndDocuments.newInstance());
@@ -19,19 +20,19 @@ export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) =>
             bordered
             itemLayout="horizontal"
             dataSource={proofsAndDocuments.proofTypes}
-            header={<Row><Col span={6}><b>Name</b></Col><Col span={12}><b>Linked document types</b></Col></Row>}
+            header={<Row><Col span={8}><b>Name</b></Col><Col span={8}><b>Linked document types</b></Col></Row>}
             renderItem={item => (
                 <List.Item
                     actions={[<Link to={PSRResources.getAppEditURLFor("proofType", ProofsAndDocuments.getProofType(proofsAndDocuments, item.name).id)}>edit</Link>]}
                     style={{
                         backgroundColor: ProofsAndDocuments.isProofTypeSelected(proofsAndDocuments, item.name) ? 'lightblue' : 'lightgrey',
                         paddingLeft: 10,
-                        cursor: ProofsAndDocuments.isProofTypeSelected(proofsAndDocuments, item.name) ? "auto" : "pointer"
+                        cursor: ProofsAndDocuments.isProofTypeSelected(proofsAndDocuments, item.name) ? "auto" : "pointer",
                     }}
                     onClick={() => {
                         ProofsAndDocuments.updateSelectedProofType(proofsAndDocuments, item.name);
                         update(ProofsAndDocuments.clone(proofsAndDocuments));
-                    }}><Row><Col span={12}>{item.name}</Col><Col span={12}>{item.name}</Col></Row></List.Item>
+                    }}><Col span={8}>{item.name}</Col><Col span={14}>{_.join(item.documentTypes.map((documentType) => documentType.name), ", ")}</Col></List.Item>
             )}
         />
         <br/>
