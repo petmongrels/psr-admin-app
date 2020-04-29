@@ -20,12 +20,12 @@ export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) =>
             bordered
             itemLayout="horizontal"
             dataSource={proofsAndDocuments.proofTypes}
-            header={<Row><Col span={8}><b>Name</b></Col><Col span={8}><b>Linked document types</b></Col></Row>}
+            header={<Row><Col span={8}><b>Name</b></Col><Col span={8}><b>Document types</b></Col></Row>}
             renderItem={item => (
                 <List.Item
                     actions={[<Link to={PSRResources.getAppEditURLFor("proofType", ProofsAndDocuments.getProofType(proofsAndDocuments, item.name).id)}>edit</Link>]}
                     style={{
-                        backgroundColor: ProofsAndDocuments.isProofTypeSelected(proofsAndDocuments, item.name) ? 'lightblue' : 'lightgrey',
+                        backgroundColor: 'lightgrey',
                         paddingLeft: 10,
                         cursor: ProofsAndDocuments.isProofTypeSelected(proofsAndDocuments, item.name) ? "auto" : "pointer",
                     }}
@@ -42,7 +42,7 @@ export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) =>
 
         <br/>
         <br/>
-        <Descriptions title="All document types"/>
+        <Descriptions title={"All document types"}/>
         <List
             bordered
             itemLayout="horizontal"
