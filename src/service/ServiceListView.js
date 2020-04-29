@@ -2,7 +2,7 @@ import {Avatar, Button, List, Row} from 'antd';
 import React from 'react';
 import {Link} from "react-router-dom";
 import {PSRLayout} from "../framework/view/PSRLayout";
-import {PSRResources} from "../framework/routing/PSRResources";
+import {AppResources} from "../framework/routing/AppResources";
 
 const data = [
     {
@@ -23,7 +23,7 @@ export function ServiceListView(props) {
     return <PSRLayout>
         <div>
             <Row justify="end">
-                <Button type="primary"><Link to={PSRResources.getCreateURLFor("service")}>New Service</Link></Button>
+                <Button type="primary"><Link to={AppResources.getCreateURLFor("service")}>New Service</Link></Button>
             </Row>
             <List
                 itemLayout="horizontal"

@@ -1,7 +1,7 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import {PSRLayout} from "../framework/view/PSRLayout";
 import {Descriptions, List, Button, Row, Col} from 'antd';
-import {PSRResources} from "../framework/routing/PSRResources";
+import {AppResources} from "../framework/routing/AppResources";
 import {ProofsAndDocuments} from "./model/ProofsAndDocuments";
 import {Link} from 'react-router-dom';
 import {ProofTypeService} from "../master-data/service/ProofTypeService";
@@ -23,7 +23,7 @@ export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) =>
             header={<Row><Col span={8}><b>Name</b></Col><Col span={8}><b>Document types</b></Col></Row>}
             renderItem={item => (
                 <List.Item
-                    actions={[<Link to={PSRResources.getAppEditURLFor("proofType", ProofsAndDocuments.getProofType(proofsAndDocuments, item.name).id)}>edit</Link>]}
+                    actions={[<Link to={AppResources.getAppEditURLFor("proofType", ProofsAndDocuments.getProofType(proofsAndDocuments, item.name).id)}>edit</Link>]}
                     style={{
                         backgroundColor: 'lightgrey',
                         paddingLeft: 10,
@@ -53,7 +53,7 @@ export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) =>
         />
         <br/>
         <Row justify="end">
-            <Button type="default" style={{alignSelf: 'end'}}>Add Document Type</Button>
+            <Button type="default" style={{alignSelf: 'end'}}><Link to={AppResources.getCreateURLFor("documentType")}>Add Document Type</Link></Button>
         </Row>
     </PSRLayout>;
 };

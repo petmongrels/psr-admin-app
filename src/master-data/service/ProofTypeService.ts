@@ -3,7 +3,7 @@ import {ProofType, PSRDocumentType} from "../../service/model/Service";
 import {ProofTypeCreateEdit} from "../model/ProofTypeCreateEdit";
 import {ManyToManyMap, ManyToManyMapping} from "../../framework/api/ManyToManyMap";
 import {HttpRequest} from "../../framework/api/HttpRequest";
-import {PSRResources} from "../../framework/routing/PSRResources";
+import {ServerResources} from "../../framework/routing/ServerResources";
 import {ProofsAndDocuments} from "../../proof-document/model/ProofsAndDocuments";
 
 const proofTypeDocumentTypeTable = "proof_type_document_type";
@@ -42,9 +42,9 @@ export class ProofTypeService {
     }
 
     static loadProofTypesAndDocumentTypes(proofsAndDocuments: ProofsAndDocuments, cb: Function) {
-        APIService.loadAll(PSRResources.getResourceListURL("document_type")).then((resources) => {
+        APIService.loadAll(ServerResources.getResourceBaseURL("document_type")).then((resources) => {
             proofsAndDocuments.documentTypes = resources.map((resource: any) => PSRDocumentType.fromResource(resource));
-            APIService.loadAll(PSRResources.getProofTypesURL()).then((resources) => {
+            APIService.loadAll(ServerResources.getProofTypesURL()).then((resources) => {
                 proofsAndDocuments.proofTypes = resources.map((resource: any) => ProofType.fromResponse(resource, proofsAndDocuments.documentTypes));
                 cb();
             });

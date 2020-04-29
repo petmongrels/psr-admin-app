@@ -4,7 +4,7 @@ import {PSRLayout} from "../framework/view/PSRLayout";
 import {PSRForm} from "../framework/view/PSRForm";
 import {APIService} from "../framework/api/APIService";
 import {ServiceCreateEdit} from "./model/ServiceCreateEdit";
-import {PSRResources} from "../framework/routing/PSRResources";
+import {ServerResources} from "../framework/routing/ServerResources";
 import {ApplicationFormCreateEditView} from "./ApplicationFormCreateEditView";
 import {ReferenceEntityFormItem} from "../master-data/ReferenceEntityFormItem";
 import {ApplicationForm, EntityRelationshipType, Service} from "./model/Service";
@@ -35,15 +35,15 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
     };
 
     useEffect(() => {
-        APIService.loadAll(PSRResources.getResourceListURL("communication_medium")).then((resources) => {
+        APIService.loadAll(ServerResources.getResourceBaseURL("communication_medium")).then((resources) => {
             serviceCreateEdit.communicationMediums = resources.map((resource: any) => CommunicationMedium.fromResource(resource));
             updateState();
         });
-        APIService.loadAll(PSRResources.getResourceListURL("document_type")).then((documentTypes) => {
+        APIService.loadAll(ServerResources.getResourceBaseURL("document_type")).then((documentTypes) => {
             serviceCreateEdit.documentTypes = documentTypes;
             updateState();
         });
-        APIService.loadAll(PSRResources.getResourceListURL("entity_relationship_type")).then((resources) => {
+        APIService.loadAll(ServerResources.getResourceBaseURL("entity_relationship_type")).then((resources) => {
             serviceCreateEdit.entityRelationshipTypes = resources.map((resource: any) => EntityRelationshipType.fromResource(resource));
             updateState();
         });

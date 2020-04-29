@@ -8,10 +8,12 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {ServiceCreateEditView} from "./service/ServiceCreateEditView";
 import {CommunicationMediumListView} from "./master-data/CommunicationMediumListView";
 import {CommunicationMediumCreateEditView} from "./master-data/CommunicationMediumCreateEditView";
-import {PSRResources} from "./framework/routing/PSRResources";
+import {AppResources} from "./framework/routing/AppResources";
 import {ServiceListView} from "./service/ServiceListView";
 import {ProofsAndDocumentsView} from "./proof-document/ProofsAndDocumentsView";
 import {ProofTypeCreateEditView} from "./master-data/ProofTypeCreateEditView";
+import {SimpleMasterDataCreateEditView} from "./master-data/view/SimpleMasterDataCreateEditView";
+import {PSRDocumentType} from "./service/model/Service";
 
 const getRoute = function (path, view) {
     return <Route path={path}>
@@ -28,12 +30,14 @@ export default function App(props) {
                 <Route exact path="/">
                     {dashboard()}
                 </Route>
-                {getRoute(PSRResources.getListURLFor("service"), <ServiceListView/>)}
-                {getRoute(PSRResources.getCreateURLFor("service"), <ServiceCreateEditView/>)}
-                {getRoute(PSRResources.getListURLFor("communicationMedium"), <CommunicationMediumListView/>)}
-                {getRoute(PSRResources.getCreateURLFor("communicationMedium"), <CommunicationMediumCreateEditView/>)}
-                {getRoute(PSRResources.getAppURLFor("proofsAndDocuments"), <ProofsAndDocumentsView/>)}
-                {getRoute(PSRResources.getEditRoutePath("proofType"), <ProofTypeCreateEditView/>)}
+                {getRoute(AppResources.getListURLFor("service"), <ServiceListView/>)}
+                {getRoute(AppResources.getCreateURLFor("service"), <ServiceCreateEditView/>)}
+                {getRoute(AppResources.getListURLFor("communicationMedium"), <CommunicationMediumListView/>)}
+                {getRoute(AppResources.getCreateURLFor("communicationMedium"), <CommunicationMediumCreateEditView/>)}
+                {getRoute(AppResources.getAppURLFor("proofsAndDocuments"), <ProofsAndDocumentsView/>)}
+                {getRoute(AppResources.getEditRoutePath("proofType"), <ProofTypeCreateEditView/>)}
+                {getRoute(AppResources.getCreateURLFor("documentType"), <SimpleMasterDataCreateEditView entityFactory={() => new PSRDocumentType()}
+                                                                                                        resourceName="document_type" masterDataTitle="DOCUMENT TYPE"/>)}
             </Switch>
         </Router>
     );

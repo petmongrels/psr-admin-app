@@ -1,4 +1,4 @@
-import {PSRResources} from "../routing/PSRResources";
+import {AppResources} from "../routing/AppResources";
 
 export class MenuData {
     private static instance: MenuData;
@@ -57,6 +57,6 @@ class MenuItemData {
     }
 
     get url(): string {
-        return PSRResources.getListURLFor(this.appResource);
+        return AppResources.getListURLFor(this.appResource);
     }
 }
