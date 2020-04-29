@@ -7,6 +7,8 @@ export class ProofsAndDocuments {
     proofTypes: ProofType[];
     selectedProofType: ProofType;
 
+    static APP_RESOURCE_NAME = "proofs_and_documents";
+
     static newInstance() {
         let proofsAndDocuments = new ProofsAndDocuments();
         proofsAndDocuments.proofTypes = [];

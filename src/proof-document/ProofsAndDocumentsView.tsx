@@ -23,7 +23,7 @@ export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) =>
             header={<Row><Col span={8}><b>Name</b></Col><Col span={8}><b>Document types</b></Col></Row>}
             renderItem={item => (
                 <List.Item
-                    actions={[<Link to={AppResources.getAppEditURLFor("proofType", ProofsAndDocuments.getProofType(proofsAndDocuments, item.name).id)}>edit</Link>]}
+                    actions={[<Link to={AppResources.getEditPath("proof_type", ProofsAndDocuments.getProofType(proofsAndDocuments, item.name).id)}>edit</Link>]}
                     style={{
                         backgroundColor: 'lightgrey',
                         paddingLeft: 10,
@@ -48,12 +48,14 @@ export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) =>
             itemLayout="horizontal"
             dataSource={proofsAndDocuments.documentTypes}
             renderItem={item => (
-                <List.Item actions={[<a key="edit">edit</a>]} style={{backgroundColor: 'lightgrey', paddingLeft: 10}}>{item.name}</List.Item>
+                <List.Item
+                    actions={[<Link to={AppResources.getEditPath("document_type", item.id)}>edit</Link>]}
+                    style={{backgroundColor: 'lightgrey', paddingLeft: 10}}>{item.name}</List.Item>
             )}
         />
         <br/>
         <Row justify="end">
-            <Button type="default" style={{alignSelf: 'end'}}><Link to={AppResources.getCreateURLFor("documentType")}>Add Document Type</Link></Button>
+            <Button type="default" style={{alignSelf: 'end'}}><Link to={AppResources.getCreatePath("documentType")}>Add Document Type</Link></Button>
         </Row>
     </PSRLayout>;
 };

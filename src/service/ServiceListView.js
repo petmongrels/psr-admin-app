@@ -23,7 +23,7 @@ export function ServiceListView(props) {
     return <PSRLayout>
         <div>
             <Row justify="end">
-                <Button type="primary"><Link to={AppResources.getCreateURLFor("service")}>New Service</Link></Button>
+                <Button type="primary"><Link to={AppResources.getCreatePath("service")}>New Service</Link></Button>
             </Row>
             <List
                 itemLayout="horizontal"

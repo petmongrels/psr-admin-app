@@ -1,4 +1,5 @@
 import {AppResources} from "../routing/AppResources";
+import {ProofsAndDocuments} from "../../proof-document/model/ProofsAndDocuments";
 
 export class MenuData {
     private static instance: MenuData;
@@ -8,7 +9,7 @@ export class MenuData {
 
     private constructor() {
         let commMedium = new MenuItemData("Comm. Mediums", "communicationMedium", [], "comm-medium");
-        let proofsAndDocuments = new MenuItemData("Proofs / Documents", "proofsAndDocument", [], "proofsAndDocuments");
+        let proofsAndDocuments = new MenuItemData("Proofs / Documents", ProofsAndDocuments.APP_RESOURCE_NAME, [], ProofsAndDocuments.APP_RESOURCE_NAME);
         let masterData = new MenuItemData("Master data", "", [commMedium, proofsAndDocuments], "master-data");
         let services = new MenuItemData("Services", "service", [], "services");
         this.root = new MenuItemData("root", '', [services, masterData], "root");
@@ -57,6 +58,6 @@ class MenuItemData {
     }
 
     get url(): string {
-        return AppResources.getListURLFor(this.appResource);
+        return AppResources.getListPath(this.appResource);
     }
 }

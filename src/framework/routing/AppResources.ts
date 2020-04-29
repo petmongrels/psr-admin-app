@@ -1,21 +1,21 @@
 export class AppResources {
-    static getAppURLFor(custom: string) {
+    static getCustomPath(custom: string) {
         return `/app/${custom}`;
     }
 
-    static getListURLFor(resource: string) {
-        return `/app/${resource}s`;
+    static getListPath(resource: string) {
+        return `/app/${resource}`;
     }
 
-    static getCreateURLFor(resource: string) {
+    static getCreatePath(resource: string) {
         return `/app/${resource}/new`;
     }
 
-    static getAppEditURLFor(resource: string, id: number) {
+    static getEditPath(resource: string, id: number) {
         return `/app/${resource}/${id}`;
     }
 
-    static getEditRoutePath(resource: string) {
+    static getEditPathTemplate(resource: string) {
         return `/app/${resource}/:id`;
     }
 }

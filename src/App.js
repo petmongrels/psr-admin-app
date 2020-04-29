@@ -14,6 +14,7 @@ import {ProofsAndDocumentsView} from "./proof-document/ProofsAndDocumentsView";
 import {ProofTypeCreateEditView} from "./master-data/ProofTypeCreateEditView";
 import {SimpleMasterDataCreateEditView} from "./master-data/view/SimpleMasterDataCreateEditView";
 import {PSRDocumentType} from "./service/model/Service";
+import {ProofsAndDocuments} from "./proof-document/model/ProofsAndDocuments";
 
 const getRoute = function (path, view) {
     return <Route path={path}>
@@ -30,14 +31,15 @@ export default function App(props) {
                 <Route exact path="/">
                     {dashboard()}
                 </Route>
-                {getRoute(AppResources.getListURLFor("service"), <ServiceListView/>)}
-                {getRoute(AppResources.getCreateURLFor("service"), <ServiceCreateEditView/>)}
-                {getRoute(AppResources.getListURLFor("communicationMedium"), <CommunicationMediumListView/>)}
-                {getRoute(AppResources.getCreateURLFor("communicationMedium"), <CommunicationMediumCreateEditView/>)}
-                {getRoute(AppResources.getAppURLFor("proofsAndDocuments"), <ProofsAndDocumentsView/>)}
-                {getRoute(AppResources.getEditRoutePath("proofType"), <ProofTypeCreateEditView/>)}
-                {getRoute(AppResources.getCreateURLFor("documentType"), <SimpleMasterDataCreateEditView entityFactory={() => new PSRDocumentType()}
-                                                                                                        resourceName="document_type" masterDataTitle="DOCUMENT TYPE"/>)}
+                {getRoute(AppResources.getListPath("service"), <ServiceListView/>)}
+                {getRoute(AppResources.getCreatePath("service"), <ServiceCreateEditView/>)}
+                {getRoute(AppResources.getListPath("communication_medium"), <CommunicationMediumListView/>)}
+                {getRoute(AppResources.getCreatePath("communication_medium"), <CommunicationMediumCreateEditView/>)}
+                {getRoute(AppResources.getCustomPath(ProofsAndDocuments.APP_RESOURCE_NAME), <ProofsAndDocumentsView/>)}
+                {getRoute(AppResources.getEditPathTemplate("proof_type"), <ProofTypeCreateEditView/>)}
+                {getRoute(AppResources.getEditPathTemplate("document_type"), <SimpleMasterDataCreateEditView entityFactory={() => new PSRDocumentType()}
+                                                                                                             resourceName="document_type"
+                                                                                                             masterDataTitle="DOCUMENT TYPE"/>)}
             </Switch>
         </Router>
     );

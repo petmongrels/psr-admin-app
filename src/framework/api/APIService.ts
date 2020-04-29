@@ -8,4 +8,11 @@ export class APIService {
     public static loadAll(url: string) {
         return HttpClient.getJSON(url);
     }
+
+    public static loadOne(url: string) {
+        return HttpClient.getJSON(url).then((array) => {
+            if (array.length === 1) return array[0];
+            throw new Error("No such entity found");
+        });
+    }
 }
