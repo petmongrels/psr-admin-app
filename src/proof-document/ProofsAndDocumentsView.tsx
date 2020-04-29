@@ -6,6 +6,7 @@ import {ProofsAndDocuments} from "./model/ProofsAndDocuments";
 import {Link} from 'react-router-dom';
 import {ProofTypeService} from "../master-data/service/ProofTypeService";
 import _ from 'lodash';
+import {PSRDocumentType} from "../service/model/Service";
 
 export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) => {
     const [proofsAndDocuments, update] = useState<ProofsAndDocuments>(ProofsAndDocuments.newInstance());
@@ -55,7 +56,7 @@ export const ProofsAndDocumentsView: FunctionComponent<object> = ({children}) =>
         />
         <br/>
         <Row justify="end">
-            <Button type="default" style={{alignSelf: 'end'}}><Link to={AppResources.getCreatePath("documentType")}>Add Document Type</Link></Button>
+            <Button type="default" style={{alignSelf: 'end'}}><Link to={AppResources.getCreatePath(PSRDocumentType.DOCUMENT_TYPE)}>Add Document Type</Link></Button>
         </Row>
     </PSRLayout>;
 };

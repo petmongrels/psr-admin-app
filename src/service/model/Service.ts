@@ -203,6 +203,8 @@ export class ProofType implements ReferenceEntity {
 }
 
 export class PSRDocumentType implements ReferenceEntity {
+    static DOCUMENT_TYPE = "document_type";
+
     id!: number;
     name!: string;
     description: string;

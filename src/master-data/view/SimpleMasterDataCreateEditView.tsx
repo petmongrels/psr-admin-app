@@ -42,7 +42,7 @@ export const SimpleMasterDataCreateEditView: FunctionComponent<SimpleMasterDataC
     }
 
     useEffect(() => {
-        if (id) {
+        if (id && id !== "new") {
             APIService.loadOne(ServerResources.getSingleResourceURL(resourceName, id)).then((entity) => {
                 let clonedEntity = clone(entity, entityFactory);
                 form.setFieldsValue({
