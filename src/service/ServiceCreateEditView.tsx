@@ -7,7 +7,7 @@ import {ServiceCreateEdit} from "./model/ServiceCreateEdit";
 import {ServerResources} from "../framework/routing/ServerResources";
 import {ApplicationFormCreateEditView} from "./ApplicationFormCreateEditView";
 import {ReferenceEntityFormItem} from "../master-data/ReferenceEntityFormItem";
-import {ApplicationForm, EntityRelationshipType, Service} from "./model/Service";
+import {ApplicationForm, EntityRelationshipType, ProofType, Service} from "./model/Service";
 import {CommunicationMedium} from '../master-data/model/CommunicationMedium';
 
 const {TextArea} = Input;
@@ -35,18 +35,21 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
     };
 
     useEffect(() => {
-        APIService.loadAll(ServerResources.getResourceBaseURL("communication_medium")).then((resources) => {
+        const commMediumLoad = APIService.loadAll(ServerResources.getResourceBaseURL("communication_medium")).then((resources) => {
             serviceCreateEdit.communicationMediums = resources.map((resource: any) => CommunicationMedium.fromResource(resource));
-            updateState();
         });
-        APIService.loadAll(ServerResources.getResourceBaseURL("document_type")).then((documentTypes) => {
+        const documentAndProofTypeLoad = APIService.loadAll(ServerResources.getResourceBaseURL("document_type")).then((documentTypes) => {
             serviceCreateEdit.documentTypes = documentTypes;
-            updateState();
+            return APIService.loadAll(ServerResources.getProofTypesURL()).then((resources) => {
+                serviceCreateEdit.proofTypes = resources.map((resource: any) => ProofType.fromResponse(resource, serviceCreateEdit.documentTypes));
+            });
         });
-        APIService.loadAll(ServerResources.getResourceBaseURL("entity_relationship_type")).then((resources) => {
+        const entityRelTypeLoad = APIService.loadAll(ServerResources.getResourceBaseURL("entity_relationship_type")).then((resources) => {
             serviceCreateEdit.entityRelationshipTypes = resources.map((resource: any) => EntityRelationshipType.fromResource(resource));
-            updateState();
         });
+        Promise.all([commMediumLoad, documentAndProofTypeLoad, entityRelTypeLoad]).then(() => {
+            updateState();
+        })
     }, []);
 
     return (

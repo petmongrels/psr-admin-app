@@ -20,7 +20,11 @@ export const ProofSubmissionCreateEditView: FunctionComponent<ProofSubmissionCre
     return <Card style={{width: 400}}>
         <Col span={24} key={`${namePrefix}proofType`}>
             <ReferenceEntityFormItem referenceEntities={proofTypes}
-                                     onReferenceEntityChange={(referenceEntity) => proofSubmission.proofType = referenceEntity as ProofType} formItemName={`${namePrefix}proofType`}
+                                     onReferenceEntityChange={(referenceEntity) => {
+                                         proofSubmission.proofType = referenceEntity as ProofType;
+                                         onStateChange();
+                                     }}
+                                     formItemName={`${namePrefix}proofType`}
                                      label="Proof type"/>
         </Col>
 
@@ -30,6 +34,7 @@ export const ProofSubmissionCreateEditView: FunctionComponent<ProofSubmissionCre
                                      formItemName={`${namePrefix}relationship`} label="Relationship"/>
         </Col>
 
+        {proofSubmission.proofType &&
         <Col span={24} key={`${namePrefix}proofDocuments`}>
             <Form.Item label="Documents that can be used" name={`${namePrefix}proofDocuments`}>
                 <Select mode="multiple" style={{width: '100%'}} placeholder="Please select" onChange={(values) => {
@@ -37,10 +42,10 @@ export const ProofSubmissionCreateEditView: FunctionComponent<ProofSubmissionCre
                     onStateChange();
                 }
                 } value={proofSubmission.proofDocuments.map((proofDocument) => proofDocument.name)}>
-                    {documentTypes.map((documentType) => <Option value={documentType.name}>{documentType.name}</Option>)}
+                    {proofSubmission.proofType.documentTypes.map((documentType) => <Option value={documentType.name}>{documentType.name}</Option>)}
                 </Select>
             </Form.Item>
-        </Col>
+        </Col>}
 
         <Col span={24} key={`${namePrefix}originalToBeShown`}>
             <BooleanFormItem label="Original to be shown?" formItemName={`${namePrefix}originalToBeShown`} value={proofSubmission.originalToBeShown}
