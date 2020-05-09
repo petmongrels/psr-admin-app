@@ -1,9 +1,8 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import {Form, Input, Select, Descriptions} from 'antd';
+import {Descriptions, Form, Input, Select} from 'antd';
 
 import {PSRLayout} from "../framework/view/PSRLayout";
 import {PSRForm} from "../framework/view/PSRForm";
-import {APIService} from "../framework/api/APIService";
 import {useParams} from 'react-router-dom';
 import {ReferenceEntities} from "../framework/model/ReferenceEntity";
 import {ProofTypeCreateEdit} from "./model/ProofTypeCreateEdit";

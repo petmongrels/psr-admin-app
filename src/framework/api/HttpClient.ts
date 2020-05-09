@@ -1,5 +1,3 @@
-import {HttpRequest} from "./HttpRequest";
-
 export class HttpClient {
     static getJSON(url: string) {
         return fetch(url)

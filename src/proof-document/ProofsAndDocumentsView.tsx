@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import {PSRLayout} from "../framework/view/PSRLayout";
-import {Descriptions, List, Button, Row, Col} from 'antd';
+import {Button, Col, Descriptions, List, Row} from 'antd';
 import {AppResources} from "../framework/routing/AppResources";
 import {ProofsAndDocuments} from "./model/ProofsAndDocuments";
 import {Link} from 'react-router-dom';

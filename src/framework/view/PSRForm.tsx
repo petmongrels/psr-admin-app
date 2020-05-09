@@ -1,5 +1,5 @@
-import React, {FunctionComponent, RefObject} from 'react';
-import {Button, Form, Space, Col, Row} from 'antd';
+import React, {FunctionComponent} from 'react';
+import {Button, Col, Form, Row, Space} from 'antd';
 import {FormInstance} from 'antd/lib/form';
 
 const layout = {

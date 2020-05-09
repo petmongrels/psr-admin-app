@@ -1,6 +1,6 @@
 import {Form, Select} from 'antd';
 import React, {FunctionComponent} from 'react';
-import {ReferenceEntities, ReferenceEntity} from "../framework/model/ReferenceEntity";
+import {ReferenceEntity} from "../framework/model/ReferenceEntity";
 
 const {Option} = Select;
 

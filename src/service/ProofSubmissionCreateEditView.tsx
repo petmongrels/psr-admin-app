@@ -17,7 +17,7 @@ type ProofSubmissionCreateEditViewProps = {
 };
 
 export const ProofSubmissionCreateEditView: FunctionComponent<ProofSubmissionCreateEditViewProps> = ({children, namePrefix, proofSubmission, entityRelationshipTypes, proofTypes, documentTypes, onStateChange}) => {
-    return <Card style={{width: 400}}>
+    return <Card>
         <Col span={24} key={`${namePrefix}proofType`}>
             <ReferenceEntityFormItem referenceEntities={proofTypes}
                                      onReferenceEntityChange={(referenceEntity) => {

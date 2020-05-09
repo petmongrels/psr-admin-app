@@ -1,5 +1,5 @@
 import {Descriptions, Form, Input} from 'antd';
-import React, {FunctionComponent, useState, useEffect} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import {PSRLayout} from "../../framework/view/PSRLayout";
 import {PSRForm} from "../../framework/view/PSRForm";
 import {APIService} from "../../framework/api/APIService";
@@ -9,7 +9,6 @@ import {ServerResources} from "../../framework/routing/ServerResources";
 import {useHistory, useParams} from 'react-router-dom';
 import {AppResources} from "../../framework/routing/AppResources";
 import {ProofsAndDocuments} from "../../proof-document/model/ProofsAndDocuments";
-import {ProofTypeService} from "../service/ProofTypeService";
 
 type SimpleMasterDataCreateEditViewProps = {
     initialState: ReferenceEntity,

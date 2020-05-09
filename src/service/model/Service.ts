@@ -3,9 +3,10 @@ import {ReferenceEntities, ReferenceEntity} from "../../framework/model/Referenc
 import _ from 'lodash';
 
 export class Service {
+    id!: number;
     name!: string;
     description!: string;
-    references!: string;
+    externalReferences!: string;
     components!: Array<ServiceComponent>;
 
     static newService() {
@@ -16,15 +17,19 @@ export class Service {
 
     static clone(other: any) {
         let service = new Service();
+        service.id = other.id;
         service.name = other.name;
         service.description = other.description;
-        service.references = other.references;
+        service.externalReferences = other.externalReferences;
         service.components = other.components.filter((serviceComponent: any) => ServiceComponent.clone(serviceComponent));
         return service;
     }
 }
 
 export class ServiceComponent {
+    public static ServerResourceName = 'service_component';
+
+    id!: number;
     name!: string;
     applications!: Array<Application>;
 
@@ -42,57 +47,68 @@ export class ServiceComponent {
 }
 
 export class Application {
+    public static ServerResourceName = 'application';
+
+    id!: number;
     name!: string;
     communicationMedium!: CommunicationMedium;
     communicationAddress!: string;
     applicationForms!: Array<ApplicationForm>;
+    photographSubmissions!: Array<PhotographSubmission>;
+    proofSubmissions!: Array<ProofSubmission>;
 
     static newApplication() {
         let application = new Application();
         application.applicationForms = [];
+        application.photographSubmissions = [];
+        application.proofSubmissions = [];
         return application;
     }
 
     static clone(other: any) {
         let application = new Application();
+        application.id = other.id;
         application.name = other.name;
         application.communicationMedium = CommunicationMedium.clone(other.communicationMedium);
         application.communicationAddress = other.communicationAddress;
         application.applicationForms = other.applicationForms.filter((value: any) => ApplicationForm.clone(value));
+        application.photographSubmissions = other.photographSubmissions.filter((value: PhotographSubmission) => PhotographSubmission.clone(value));
+        application.proofSubmissions = other.proofSubmissions.filter((value: any) => ProofSubmission.clone(value));
         return application;
+    }
+
+    static removePhotographSubmission(application: Application, photographSubmission: PhotographSubmission) {
+        _.remove(application.photographSubmissions, (item) => item === photographSubmission);
+    }
+
+    static removeProofSubmission(application: Application, proofSubmission: ProofSubmission) {
+        _.remove(application.proofSubmissions, (item) => item === proofSubmission);
     }
 }
 
 export class ApplicationForm {
+    public static ServerResourceName = 'application_form';
+
+    id!: number;
     name!: string;
     officialFileURL!: string;
-    fileURL!: string;
-    photographSubmissions!: Array<PhotographSubmission>;
-    proofSubmissions!: Array<ProofSubmission>;
+    blankFormLocation!: string;
+    formSchema: object;
 
     static newInstance() {
         let applicationForm = new ApplicationForm();
-        applicationForm.photographSubmissions = [];
-        applicationForm.proofSubmissions = [];
+        applicationForm.formSchema = {};
         return applicationForm;
     }
 
     static clone(other: any) {
         let applicationForm = new ApplicationForm();
+        applicationForm.id = other.id;
         applicationForm.name = other.name;
         applicationForm.officialFileURL = other.officialFileURL;
-        applicationForm.fileURL = other.fileURL;
-        applicationForm.photographSubmissions = other.photographSubmissions.filter((value: PhotographSubmission) => PhotographSubmission.clone(value));
-        applicationForm.proofSubmissions = other.proofSubmissions.filter((value: any) => ProofSubmission.clone(value));
+        applicationForm.blankFormLocation = other.blankFormLocation;
+        applicationForm.formSchema = other.formSchema;
         return applicationForm;
-    }
-
-    static removePhotographSubmission(applicationForm: ApplicationForm, photographSubmission: PhotographSubmission) {
-        _.remove(applicationForm.photographSubmissions, (item) => item === photographSubmission);
-    }
-
-    static removeProofSubmission(applicationForm: ApplicationForm, proofSubmission: ProofSubmission) {
-        _.remove(applicationForm.proofSubmissions, (item) => item === proofSubmission);
     }
 }
 
@@ -103,15 +119,17 @@ export class PhotographType implements ReferenceEntity {
 }
 
 export class PhotographSubmission {
+    id!: number;
     photographType!: PhotographType;
     crossSignRequired!: boolean;
     numberOfCopies!: number;
-    entityRelationshipTypes!: EntityRelationshipType[];
+    entityRelationshipType!: EntityRelationshipType;
 
     static clone(other: any) {
         let photographSubmission = new PhotographSubmission();
+        photographSubmission.id = other.id;
         photographSubmission.numberOfCopies = other.numberOfCopies;
-        photographSubmission.entityRelationshipTypes = other.entityRelationshipTypes;
+        photographSubmission.entityRelationshipType = other.entityRelationshipType;
         photographSubmission.crossSignRequired = other.crossSignRequired;
         photographSubmission.photographType = other.photographType;
         return photographSubmission;
@@ -141,6 +159,7 @@ export class EntityRelationshipType implements ReferenceEntity {
 }
 
 export class ProofSubmission {
+    id!: number;
     entityRelationshipType!: EntityRelationshipType;
     proofType!: ProofType;
     originalToBeShown!: boolean;

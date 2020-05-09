@@ -7,15 +7,16 @@ export class CommunicationMedium implements ReferenceEntity {
     requiresAddress: boolean;
 
     static clone(other: CommunicationMedium) {
-        return other && CommunicationMedium.newInstance(other.name, other.description, other.requiresAddress);
+        return other && CommunicationMedium.newInstance(other);
     }
 
     static fromResource(resource: any) {
-        return CommunicationMedium.newInstance(resource["name"], resource["description"], resource["requires_address"]);
+        return CommunicationMedium.newInstance(resource);
     }
 
-    static newInstance(name: string, description: string, requiresAddress: boolean) {
+    static newInstance({id, name, description, requiresAddress}: CommunicationMedium) {
         let communicationMedium = new CommunicationMedium();
+        communicationMedium.id = id;
         communicationMedium.name = name;
         communicationMedium.description = description;
         communicationMedium.requiresAddress = requiresAddress;
