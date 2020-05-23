@@ -9,12 +9,12 @@ import {ServerResources} from "../../framework/routing/ServerResources";
 import {useHistory, useParams} from 'react-router-dom';
 import {AppResources} from "../../framework/routing/AppResources";
 import {ProofsAndDocuments} from "../../proof-document/model/ProofsAndDocuments";
+import _ from 'lodash';
 
 type SimpleMasterDataCreateEditViewProps = {
     initialState: ReferenceEntity,
     entityFactory: () => ReferenceEntity,
-    resourceName: string,
-    masterDataTitle: string
+    resourceName: string
 };
 
 const clone = function (simpleMasterData: ReferenceEntity, entityFactory: () => ReferenceEntity) {
@@ -25,12 +25,13 @@ const clone = function (simpleMasterData: ReferenceEntity, entityFactory: () => 
     return clonedSimpleMasterData;
 };
 
-export const SimpleMasterDataCreateEditView: FunctionComponent<SimpleMasterDataCreateEditViewProps> = ({children, entityFactory, resourceName, masterDataTitle}) => {
+export const SimpleMasterDataCreateEditView: FunctionComponent<SimpleMasterDataCreateEditViewProps> = ({children, entityFactory, resourceName}) => {
     const [form] = Form.useForm();
     const [simpleMasterData, update] = useState<ReferenceEntity>(entityFactory());
     const [pageExited, exitPage] = useState<boolean>(false);
     const history = useHistory();
     const {id} = useParams();
+    const humanReadableResource = _.lowerCase(_.startCase(_.camelCase(resourceName)));
 
     const updateState = function () {
         update(clone(simpleMasterData, entityFactory));
@@ -54,7 +55,7 @@ export const SimpleMasterDataCreateEditView: FunctionComponent<SimpleMasterDataC
     }, []);
 
     return <PSRLayout>
-        <Descriptions title={id ? `Update ${masterDataTitle}` : `Create new ${masterDataTitle}`}/>
+        <Descriptions title={id ? `Update ${humanReadableResource}` : `Create new ${humanReadableResource}`}/>
         <PSRForm submitHandler={() => {
             APIService.save(ServerResources.getResourceBaseURL(resourceName), simpleMasterData).then(() => exitPage(true));
         }} cancelHandler={() => exitPage(true)} name="simpleMasterDataCreateEdit" form={form}>

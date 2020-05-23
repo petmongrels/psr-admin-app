@@ -4,4 +4,8 @@ export class ServiceTag implements ReferenceEntity {
     id!: number;
     name!: string;
     description!: string;
+
+    static newInstance() {
+        return new ServiceTag();
+    }
 }

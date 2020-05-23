@@ -6,8 +6,8 @@ export class CommunicationMedium implements ReferenceEntity {
     description: string;
     requiresAddress: boolean;
 
-    static clone(other: CommunicationMedium) {
-        return other && CommunicationMedium.newInstance(other);
+    static emptyInstance() {
+        return new CommunicationMedium();
     }
 
     static fromResource(resource: any) {

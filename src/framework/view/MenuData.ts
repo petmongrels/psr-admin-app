@@ -8,8 +8,8 @@ export class MenuData {
     openKeys!: Array<string>;
 
     private constructor() {
-        let commMedium = new MenuItemData("Comm. Mediums", "communicationMedium", [], "comm-medium");
-        let serviceTag = new MenuItemData("Service tags", "serviceTag", [], "service-tag");
+        let commMedium = new MenuItemData("Comm. Mediums", "communication_medium", [], "comm-medium");
+        let serviceTag = new MenuItemData("Service tags", "service_tag", [], "service-tag");
         let proofsAndDocuments = new MenuItemData("Proofs / Documents", ProofsAndDocuments.APP_RESOURCE_NAME, [], ProofsAndDocuments.APP_RESOURCE_NAME);
         let masterData = new MenuItemData("Master data", "", [commMedium, proofsAndDocuments, serviceTag], "master-data");
         let services = new MenuItemData("Services", "service", [], "services");

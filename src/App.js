@@ -6,8 +6,6 @@ import {dashboard} from "./dashboard/Dashboard";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 import {ServiceCreateEditView} from "./service/ServiceCreateEditView";
-import {CommunicationMediumListView} from "./master-data/CommunicationMediumListView";
-import {CommunicationMediumCreateEditView} from "./master-data/CommunicationMediumCreateEditView";
 import {AppResources} from "./framework/routing/AppResources";
 import {ServiceListView} from "./service/ServiceListView";
 import {ProofsAndDocumentsView} from "./proof-document/ProofsAndDocumentsView";
@@ -15,7 +13,9 @@ import {ProofTypeCreateEditView} from "./master-data/ProofTypeCreateEditView";
 import {SimpleMasterDataCreateEditView} from "./master-data/view/SimpleMasterDataCreateEditView";
 import {PSRDocumentType} from "./service/model/Service";
 import {ProofsAndDocuments} from "./proof-document/model/ProofsAndDocuments";
-import {ServiceTagView} from "./master-data/view/ServiceTagView";
+import {ServiceTag} from "./master-data/model/ServiceTag";
+import {MasterDataListComponentView} from "./master-data/view/MasterDataListComponentView";
+import {CommunicationMedium} from "./master-data/model/CommunicationMedium";
 
 const getRoute = function (path, view) {
     return <Route path={path}>
@@ -33,6 +33,14 @@ const createRoute = function (resource, view) {
     return getRoute(AppResources.getCreatePath(resource), view);
 };
 
+const masterDataListRoute = function (resource) {
+    return listRoute(resource, <MasterDataListComponentView resource={resource}/>);
+};
+
+const masterDataCreateEditRoute = function (resource, entityFactoryFn) {
+    return createRoute(resource, <SimpleMasterDataCreateEditView entityFactory={entityFactoryFn} resourceName={resource}/>);
+};
+
 export default function App(props) {
     return (
         <Router>
@@ -42,9 +50,12 @@ export default function App(props) {
                 </Route>
                 {getRoute(AppResources.getCreatePath("service"), <ServiceCreateEditView/>)}
                 {getRoute(AppResources.getListPath("service"), <ServiceListView/>)}
-                {listRoute("communication_medium", <CommunicationMediumListView/>)}
-                {listRoute("service_tag", <ServiceTagView/>)}
-                {createRoute("communication_medium", <CommunicationMediumCreateEditView/>)}
+
+                {masterDataCreateEditRoute("service_tag", ServiceTag.newInstance)}
+                {masterDataListRoute("service_tag")}
+
+                {masterDataCreateEditRoute("communication_medium", CommunicationMedium.emptyInstance)}
+                {masterDataListRoute("communication_medium")}
                 {getRoute(AppResources.getCustomPath(ProofsAndDocuments.APP_RESOURCE_NAME), <ProofsAndDocumentsView/>)}
                 {getRoute(AppResources.getEditPathTemplate("proof_type"), <ProofTypeCreateEditView/>)}
                 {getRoute(AppResources.getEditPathTemplate("document_type"), <SimpleMasterDataCreateEditView entityFactory={() => new PSRDocumentType()}

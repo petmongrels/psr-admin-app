@@ -69,7 +69,7 @@ export class Application {
         let application = new Application();
         application.id = other.id;
         application.name = other.name;
-        application.communicationMedium = CommunicationMedium.clone(other.communicationMedium);
+        application.communicationMedium = other.communicationMedium;
         application.communicationAddress = other.communicationAddress;
         application.applicationForms = other.applicationForms.filter((value: any) => ApplicationForm.clone(value));
         application.photographSubmissions = other.photographSubmissions.filter((value: PhotographSubmission) => PhotographSubmission.clone(value));

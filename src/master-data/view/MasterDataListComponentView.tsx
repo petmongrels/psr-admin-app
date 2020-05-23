@@ -1,31 +1,40 @@
 import {Button, Col, Descriptions, List, Row} from 'antd';
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useState, useEffect} from 'react';
 import {AppResources} from "../../framework/routing/AppResources";
 import {Link} from 'react-router-dom';
 import {ReferenceEntities, ReferenceEntity} from "../../framework/model/ReferenceEntity";
 import _ from 'lodash';
-import {PSRDocumentType} from "../../service/model/Service";
+import {APIService} from "../../framework/api/APIService";
+import {ServerResources} from "../../framework/routing/ServerResources";
+import {PSRLayout} from "../../framework/view/PSRLayout";
 
 interface MasterDataListComponentProps {
-    masterDataList: Array<ReferenceEntity>;
     resource: string;
     listItemCursor?: (x: string) => string;
     onItemSelect?: (x: ReferenceEntity) => void;
     childrenFieldName?: string;
 }
 
-export const MasterDataListComponent: FunctionComponent<MasterDataListComponentProps> = ({
+export const MasterDataListComponentView: FunctionComponent<MasterDataListComponentProps> = ({
                                                                                              children,
-                                                                                             masterDataList,
                                                                                              resource,
                                                                                              listItemCursor = () => "auto",
                                                                                              onItemSelect = () => {
                                                                                              },
                                                                                              childrenFieldName
                                                                                          }) => {
-    let humanReadableResource = _.startCase(_.camelCase(resource));
+    const [masterDataList, update] = useState([]);
+
+    useEffect(() => {
+        APIService.loadAll(ServerResources.getResourceBaseURL(resource)).then((data) => {
+            update(data);
+        });
+    }, []);
+
+
+    const humanReadableResource = _.startCase(_.camelCase(resource));
     return (
-        <div>
+        <PSRLayout>
             <Descriptions title={`${humanReadableResource}s`}/>
             <List
                 bordered
@@ -53,7 +62,7 @@ export const MasterDataListComponent: FunctionComponent<MasterDataListComponentP
                     <Link to={AppResources.getCreatePath(resource)}>{`Add ${humanReadableResource}`}</Link>
                 </Button>
             </Row>
-        </div>);
+        </PSRLayout>);
 };
 
 const childrenText = function (item: any, fieldName: string) {
