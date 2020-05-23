@@ -1,8 +1,6 @@
-import {Button, Card, Col, Descriptions, Form, Input, Row} from 'antd';
-import React, {FunctionComponent, useState} from 'react';
-import {ApplicationForm, EntityRelationshipType, PhotographSubmission, PhotographType, ProofSubmission, ProofType, PSRDocumentType} from "./model/Service";
-import {PhotographSubmissionCreateEditView} from "./PhotographSubmissionCreateEditView";
-import {ProofSubmissionCreateEditView} from "./ProofSubmissionCreateEditView";
+import {Col, Descriptions, Form, Input, Row} from 'antd';
+import React, {FunctionComponent} from 'react';
+import {ApplicationForm, PSRDocumentType} from "./model/Service";
 
 type ApplicationFormCreateEditViewProps = {
     namePrefix: string,

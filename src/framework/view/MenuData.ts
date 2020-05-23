@@ -9,8 +9,9 @@ export class MenuData {
 
     private constructor() {
         let commMedium = new MenuItemData("Comm. Mediums", "communicationMedium", [], "comm-medium");
+        let serviceTag = new MenuItemData("Service tags", "serviceTag", [], "service-tag");
         let proofsAndDocuments = new MenuItemData("Proofs / Documents", ProofsAndDocuments.APP_RESOURCE_NAME, [], ProofsAndDocuments.APP_RESOURCE_NAME);
-        let masterData = new MenuItemData("Master data", "", [commMedium, proofsAndDocuments], "master-data");
+        let masterData = new MenuItemData("Master data", "", [commMedium, proofsAndDocuments, serviceTag], "master-data");
         let services = new MenuItemData("Services", "service", [], "services");
         this.root = new MenuItemData("root", '', [services, masterData], "root");
     }

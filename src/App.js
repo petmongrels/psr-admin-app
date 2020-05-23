@@ -15,6 +15,7 @@ import {ProofTypeCreateEditView} from "./master-data/ProofTypeCreateEditView";
 import {SimpleMasterDataCreateEditView} from "./master-data/view/SimpleMasterDataCreateEditView";
 import {PSRDocumentType} from "./service/model/Service";
 import {ProofsAndDocuments} from "./proof-document/model/ProofsAndDocuments";
+import {ServiceTagView} from "./master-data/view/ServiceTagView";
 
 const getRoute = function (path, view) {
     return <Route path={path}>
@@ -23,6 +24,14 @@ const getRoute = function (path, view) {
 };
 
 const UIContext = React.createContext();
+
+const listRoute = function (resource, view) {
+    return getRoute(AppResources.getListPath(resource), view);
+};
+
+const createRoute = function (resource, view) {
+    return getRoute(AppResources.getCreatePath(resource), view);
+};
 
 export default function App(props) {
     return (
@@ -33,9 +42,9 @@ export default function App(props) {
                 </Route>
                 {getRoute(AppResources.getCreatePath("service"), <ServiceCreateEditView/>)}
                 {getRoute(AppResources.getListPath("service"), <ServiceListView/>)}
-
-                {getRoute(AppResources.getListPath("communication_medium"), <CommunicationMediumListView/>)}
-                {getRoute(AppResources.getCreatePath("communication_medium"), <CommunicationMediumCreateEditView/>)}
+                {listRoute("communication_medium", <CommunicationMediumListView/>)}
+                {listRoute("service_tag", <ServiceTagView/>)}
+                {createRoute("communication_medium", <CommunicationMediumCreateEditView/>)}
                 {getRoute(AppResources.getCustomPath(ProofsAndDocuments.APP_RESOURCE_NAME), <ProofsAndDocumentsView/>)}
                 {getRoute(AppResources.getEditPathTemplate("proof_type"), <ProofTypeCreateEditView/>)}
                 {getRoute(AppResources.getEditPathTemplate("document_type"), <SimpleMasterDataCreateEditView entityFactory={() => new PSRDocumentType()}
