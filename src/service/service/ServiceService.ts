@@ -5,7 +5,13 @@ import {EntityRelationshipType, ProofType, Service} from "../model/Service";
 import {ServiceCreateEdit} from "../model/ServiceCreateEdit";
 
 export class ServiceService {
-    static loadAll(serviceCreateEdit: ServiceCreateEdit, cb: Function) {
+    static loadAll(serviceCreateEdit: ServiceCreateEdit, id: any, cb: Function) {
+        let entityLoad = Promise.resolve();
+        if (id && id !== "new") {
+            entityLoad = APIService.loadAggregate(ServerResources.getAggregateResourceURL("service", id)).then((entity) => {
+                serviceCreateEdit.service = entity;
+            });
+        }
         const commMediumLoad = APIService.loadAll(ServerResources.getResourceBaseURL("communication_medium")).then((resources) => {
             serviceCreateEdit.communicationMediums = resources.map((resource: any) => CommunicationMedium.fromResource(resource));
         });
@@ -19,7 +25,7 @@ export class ServiceService {
             serviceCreateEdit.entityRelationshipTypes = resources.map((resource: any) => EntityRelationshipType.fromResource(resource));
         });
 
-        Promise.all([commMediumLoad, documentAndProofTypeLoad, entityRelTypeLoad]).then(() => {
+        Promise.all([commMediumLoad, documentAndProofTypeLoad, entityRelTypeLoad, entityLoad]).then(() => {
             cb();
         })
     }

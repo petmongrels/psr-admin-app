@@ -15,4 +15,8 @@ export class APIService {
             throw new Error("No such entity found");
         });
     }
+
+    public static loadAggregate(url: string) {
+        return HttpClient.getJSON(url);
+    }
 }

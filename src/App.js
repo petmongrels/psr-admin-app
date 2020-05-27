@@ -33,6 +33,10 @@ const createRoute = function (resource, view) {
     return getRoute(AppResources.getCreatePath(resource), view);
 };
 
+const editRoute = function (resource, view) {
+    return getRoute(AppResources.getEditPathTemplate(resource), view)
+};
+
 const masterDataListRoute = function (resource) {
     return listRoute(resource, <MasterDataListComponentView resource={resource}/>);
 };
@@ -48,8 +52,9 @@ export default function App(props) {
                 <Route exact path="/">
                     {dashboard()}
                 </Route>
-                {getRoute(AppResources.getCreatePath("service"), <ServiceCreateEditView/>)}
-                {getRoute(AppResources.getListPath("service"), <ServiceListView/>)}
+                {editRoute("service", <ServiceCreateEditView/>)}
+                {createRoute("service", <ServiceCreateEditView/>)}
+                {listRoute("service", <ServiceListView/>)}
 
                 {masterDataCreateEditRoute("service_tag", ServiceTag.newInstance)}
                 {masterDataListRoute("service_tag")}

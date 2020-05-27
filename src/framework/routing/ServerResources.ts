@@ -17,4 +17,8 @@ export class ServerResources {
     static getSingleResourceURL(resource: string, id: string) {
         return `${this.PostgrestBaseURL}/${resource}?id=eq.${id}`;
     }
+
+    static getAggregateResourceURL(resource: string, id: string) {
+        return `${this.SpringBaseURL}/${resource}/${id}`;
+    }
 }

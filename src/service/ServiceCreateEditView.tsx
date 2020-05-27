@@ -10,6 +10,8 @@ import {CommunicationMedium} from '../master-data/model/CommunicationMedium';
 import {ServiceService} from "./service/ServiceService";
 import {PhotographSubmissionCreateEditView} from "./PhotographSubmissionCreateEditView";
 import {ProofSubmissionCreateEditView} from "./ProofSubmissionCreateEditView";
+import {useParams} from 'react-router-dom';
+const flatten = require('flat');
 
 const {TextArea} = Input;
 
@@ -43,13 +45,21 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
     const [form] = Form.useForm();
     const [serviceCreateEdit, update] = useState<ServiceCreateEdit>(ServiceCreateEdit.newInstance());
     const [activeTabKey, updateTab] = useState('proofs');
+    const {id} = useParams();
 
     const updateState = function () {
         update(ServiceCreateEdit.clone(serviceCreateEdit));
     };
 
+    const loadFromServer = function() {
+        let flatService = flatten(serviceCreateEdit.service);
+        console.log(flatService);
+        form.setFieldsValue(flatService);
+        updateState();
+    };
+
     useEffect(() => {
-        ServiceService.loadAll(serviceCreateEdit, updateState);
+        ServiceService.loadAll(serviceCreateEdit, id, loadFromServer);
     }, []);
 
     return (
@@ -90,7 +100,7 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
                         }} autoSize={{minRows: 2}}/>
                     </Form.Item>
 
-                    <Form.Item label="References" name="references">
+                    <Form.Item label="References" name="externalReferences">
                         <TextArea onChange={(e) => {
                             serviceCreateEdit.service.externalReferences = e.target.value;
                             updateState();
@@ -99,7 +109,7 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
                 </Card>
 
                 {serviceCreateEdit.service.components.map((serviceComponent, index) => {
-                        let prefix = `serviceComponent.${index}.`;
+                        let prefix = `components.${index}.`;
                         return <Card key={prefix}>
                             <Descriptions title="SERVICE COMPONENT - 1" style={{marginLeft: 10}}/>
                             <Form.Item label="Name" name={`${prefix}name`}
@@ -114,7 +124,7 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
                             </Form.Item>
 
                             {serviceComponent.applications.map((application, index) => {
-                                const applicationPrefix = `${prefix}application.${index}.`;
+                                const applicationPrefix = `${prefix}applications.${index}.`;
                                 return <Col style={{backgroundColor: '#f5f5f5'}} key={applicationPrefix}>
                                     <Descriptions title="APPLICATION - 1" style={{marginLeft: 40, paddingTop: 10}}/>
                                     <Row style={{paddingRight: 10}} key={`${applicationPrefix}name`}>
@@ -134,7 +144,7 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
 
                                     <Row style={{paddingRight: 10}} key={`${applicationPrefix}communicationMedium`}>
                                         <Col span={24}>
-                                            <ReferenceEntityFormItem formItemName={`${applicationPrefix}communicationMedium`} label="Communication medium"
+                                            <ReferenceEntityFormItem formItemName={`${applicationPrefix}communicationMedium.name`} label="Communication medium"
                                                                      referenceEntities={serviceCreateEdit.communicationMediums}
                                                                      onReferenceEntityChange={(referenceEntity) => {
                                                                          application.communicationMedium = referenceEntity as CommunicationMedium;

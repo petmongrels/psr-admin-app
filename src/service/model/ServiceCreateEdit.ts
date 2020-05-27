@@ -30,4 +30,13 @@ export class ServiceCreateEdit {
         serviceCreateEdit.entityRelationshipTypes = other.entityRelationshipTypes;
         return serviceCreateEdit;
     }
+
+    static toFormValues(serviceCreateEdit: ServiceCreateEdit) {
+        let s = serviceCreateEdit.service;
+        return {
+            name: s.name,
+            description: s.description,
+            references: s.externalReferences,
+        };
+    }
 }

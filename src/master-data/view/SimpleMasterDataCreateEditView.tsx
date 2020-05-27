@@ -8,7 +8,6 @@ import TextArea from 'antd/lib/input/TextArea';
 import {ServerResources} from "../../framework/routing/ServerResources";
 import {useHistory, useParams} from 'react-router-dom';
 import {AppResources} from "../../framework/routing/AppResources";
-import {ProofsAndDocuments} from "../../proof-document/model/ProofsAndDocuments";
 import _ from 'lodash';
 
 type SimpleMasterDataCreateEditViewProps = {
@@ -38,7 +37,7 @@ export const SimpleMasterDataCreateEditView: FunctionComponent<SimpleMasterDataC
     };
 
     if (pageExited) {
-        history.replace(AppResources.getCustomPath(ProofsAndDocuments.APP_RESOURCE_NAME));
+        history.replace(AppResources.getCustomPath(resourceName));
     }
 
     useEffect(() => {
