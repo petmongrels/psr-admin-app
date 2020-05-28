@@ -1,5 +1,6 @@
 import {EntityRelationshipType, PhotographType, ProofType, PSRDocumentType, Service} from "./Service";
 import {CommunicationMedium} from "../../master-data/model/CommunicationMedium";
+import {ServiceTag} from "../../master-data/model/ServiceTag";
 
 export class ServiceCreateEdit {
     service!: Service;
@@ -8,6 +9,7 @@ export class ServiceCreateEdit {
     documentTypes!: Array<PSRDocumentType>;
     proofTypes!: Array<ProofType>;
     entityRelationshipTypes!: Array<EntityRelationshipType>;
+    serviceTags: Array<ServiceTag>;
 
     static newInstance() {
         let serviceCreateEdit = new ServiceCreateEdit();
@@ -17,6 +19,7 @@ export class ServiceCreateEdit {
         serviceCreateEdit.documentTypes = [];
         serviceCreateEdit.proofTypes = [];
         serviceCreateEdit.entityRelationshipTypes = [];
+        serviceCreateEdit.serviceTags = [];
         return serviceCreateEdit;
     }
 
@@ -28,6 +31,7 @@ export class ServiceCreateEdit {
         serviceCreateEdit.documentTypes = other.documentTypes;
         serviceCreateEdit.proofTypes = other.proofTypes;
         serviceCreateEdit.entityRelationshipTypes = other.entityRelationshipTypes;
+        serviceCreateEdit.serviceTags = other.serviceTags;
         return serviceCreateEdit;
     }
 

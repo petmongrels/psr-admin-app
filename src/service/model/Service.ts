@@ -1,6 +1,7 @@
 import {CommunicationMedium} from "../../master-data/model/CommunicationMedium";
 import {ReferenceEntities, ReferenceEntity} from "../../framework/model/ReferenceEntity";
 import _ from 'lodash';
+import {ServiceTag} from "../../master-data/model/ServiceTag";
 
 export class Service {
     id!: number;
@@ -8,10 +9,12 @@ export class Service {
     description!: string;
     externalReferences!: string;
     components!: Array<ServiceComponent>;
+    tags!: Array<ServiceTag>;
 
     static newService() {
         let service = new Service();
         service.components = [ServiceComponent.newServiceComponent()];
+        service.tags = [];
         return service;
     }
 
@@ -22,6 +25,7 @@ export class Service {
         service.description = other.description;
         service.externalReferences = other.externalReferences;
         service.components = other.components.filter((serviceComponent: any) => ServiceComponent.clone(serviceComponent));
+        service.tags = [...other.tags];
         return service;
     }
 }

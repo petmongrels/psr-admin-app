@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import {Button, Card, Col, Descriptions, Form, Input, Row} from 'antd';
+import {Button, Card, Col, Descriptions, Form, Input, Row, Select} from 'antd';
 import {PSRLayout} from "../framework/view/PSRLayout";
 import {PSRForm} from "../framework/view/PSRForm";
 import {ServiceCreateEdit} from "./model/ServiceCreateEdit";
@@ -11,9 +11,13 @@ import {ServiceService} from "./service/ServiceService";
 import {PhotographSubmissionCreateEditView} from "./PhotographSubmissionCreateEditView";
 import {ProofSubmissionCreateEditView} from "./ProofSubmissionCreateEditView";
 import {useParams} from 'react-router-dom';
+import {ReferenceEntities} from "../framework/model/ReferenceEntity";
+import {RoutingHelper} from "../framework/routing/RoutingHelper";
+
 const flatten = require('flat');
 
 const {TextArea} = Input;
+const {Option} = Select;
 
 const draftKey = 'service.draft';
 
@@ -51,10 +55,12 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
         update(ServiceCreateEdit.clone(serviceCreateEdit));
     };
 
-    const loadFromServer = function() {
-        let flatService = flatten(serviceCreateEdit.service);
-        console.log(flatService);
-        form.setFieldsValue(flatService);
+    const loadFromServer = function () {
+        if (RoutingHelper.isEdit(id)) {
+            let flatService = flatten(serviceCreateEdit.service);
+            form.setFieldsValue(flatService);
+            form.setFieldsValue({tags: serviceCreateEdit.service.tags.map(tag => tag.name)});
+        }
         updateState();
     };
 
@@ -62,6 +68,8 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
         ServiceService.loadAll(serviceCreateEdit, id, loadFromServer);
     }, []);
 
+
+    console.log(serviceCreateEdit.service);
     return (
         <PSRLayout>
             <PSRForm submitHandler={() => {
@@ -105,6 +113,16 @@ export const ServiceCreateEditView: FunctionComponent<ServiceCreateEditViewProps
                             serviceCreateEdit.service.externalReferences = e.target.value;
                             updateState();
                         }} autoSize={{minRows: 2}}/>
+                    </Form.Item>
+
+                    <Form.Item label="Tags" name="tags">
+                        <Select mode="multiple" style={{width: '100%'}} placeholder="Please select" onChange={(values) => {
+                            serviceCreateEdit.service.tags = values.map((value) => ReferenceEntities.findEntityByName(serviceCreateEdit.serviceTags, value));
+                            updateState();
+                        }
+                        } value={serviceCreateEdit.service.tags.map((serviceTag) => serviceTag.name)}>
+                            {serviceCreateEdit.serviceTags.map((serviceTag) => <Option value={serviceTag.name}>{serviceTag.name}</Option>)}
+                        </Select>
                     </Form.Item>
                 </Card>
 

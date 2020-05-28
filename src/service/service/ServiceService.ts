@@ -3,11 +3,12 @@ import {ServerResources} from "../../framework/routing/ServerResources";
 import {CommunicationMedium} from "../../master-data/model/CommunicationMedium";
 import {EntityRelationshipType, ProofType, Service} from "../model/Service";
 import {ServiceCreateEdit} from "../model/ServiceCreateEdit";
+import {RoutingHelper} from "../../framework/routing/RoutingHelper";
 
 export class ServiceService {
     static loadAll(serviceCreateEdit: ServiceCreateEdit, id: any, cb: Function) {
         let entityLoad = Promise.resolve();
-        if (id && id !== "new") {
+        if (RoutingHelper.isEdit(id)) {
             entityLoad = APIService.loadAggregate(ServerResources.getAggregateResourceURL("service", id)).then((entity) => {
                 serviceCreateEdit.service = entity;
             });
@@ -23,6 +24,9 @@ export class ServiceService {
         });
         const entityRelTypeLoad = APIService.loadAll(ServerResources.getResourceBaseURL("entity_relationship_type")).then((resources) => {
             serviceCreateEdit.entityRelationshipTypes = resources.map((resource: any) => EntityRelationshipType.fromResource(resource));
+        });
+        const serviceTagLoad = APIService.loadAll(ServerResources.getResourceBaseURL("service_tag")).then((resources) => {
+            serviceCreateEdit.serviceTags = resources;
         });
 
         Promise.all([commMediumLoad, documentAndProofTypeLoad, entityRelTypeLoad, entityLoad]).then(() => {
